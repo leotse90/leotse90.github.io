@@ -1,0 +1,550 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Scorpio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Leo Tse">
+    
+
+    
+    <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Scorpio">
+<meta property="og:url" content="http://leotse90.com/page/3/index.html">
+<meta property="og:site_name" content="Scorpio">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scorpio">
+<meta name="twitter:description">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Scorpio" title="Scorpio"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Scorpio">Scorpio</a></h1>
+				<h2 class="blog-motto">You only live once!</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:leotse90.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/Hadoop集群部署(RedHat)/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:51:21.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Hadoop集群部署（RedHat）">Hadoop集群部署（RedHat）</h1><p><strong>整理：LeoTse</strong></p>
+<h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
+<p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
+<p>接下来我们对每一步进行详细介绍。</p>
+<h2 id="SSH免密码登录设置">SSH免密码登录设置</h2><p>进行SSH免密码登录设置是为了避免在集群内部机器交互的时候频繁输入登录密码，我们在这里为集群内的每个机器都执行SSH免密码登录设置。在这里不具体介绍SSH免密码登录的具体步骤，可以参见<a href="https://github.com/leotse90/blogs/blob/master/SSH免密码登录设置.md" target="_blank" rel="external">SSH免密码登录设置</a></p>
+<h2 id="环境变量设置">环境变量设置</h2><p>修改hosts文件：<br><code>vi /etc/hosts</code><br>新增：<br><code>172.16.10.136   Master</code><br><code>172.16.10.137   Slave1</code>  </p>
+<p>一般，Java都已经安装好。如果没有，需要先行安装Java并配置JAVA_HOME。然后修改~/.bashrc文件，在文件的末尾增加JAVA和HADOOP的配置：  </p>
+<p><code>### set java home</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
+<p><code>### set hadoop env</code><br><code>export HADOOP_HOME=/home/xiefeng/dependecies/hadoop-2.6.0</code><br><code>export HADOOP_COMMON_HOME=$HADOOP_HOME</code><br><code>export HADOOP_HDFS_HOME=$HADOOP_HOME</code><br><code>export HADOOP_MAPRED_HOME=$HADOOP_HOME</code><br><code>export HADOOP_YARN_HOME=$HADOOP_HOME</code><br><code>export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop</code><br><code>export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/lib</code><br><code>export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native</code><br><code>export HADOOP_OPTS=&quot;-Djava.library.path=$HADOOP_HOME/lib&quot;</code>  </p>
+<p>然后：<br><code>source ~/.bashrc</code>  </p>
+<p>检查是否配置成功，可以<code>echo $HADOOP_HOME</code>看是否是配置中的路径。  </p>
+<h2 id="Master部署">Master部署</h2><p>1.解压Hadoop 2.6安装包到安装目录，在这个示例里是/home/xiefeng/dependecies/目录：<br><code>tar xvf hadoop-2.6.0.tar</code>  </p>
+<p>2.进入Hadoop目录，修改slaves文件，增加Slave1到slaves文件中：<br><code>cd hadoop-2.6.0</code><br><code>vi etc/hadoop/slaves</code><br>添加：<br><code>Slave1</code>  </p>
+<p>3.修改core-site.xml配置文件：<br><code>vi etc/hadoop/core-site.xml</code><br>修改为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;fs.defaultFS&lt;/name&gt;</code><br><code>&lt;value&gt;hdfs://Master:9000&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp&lt;/value&gt;</code><br><code>&lt;description&gt;Abase for other temporary directories.&lt;/description&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>4.修改hdfs-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</code><br><code>&lt;value&gt;Master:50090&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/name&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/data&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.replication&lt;/name&gt;</code><br><code>&lt;value&gt;1&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>5.复制mapred-site.xml.template得到mapred-site.xml文件：<br><code>cp mapred-site.xml.template mapred-site.xml</code><br>修改mapred-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</code><br><code>&lt;value&gt;yarn&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>6.修改yarn-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;!-- Site specific YARN configuration properties --&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</code><br><code>&lt;value&gt;Master&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</code><br><code>&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>7.一般的，我们还需要修改一下hadoop-env.sh，将其JAVA_HOME修改为当前机器的JAVA_HOME：<br><code># The java implementation to use.</code><br><code># export JAVA_HOME=${JAVA_HOME}</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
+<h2 id="Slave部署">Slave部署</h2><p>1.将 Master 上的 Hadoop 文件先打包然后复制到各个节点上：<br><code>sudo tar -zcf hadoop－2.6.0.tar.gz hadoop－2.6.0/</code><br><code>scp hadoop－2.6.0.tar.gz Slave1:/home/xiefeng/dependecies</code>  </p>
+<p>2.解压到Slave1的安装目录：<br><code>sudo tar -zxf hadoop－2.6.0.tar.gz</code><br><code>sudo chown -R xiefeng:xiefeng /home/xiefeng/dependecies/hadoop-2.6.0</code>  </p>
+<h2 id="集群启动">集群启动</h2><p>我们回到Master，进入hadoop安装目录：<br><code>cd /home/xiefeng/dependecies/hadoop-2.6.0</code><br>第一次执行，初始化：<br><code>bin/hdfs namenode -format</code>  </p>
+<p>启动dfs：<br><code>sbin/start-dfs.sh</code><br>启动yarn：<br><code>sbin/start-yarn.sh</code>  </p>
+<p>分别在Master和Slave1输入jps，看看是否有以下输出，有则表明安装ok：<br><code>[xiefeng@Master hadoop-2.6.0]$ jps</code><br><code>8498 NameNode</code><br><code>8837 ResourceManager</code><br><code>8680 SecondaryNameNode</code><br><code>9817 Jps</code>  </p>
+<p><code>[xiefeng@Slave1 logs]$ jps</code><br><code>20208 NodeManager</code><br><code>20344 Jps</code><br><code>20107 DataNode</code>  </p>
+<p>在浏览器输入：<a href="http://master：8088就可以查看集群All" target="_blank" rel="external">http://master：8088就可以查看集群All</a> Applications信息；输入<a href="http://master:50070可以查看namenode信息。" target="_blank" rel="external">http://master:50070可以查看namenode信息。</a></p>
+<p>停止dfs：<br><code>sbin/stop-dfs.sh</code><br>停止yarn：<br><code>sbin/stop-yarn.sh</code>  </p>
+<p>另外，还可以使用以下脚本进行集群的启动和停止：<br><code>sbin/start-all.sh</code><br><code>sbin/stop-all.sh</code></p>
+<p>至此，Hadoop集群搭建完毕！！！</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/Python多进程使用/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:50:58.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Python多进程使用">Python多进程使用</h1><h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock" target="_blank" rel="external">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
+<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。</p>
+<h2 id="multiprocessing使用">multiprocessing使用</h2><p>在multiprocessing模块中，我们使用multiprocessing.Process()来创建一个新的进程对象。</p>
+<p>一般情况下，我们需要在创建Process对象时指定进程执行的函数，以及该函数的参数：<br><code>process = multiprocessing.Process(target=worker, args=(param1, param2)</code><br>该对象的主要方法有：<br><strong>start()</strong>：启动进程；每个进程最多只能调用一次；<br><strong>run()</strong>：进程的执行逻辑在run()里。如果Process对象没有指定target，就会默认执行Process的run()方法；<br><strong>join([timeout])</strong>：阻塞当前进程，直到调用join方法的那个进程执行完，再继续执行当前进程；<br><strong>is_alive()</strong>：返回该进程是否存活；<br><strong>terminate()</strong>：终结一个进程。当调用这个函数的时候，运行逻辑中的exit和finally代码段将不会执行。而且这个进程的子进程不会被终结而是成为孤儿进程；  </p>
+<p>下面我们给出一段多进程使用的示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param):</code><br><code>print param</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>  </p>
+<p>我们可以得到如下的输出：<br><code>1</code><br><code>0</code><br><code>2</code><br><code>4</code><br><code>3</code>  </p>
+<h2 id="子进程通信">子进程通信</h2><p>multiprocessing支持两种类型的进程通信手段，分别是Queue和Pipe。  </p>
+<h3 id="Queue">Queue</h3><p>Queue是一种多线程优先队列。它允许多个进程读和写，我们通过<code>mutiprocessing.Queue(maxsize)</code>创建一个Queue，maxsize表示队列中可以存放对象的最大数量。它的一些主要方法有：<br><strong>get()</strong>：删除并返回队列中的一个元素；<br><strong>put()</strong>: 添加元素到队列；<br><strong>qsize()</strong> : 返回队列中元素的个数；<br><strong>empty()</strong>: 队列为空返回True否则返回False；<br><strong>full()</strong>: 队列已满返回True，负责返回False；  </p>
+<p>在下面的示例里，我们用Queue实现获取多进程执行时的输出：   </p>
+<p><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>result_queue = multiprocessing.Queue()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, result_queue])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>while not result_queue.empty():</code><br><code>print result_queue.get()</code><br><code>def worker(param, result_queue):</code><br><code>result_queue.put(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>   </p>
+<p>执行这段代码，输出为：<br><code>101</code><br><code>102</code><br><code>103</code><br><code>100</code><br><code>104</code>  </p>
+<h3 id="Pipe">Pipe</h3><p>Pipe可以是单向，也可以是双向。我们通过mutiprocessing.Pipe(duplex=False)创建单向管道 (默认为双向)。它主要有send()和recv()两种方法，顾名思义，分别是发送消息和接受消息。<br>我们同样来看一段示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>parent_conn, child_conn = multiprocessing.Pipe()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, child_conn])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>print parent_conn.recv()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param, child_conn):</code><br><code>child_conn.send(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code><br>执行这段代码，输出为：<br><code>100</code><br><code>101</code><br><code>102</code><br><code>103</code><br><code>104</code>  </p>
+<h2 id="Q&amp;A">Q&amp;A</h2><p>为什么要先依次调用start再调用join，而不是start完了就调用join呢？<br>答：假设我们有两个进程p1，p2，如果我们在p1执行后先join()然后再p2.start()，我们就会发现是先执行完p1，再执行主线程，最后才开始p2。这是因为join是用来阻塞当前线程的，p1.start()之后，p1就提示主线程，需要等待p1结束才向下执行，那主线程就乖乖的等着啦，自然没有执行p2.start()。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/Python任务调度队列Celery/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:50:40.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Python任务调度队列Celery">Python任务调度队列Celery</h1><p><em>BY:leotse</em></p>
+<h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
+<p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
+<p>一般推荐使用RabbitMQ，但是我们这里用到Redis，因为Redis安装的时候依赖少，而且性能稳定，但是Redis也有缺点，那就是断电的时候会丢失数据。我们在这里，就以Redis作为Celery的第三方中间层。</p>
+<h2 id="Installation">Installation</h2><p>我们这里使用Celery+redis套餐进行任务的调度。  </p>
+<p>Celery的安装非常简单，在linux系统下直接执行：<br><code>sudo pip install Celery</code><br><code>sudo pip install celery-with-redis</code><br>如果上述安装失败，可以尝试：<br><code>sudo easy_install Celery</code>   </p>
+<p>我们来验证一下Celery是否安装成功，进入python shell，输入：<br><code>from celery import Celery</code><br>如果没有报错，则说明安装成功。</p>
+<p>接着我们安装redis：<br><code>sudo apt-get install redis-server</code><br>安装完成后，redis会自动启动，我们也来验证一下redis是否安装成功：<br><code>ps -aux|grep redis</code><br>如果看到以下输出，则说明安装ok：<br><code>redis      942  0.2  0.0  73852  1832 ?        Ssl  Apr13 302:26 /usr/bin/redis-server /etc/redis/redis.conf</code></p>
+<p>它们的安装都比较简单。接下来我们看如何使用Celery进行任务调度。</p>
+<h2 id="Usage">Usage</h2><p>我们应该都知道生产者-消费者模型，在使用Celery的时候，我们也需要一个生产者和一个消费者，生产者负责往队列里写入待处理的数据，消费者负责将数据从队列中取出并进行处理。我们在这里将redis作为存储这种“数据”的地方。</p>
+<p>我们来看这样一个示例，我们假设要下载一批视频v1，v2，v3….，这批视频列表存在另一个文件系统中，我们假设通过get_video_list方法来获取这批视频列表，另一方面，我们可以通过download_video_worker(video)来下载视频。</p>
+<p>那么，生产者的伪代码如下：</p>
+<p><pre><code><br>import download_video_worker<br>video_list = get_video_list()<br>for video in video_list:<br>    download_video_worker.apply_async([video])<br></code></pre></p>
+<p>消费者的伪代码如下： </p>
+<p><pre><code><br>download_app=Celery(“download_videos”, broker=”redis://localhost:6379/0”)<br>@download_app.task`<br>def download_video_worker(video):<br>    download_video_to_local(video)<br></code></pre></p>
+<p>接着我们运行Celery：<br><code>celery -A download_video_worker worker --loglevel=info</code>  </p>
+<p>这样，当我们每次往队列中放入video信息时，celery就会执行download_video_woker中的逻辑处理video的下载过程。</p>
+<h3 id="推荐阅读">推荐阅读</h3><p><a href="http://www.celeryproject.org/" target="_blank" rel="external">Homepage - Celery: Distributed Task Queue</a><br><a href="https://denibertovic.com/posts/celery-best-practices/" target="_blank" rel="external">CELERY - BEST PRACTICES</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/Hive浮点数比较与计算/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:50:05.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Hive浮点数比较与计算">Hive浮点数比较与计算</h1><p><strong>author:leotse</strong></p>
+<h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。</p>
+<p>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>
+<p>虽然这个问题已经解决，但是仍然给我们一些启示，当我们在进行浮点数比较的时候，需要警惕float和double的自动转型，特别需要避免从窄类型数值向宽类型数值的转型。</p>
+<h3 id="Hive浮点数计算">Hive浮点数计算</h3><p>相比上面的问题，浮点数的计算也是一个BUG，而且现在还没有解决，<a href="https://issues.apache.org/jira/browse/HIVE-3715" target="_blank" rel="external">float and double calculation is inaccurate in Hive</a>。</p>
+<p>为了方便对比，我们先展示出表float_compare中的全部数据：<br><code>hive&gt; select * from float_compare;</code><br><code>OK</code><br><code>dooley 110.0</code><br><code>xiefeng 128.2</code><br><code>leotse    120.9</code><br><code>februus 119.0</code><br><code>yolovon 121.8</code>  </p>
+<p>接下来我们将表中的weight的字段除以10，得到如下结果：<br><code>hive&gt; select weight/10 from float_compare;</code><br><code>OK</code><br><code>11.0</code><br><code>12.819999694824219</code><br><code>12.09000015258789</code><br><code>11.9</code><br><code>12.180000305175781</code>  </p>
+<p>我们可以看到，除了110.0和120.0这种小数点后为0的，其他浮点数计算的结果都是不符合我们预期的。实际上，这个问题在Hive和Java中都存在（Hive用Java实现），而且所有使用IEEE标准进行浮点数编码的系统都存在这个问题。目前这个没有被解决，在这里摆出来是希望以后在遇到类似的浮点数计算的时候，我们能够长一个心眼，以免出现了谬误还不知道为什么。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="leotse90" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/leotse90" target="_blank" title="Leotse&#39;s Github">Leotse&#39;s Github</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> You know I&#39;m hoping you&#39;ll sing along . <br/>
+			Though it&#39;s not your favorite song.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/proleo" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/leotse90" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Leo Tse">Leo Tse</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>
