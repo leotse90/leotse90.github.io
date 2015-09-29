@@ -1,6 +1,6 @@
 
  <!DOCTYPE HTML>
-<html >
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   
@@ -15,7 +15,7 @@
 multiprocessing模块和thr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scorpio">
-<meta property="og:url" content="http://yoursite.com/2015/09/29/Python多进程使用/index.html">
+<meta property="og:url" content="http://leotse90.com/2015/09/29/Python多进程使用/index.html">
 <meta property="og:site_name" content="Scorpio">
 <meta property="og:description" content="Python多进程使用Intro我们知道，由于GIL的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  
 multiprocessing模块和thr">
@@ -49,9 +49,9 @@ multiprocessing模块和thr">
 			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="Scorpio">Scorpio</a></h1>
-				<h2 class="blog-motto"></h2>
+				<h2 class="blog-motto">You only live once!</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -66,7 +66,7 @@ multiprocessing模块和thr">
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:yoursite.com">
+						<input type="hidden" name="q" value="site:leotse90.com">
 					</form>
 					
 					</li>
@@ -88,14 +88,14 @@ multiprocessing模块和thr">
 		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
 		
   <p class="article-time">
-    <time datetime="2015-09-29T07:50:58.000Z" itemprop="datePublished"> 發表於 2015-09-29</time>
+    <time datetime="2015-09-29T07:50:58.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python多进程使用"><span class="toc-number">1.</span> <span class="toc-text">Python多进程使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.1.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multiprocessing使用"><span class="toc-number">1.2.</span> <span class="toc-text">multiprocessing使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子进程通信"><span class="toc-number">1.3.</span> <span class="toc-text">子进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Queue"><span class="toc-number">1.3.1.</span> <span class="toc-text">Queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipe"><span class="toc-number">1.3.2.</span> <span class="toc-text">Pipe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q&A"><span class="toc-number">1.4.</span> <span class="toc-text">Q&A</span></a></li></ol></li></ol>
 		
@@ -126,7 +126,7 @@ multiprocessing模块和thr">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2015/09/29/Python多进程使用/" data-title="Scorpio" data-tsina="null" class="share clearfix">
+	  <div data-url="http://leotse90.com/2015/09/29/Python多进程使用/" data-title="Scorpio" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -161,17 +161,17 @@ multiprocessing模块和thr">
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">文章目录</strong>
  
  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python多进程使用"><span class="toc-number">1.</span> <span class="toc-text">Python多进程使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.1.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multiprocessing使用"><span class="toc-number">1.2.</span> <span class="toc-text">multiprocessing使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子进程通信"><span class="toc-number">1.3.</span> <span class="toc-text">子进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Queue"><span class="toc-number">1.3.1.</span> <span class="toc-text">Queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipe"><span class="toc-number">1.3.2.</span> <span class="toc-text">Pipe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q&A"><span class="toc-number">1.4.</span> <span class="toc-text">Q&A</span></a></li></ol></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
@@ -189,7 +189,7 @@ multiprocessing模块和thr">
   
 
   <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -205,7 +205,7 @@ multiprocessing模块和thr">
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
   <div class="weiboshow">
@@ -433,7 +433,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
