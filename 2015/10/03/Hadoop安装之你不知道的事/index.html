@@ -23,7 +23,7 @@
 概述这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到这里.md)。
 那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。
 我们先简单总结一下Hado">
-<meta property="og:updated_time" content="2015-10-03T02:40:02.000Z">
+<meta property="og:updated_time" content="2015-10-03T02:46:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scorpio">
 <meta name="twitter:description" content="Hadoop安装之你不知道的事整理:leotse
@@ -94,7 +94,7 @@
 		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-03T02:40:02.000Z" itemprop="datePublished"> 发表于 2015-10-03</time>
+    <time datetime="2015-10-03T02:46:49.000Z" itemprop="datePublished"> 发表于 2015-10-03</time>
     
   </p>
 </header>
@@ -108,7 +108,7 @@
 		</div>
 		
 		<h1 id="Hadoop安装之你不知道的事">Hadoop安装之你不知道的事</h1><p><em>整理:leotse</em></p>
-<h2 id="概述">概述</h2><p>这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到<a href="https://github.com/leotse90/blogs/blob/master/Hadoop集群部署(RedHat" target="_blank" rel="external">这里</a>.md)。</p>
+<h2 id="概述">概述</h2><p>这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到<a href="https://github.com/leotse90/blogs/blob/master/Hadoop集群部署\(RedHat\" target="_blank" rel="external">这里</a>.md)。</p>
 <p>那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。</p>
 <p>我们先简单总结一下Hadoop集群的安装过程：<br>1.准备工作：SSH免密码登录设置以及HostName配置；<br>2.NameNode安装与配置：解压Hadoop安装包到NameNode服务器上，并修改配置文件；<br>3.DataNode安装与配置：将NameNode的Hadoop文件分发到各DataNode服务器；<br>4.集群启动：格式化NameNode，然后先后启动Hadoop集群的dfs以及yarn；</p>
 <h2 id="Hadoop集群搭建的那些事">Hadoop集群搭建的那些事</h2><h3 id="为什么需要进行SSH免密码登录的设置？">为什么需要进行SSH免密码登录的设置？</h3><p>我们都知道SSH免密码登录可以让服务器之间在SSH登录时畅通无阻。那么，我们在Hadoop集群中，哪些过程需要用到SSH登录呢？<br>首先，是DataNode与DataNode之间的文件传输；<br>其次，在Hadoop的启动过程中，需要登录到其他机器的sbin目录下执行一些文件。</p>
