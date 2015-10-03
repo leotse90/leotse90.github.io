@@ -11,25 +11,25 @@
     
 
     
-    <meta name="description" content="#Hadoop安装之你不知道的事整理:leotse
+    <meta name="description" content="Hadoop安装之你不知道的事整理:leotse
 概述这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到这里.md)。
 那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。
-我们先简单总结一下Had">
+我们先简单总结一下Hado">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scorpio">
 <meta property="og:url" content="http://leotse90.com/2015/10/03/Hadoop安装之你不知道的事/index.html">
 <meta property="og:site_name" content="Scorpio">
-<meta property="og:description" content="#Hadoop安装之你不知道的事整理:leotse
+<meta property="og:description" content="Hadoop安装之你不知道的事整理:leotse
 概述这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到这里.md)。
 那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。
-我们先简单总结一下Had">
-<meta property="og:updated_time" content="2015-10-03T02:38:04.000Z">
+我们先简单总结一下Hado">
+<meta property="og:updated_time" content="2015-10-03T02:40:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scorpio">
-<meta name="twitter:description" content="#Hadoop安装之你不知道的事整理:leotse
+<meta name="twitter:description" content="Hadoop安装之你不知道的事整理:leotse
 概述这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到这里.md)。
 那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。
-我们先简单总结一下Had">
+我们先简单总结一下Hado">
 
     
     <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
@@ -94,7 +94,7 @@
 		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-03T02:38:04.000Z" itemprop="datePublished"> 发表于 2015-10-03</time>
+    <time datetime="2015-10-03T02:40:02.000Z" itemprop="datePublished"> 发表于 2015-10-03</time>
     
   </p>
 </header>
@@ -103,11 +103,11 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop集群搭建的那些事"><span class="toc-number">2.</span> <span class="toc-text">Hadoop集群搭建的那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要进行SSH免密码登录的设置？"><span class="toc-number">2.1.</span> <span class="toc-text">为什么需要进行SSH免密码登录的设置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要配置Hostname？"><span class="toc-number">2.2.</span> <span class="toc-text">为什么需要配置Hostname？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#要修改哪些配置文件？"><span class="toc-number">2.3.</span> <span class="toc-text">要修改哪些配置文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode在format时都干了些什么？"><span class="toc-number">2.4.</span> <span class="toc-text">NameNode在format时都干了些什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">3.</span> <span class="toc-text">结语</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop安装之你不知道的事"><span class="toc-number">1.</span> <span class="toc-text">Hadoop安装之你不知道的事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop集群搭建的那些事"><span class="toc-number">1.2.</span> <span class="toc-text">Hadoop集群搭建的那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要进行SSH免密码登录的设置？"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么需要进行SSH免密码登录的设置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要配置Hostname？"><span class="toc-number">1.2.2.</span> <span class="toc-text">为什么需要配置Hostname？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#要修改哪些配置文件？"><span class="toc-number">1.2.3.</span> <span class="toc-text">要修改哪些配置文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode在format时都干了些什么？"><span class="toc-number">1.2.4.</span> <span class="toc-text">NameNode在format时都干了些什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">1.3.</span> <span class="toc-text">结语</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<p>#Hadoop安装之你不知道的事<br><em>整理:leotse</em></p>
+		<h1 id="Hadoop安装之你不知道的事">Hadoop安装之你不知道的事</h1><p><em>整理:leotse</em></p>
 <h2 id="概述">概述</h2><p>这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到<a href="https://github.com/leotse90/blogs/blob/master/Hadoop集群部署(RedHat" target="_blank" rel="external">这里</a>.md)。</p>
 <p>那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。</p>
 <p>我们先简单总结一下Hadoop集群的安装过程：<br>1.准备工作：SSH免密码登录设置以及HostName配置；<br>2.NameNode安装与配置：解压Hadoop安装包到NameNode服务器上，并修改配置文件；<br>3.DataNode安装与配置：将NameNode的Hadoop文件分发到各DataNode服务器；<br>4.集群启动：格式化NameNode，然后先后启动Hadoop集群的dfs以及yarn；</p>
@@ -162,7 +162,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop集群搭建的那些事"><span class="toc-number">2.</span> <span class="toc-text">Hadoop集群搭建的那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要进行SSH免密码登录的设置？"><span class="toc-number">2.1.</span> <span class="toc-text">为什么需要进行SSH免密码登录的设置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要配置Hostname？"><span class="toc-number">2.2.</span> <span class="toc-text">为什么需要配置Hostname？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#要修改哪些配置文件？"><span class="toc-number">2.3.</span> <span class="toc-text">要修改哪些配置文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode在format时都干了些什么？"><span class="toc-number">2.4.</span> <span class="toc-text">NameNode在format时都干了些什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">3.</span> <span class="toc-text">结语</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop安装之你不知道的事"><span class="toc-number">1.</span> <span class="toc-text">Hadoop安装之你不知道的事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop集群搭建的那些事"><span class="toc-number">1.2.</span> <span class="toc-text">Hadoop集群搭建的那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要进行SSH免密码登录的设置？"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么需要进行SSH免密码登录的设置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要配置Hostname？"><span class="toc-number">1.2.2.</span> <span class="toc-text">为什么需要配置Hostname？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#要修改哪些配置文件？"><span class="toc-number">1.2.3.</span> <span class="toc-text">要修改哪些配置文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode在format时都干了些什么？"><span class="toc-number">1.2.4.</span> <span class="toc-text">NameNode在format时都干了些什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">1.3.</span> <span class="toc-text">结语</span></a></li></ol></li></ol>
  
   </div>
 
