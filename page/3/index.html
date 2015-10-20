@@ -57,6 +57,8 @@
 					
 						<li><a href="/archives">Archives</a></li>
 					
+						<li><a href="/about">About</a></li>
+					
 					<li>
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
@@ -73,296 +75,84 @@
     <div id="container">
       <div id="main">
 
-   
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/09/29/FastDFS概览/" title="" itemprop="url">
+  
+    <h1 itemprop="name"></h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >FastDFS概览整理：LeoTse
+DefinitionFastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。
+ArchitectureFastDF</p>
+        
     
-      <a href="/2015/09/29/FastDFS概览/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-29T07:51:49.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    <time datetime="2015-09-29T07:51:49.000Z" itemprop="datePublished">2015-09-29</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/09/29/你真的懂单链表吗/" title="" itemprop="url">
+  
+    <h1 itemprop="name"></h1>
     
-  </p>
-</header>
-    <div class="article-content">
+     
+           <p itemprop="description" >你真的懂单链表吗引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
+我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢</p>
         
-        <h1 id="FastDFS概览">FastDFS概览</h1><p><em>整理：LeoTse</em></p>
-<h2 id="Definition">Definition</h2><p>FastDFS是C语言实现的、开源的、轻量级的<strong>应用级分布式文件系统</strong>，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。</p>
-<h2 id="Architecture">Architecture</h2><p>FastDFS一共由三部分组成：<br><strong>TrackerServer</strong>：负责负载均衡和调度。是整个FastDFS的中心，它将StorageServer的分组信息以及状态信息保存在内存中；<br><strong>StorageServer</strong>：存储文件和文件meta信息。直接使用操作系统的文件系统管理DFS上的文件；<br><strong>Client</strong>：使用者与请求发起方。通过专有接口，使用TCP/IP协议与跟踪器服务器或存储节点进行数据交互；  </p>
-<p><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs01.gif" alt="FastDFS架构"></p>
-<p><strong>上传文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs02.gif" alt="FastDFS上传文件"></p>
-<p><strong>下载文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs03.gif" alt="FastDFS下载文件"></p>
-<h2 id="Applies">Applies</h2><p>适合大中型网站使用，用于视频、图片、音频等中小资源文件的存储。（建议范围：4KB&lt;file_size&lt;500MB）</p>
-<h2 id="Features">Features</h2><h3 id="1-Advantages">1.Advantages</h3><p>1）支持Linux、FreeBSD、AIX等Unix系统；<br>2）支持Java、Python、PHP API；<br>3）轻量级：相比GFS简化了master角色，不再管理meta数据信息；代码量较小，总代码行数不到5.2w行；<br>4）对等结构：FastDFS集群中的TrackerServer也可以有多台，TrackerServer和StorageServer均<strong>不存在单点问题</strong>。TrackerServer之间是对等关系，组内的StoragServer之间也是对等关系。和MasterSlave结构相比，对等结构中所有结点的地位是相同的，每个结点都是Master，不存在单点问题；<br>5）分组：FastDFS采用了分组存储方式。集群由一个或多个组构成，集群存储总容量为集群中所有组的存储容量之和。一个组由一台或多台存储服务器组成，同组内的多台StorageServer之间是互备关系，同组存储服务器上的文件是完全一致的。文件上传、下载、删除等操作可以在组内任意一台StorageServer上进行。所有的存储服务器均是同时在线服务，极大的提高的服务器的使用率，分担了数据访问压力；<br>6）可以使用Apache、Nginx等WebServer访问和下载文件；<br>7）FastDFS不对文件进行分块存储，与支持文件分块存储的DFS相比，更加简洁高效，并且完全能满足绝大多数互联网应用的实际需要。<br>8）FastDFS的设计目标就是支持大容量和高访问量，因此对于大量的小文件，可以支持得很好；<br>9）FastDFS自v1.14开始支持相同文件内容只存储一份，但是需要安装FastDHT，如果已经存在上传的文件，则建立一个符号链接以节省磁盘空间；</p>
-<h3 id="2-Disadvantages">2.Disadvantages</h3><p>1）FastDFS不支持POSIX接口方式，不是通用的文件系统，不支持FUSE，不能<a href="http://en.wikipedia.org/wiki/Mount_(Unix" target="_blank" rel="external">mount使用</a>)；<br>2）不适用于分布式计算环境；<br>3）Group容量受单机存储容量限制，同时，当Group内有机器坏掉，数据恢复只能从Group内其他机器复制，使得恢复时间较长；<br>4）FastDFS适合存储用户上传的文件，比如用户照片。如果只是存储网站的静态文件（如装饰图片、css、js等），那没有必要使用FastDFS；<br>5）文档不够完善。相较于GlusterFS等DFS，FastDFS的相关文档资料相对欠缺。当前比较活跃的是ChinaUnix上的<a href="http://bbs.chinaunix.net/forum-240-1.html" target="_blank" rel="external">FastDFS论坛</a>。  </p>
-<h2 id="others">others</h2><p>来源于论坛原作者的话：<br>1.单台tracker的性能特别高。因为tracker处理查询时，直接访问内存中的索引数据，不存在任何性能瓶颈。单台服务器支持的QPS超过5000没有任何问题。  </p>
-<p>2.出于性能等考虑，必须通过FastDFS的API来对文件进行存取，不能mount使用。 </p>
-<p>3.上传文件成功后，文件ID由storage server返回给客户端。文件ID中包括了分组、文件路径和文件名等信息，需要由客户端来保存文件ID。因此FastDFS 服务器端是不需要保存文件ID或索引等信息的。不再使用的文件（比如用户删除了自己的照片文件），应该由client调用delete file接口删除该文件。  </p>
-<p>4.FastDFS存储文件采用的是256 * 256的两级目录；  </p>
-<p>5.tracker不耗内存，有1GB内存足矣；   </p>
-<p>6.FastDFS如何做整体迁移？如换机房更换IP?  </p>
-<pre><code>如果新旧<span class="type">IP</span>地址一一对应，而且是一样的，那非常简单，直接将<span class="typedef"><span class="keyword">data</span>目录拷贝过去即可。</span>
-
-<span class="type">IP</span>不一样的话，会比较麻烦一些。
-如果使用了<span class="type">V4</span>的自定义server <span class="type">ID</span>特性，那么比较容易，直接将tracker上的<span class="type">IP</span>和<span class="type">ID</span>映射文件storage_ids.conf修改好即可。
-
-如果是用<span class="type">IP</span>地址作为服务器标识，那么需要修改tracker和storage的<span class="typedef"><span class="keyword">data</span>目录下的几个数据文件，将旧<span class="type">IP</span>调整为新<span class="type">IP</span>。</span>
-注意storage的<span class="typedef"><span class="keyword">data</span>目录下有一个.打头的隐藏文件也需要修改。</span>
-另外，需要将后缀为mark的<span class="type">IP</span>地址和端口命名的同步位置记录文件名改名。
-文件全部调整完成后才能启动集群服务。
-
-<span class="title">tracker</span> server上需要调整的文件列表：
-<span class="typedef"><span class="keyword">data</span>/storage_groups_new.dat</span>
-<span class="typedef"><span class="keyword">data</span>/storage_servers_new.dat</span>
-<span class="typedef"><span class="keyword">data</span>/storage_sync_timestamp.dat</span>
-
-<span class="title">storage</span> server需要调整的文件列表：
-<span class="typedef"><span class="keyword">data</span>/.data_init_flag</span>
-<span class="typedef"><span class="keyword">data</span>/sync/$<span class="container">{<span class="title">ip_addr</span>}</span>_$<span class="container">{<span class="title">port</span>}</span>.mark：此类文件，需要将文件名中的<span class="type">IP</span>地址调整过来。</span>
-</code></pre><p>7./etc/fdfs/mod_fastdfs.conf中的url_have_group_name项为true,否则会使用fdfs_test上传测试文件而后进行测试时，会报400错误。</p>
-<p>8.<a href="http://bbs.chinaunix.net/thread-3772130-1-4.html" target="_blank" rel="external">FastDFS监控系统</a></p>
-<p>9.<a href="http://bbs.chinaunix.net/thread-4164253-1-5.html" target="_blank" rel="external">FastDFS原理分析系列文章</a></p>
-<p>10.部署方式和存储方式：作者推荐采用多个storage服务器(多个group)，各自分别挂载几个单盘的方式，以期提高总的磁盘IO性能。</p>
-<p>11.相同内容的文件在系统里只保存一份文件实体，每次上传同一个文件，返回给client的文件ID是不同的，返回的文件ID通过链接的方式指向该实体文件，以unix的符号链接来理解：目标文件为实体文件，每次上传产生的文件为符号链接，指向对应的实体文件。</p>
-<p>12.Storage的状态：<br>    FDFS_STORAGE_STATUS：INIT      :初始化，尚未得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：WAIT_SYNC :等待同步，已得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：SYNCING   :同步中<br>    FDFS_STORAGE_STATUS：DELETED   :已删除，该服务器从本组中摘除<br>    FDFS_STORAGE_STATUS：OFFLINE   :离线<br>    FDFS_STORAGE_STATUS：ONLINE    :在线，尚不能提供服务<br>    FDFS_STORAGE_STATUS：ACTIVE    :在线，可以提供服务  </p>
-<p>13.安装pcre时，出现<br>configure: error: You need a C++ compiler for C++ support.<br>解决方案：yum install -y gcc gcc-c++</p>
-<p>14.上传文件时：<br>errno: 113, error info: No route to host<br>解决方案：有可能是防火墙问题。iptables -F</p>
-<p>15.启动nginx，permission denied，这时一般是权限问题。<br>解决方案：修改nginx配置，将#user  nobody;修改为user  root;（注意：可能有安全隐患），重启nginx即可。</p>
-<h2 id="Conclusion">Conclusion</h2><p>FastDFS，按照作者本人的说法，它把简洁和高效做到了极致，非常节约资源，中小网站完全用得起。<br>作为国人在mogileFS的基础上进行改进的key-value型文件系统，一方面，它是我们国人的骄傲，另一方面，也希望FastDFS发展越来越好，相关的文档也越来越完善。</p>
-<p><strong>备注</strong>：<br>该文档整理自网络，用于个人备忘与学习。如有侵权，衷心表示抱歉，并请联系本人及时删除相关内容。</p>
-<p><strong>参考</strong>：<br><a href="http://tech.uc.cn/?p=221" target="_blank" rel="external">分布式文件系统FastDFS原理介绍</a><br><a href="http://www.oschina.net/question/12_13316" target="_blank" rel="external">分布式文件系统FastDFS架构剖析</a><br><a href="http://blog.irebit.com/fastdfs-%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" target="_blank" rel="external">FastDFS 配置教程</a><br><a href="http://blog.csdn.net/monkey_d_meng/article/details/6038995" target="_blank" rel="external">轻量级分布式文件系统FastDFS使用安装说明手册</a>  </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+    <time datetime="2015-09-29T07:51:37.000Z" itemprop="datePublished">2015-09-29</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/09/29/Hadoop集群部署(RedHat)/" title="" itemprop="url">
+  
+    <h1 itemprop="name"></h1>
     
-      <a href="/2015/09/29/你真的懂单链表吗/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-29T07:51:37.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+     
+           <p itemprop="description" >Hadoop集群部署（RedHat）整理：LeoTse
+概述安装环境：Red Hat 4.8.3-9Hadoop版本：Apache Hadoop 2.6.0Java版本：1.8.0Master：172.16.10.136Slave1：172.16.10.137用户：xiefeng</p>
+        
     
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="你真的懂单链表吗">你真的懂单链表吗</h1><h2 id="引子">引子</h2><p><strong>首先，上一道开胃菜：怎么判断两个单链表是否相交？</strong>  </p>
-<p>我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  </p>
-<p>我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只能是Y形相交，而不可能是X形相交，亦即从第一个相同的结点开始，后面的结点全部一样。如果能想到这个，后面的就简单明了了：只要A链表和B链表的最后一个结点值相等，则证明A链表和B链表相交。该算法的时间复杂度也下降到O(m+n)。</p>
-<p>我们进一步来思考：<strong>怎么找到第一个相交的元素呢？</strong>  </p>
-<p>这里就当然不能像刚才那样，但是出发点还是一样，我们同样可以保证只要两次遍历。我们假设m &gt; n，那么如果我们将两个链表的末尾对齐，是不是从最后一个往前看（当然单链表不能往前遍历，我们先这样看）的时候，A链表会比B链表多m-n个元素，而A链表中的前m-n个元素可以忽略，直接从第m-n个元素开始和B链表一起向前遍历，比较A链表上第m-n+i个元素和B链表第i个元素（i&lt;n）即可。第一个相同的元素即为所求。  </p>
-<p>下面来看看其它的几个单链表相关的典型问题（贴代码太占空间，这里就只谈谈思路，大家可以动手试试）： </p>
-<h3 id="单链表的反转">单链表的反转</h3><p>如题，怎么实现一个单链表A（有m个元素）的反转呢？<br><strong>方案一</strong>：如果不能破坏原单链表，我们需要重新新建一个链表C，然后遍历原来的A链表，对C链表实行头插法建表（头插法即将新加入的结点作为链表的头结点，对应的还有尾插法，即直接在链表末尾添加元素）；<br><strong>方案二</strong>：如果可以破坏原单链表呢？暴力一点的办法是不断地交换相邻的两个元素，即首先将第一个元素通过m-1次交换使其变成链表的最后一个元素，然后又是同样的方法将现任的第一个元素通过m-2次交换使其成为链表的倒数第二个元素，以此类推。  </p>
-<h3 id="单链表的排序">单链表的排序</h3><p>就排序原理而言，个人觉得其实不用过多考虑存储结构的问题，即不管是顺序存储还是链式存储，都不影响排序的基本原理，只是不同的存储结构会影响不同排序方法的效率而已。因为我们完全可以夸张地将顺序存储也想象为不连续的存储只是它们相邻两者的间隙极端的小。即我们将货物分别存在美国和中国的仓库里和都存放在一个仓库里是一样的，只是运费问题而已。<br>明白了这一点，那么单链表的排序就和普通的数组排序没有什么太大的区别。我们现在要做的事就是针对性地选择一个时间性能相对较好的排序算法。<br>我们知道的排序方法有很多：插入排序、冒泡排序、快速排序、归并排序、堆排序以及基数排序等等，那么这其中哪些对顺序结构和链式结构不那么感冒呢？熟悉这些排序的童鞋肯定知道，是插入排序和冒泡排序。其他的几种常见排序方法就比较偏袒顺序存储结构了。所以，如果要对链表进行排序，我会选择插入排序或者冒泡排序。（不太清楚这些基本排序原理的click here：<a href="http://wlh0706-163-com.iteye.com/blog/1465570" target="_blank" rel="external">5种基本排序 娱乐版开脑解析</a>）  </p>
-<h3 id="删除单链表中的最小元素">删除单链表中的最小元素</h3><p>我能想到的办法就是遍历两次：第一次找到单链表中最小的元素，第二次遍历删除该元素。第一次遍历的时候需要借助两个变量，一个保存当前的最小元素的值，另一个保存当前最小值的位序。第二次遍历的时候当然就是删除第一次遍历得到的最小元素的位序上的元素了。 </p>
-<h3 id="删除所有重复结点">删除所有重复结点</h3><p>这个一般得借助其他的数据结构了。基本思路应该是：遍历链表，用一个数据结构保存当前已经遍历的元素，若下一个访问的链表里的元素已经存在于已经访问的元素集合中，则删除单链表中的该元素，否则继续，直至到达链表的末尾。保存已经访问过的元素可以用数组，也可以用其他的。 </p>
-<h3 id="判断一个链表是否包含另一个链表">判断一个链表是否包含另一个链表</h3><p>这个问题其实和开篇的问题一样，只是换了一种说法而已。因此只要找到第一个相同的元素就可以了。 </p>
-<h3 id="找出单链表中的倒数第K个元素">找出单链表中的倒数第K个元素</h3><p>我们首先要确保的就是单链表的元素个数大于K。<br>这里的实现思路也很巧妙：我们定义两个指针a和b，全部指向链表的头结点，然后a指针开始向后遍历，但a遍历到第K个元素的时候，b指针也开始从头开始遍历，接下来的事你应该知道了，当a指针到达链表的末尾时，b指针恰好指着链表的倒数第K个元素。这样的时间复杂度是O(n)。 </p>
-<p>那么，<strong>怎么找单链表中间的那个元素呢？</strong>  </p>
-<p>PS：这些问题肯定还有更好地解法和方案，希望您不吝赐教。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
+    <time datetime="2015-09-29T07:51:21.000Z" itemprop="datePublished">2015-09-29</time>
+  </a>
+</section>
 
 
 
 
 
 
-   
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/09/29/Python多进程使用/" title="" itemprop="url">
+  
+    <h1 itemprop="name"></h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >Python多进程使用Intro我们知道，由于GIL的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我</p>
+        
     
-      <a href="/2015/09/29/Hadoop集群部署(RedHat)/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-29T07:51:21.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="Hadoop集群部署（RedHat）">Hadoop集群部署（RedHat）</h1><p><strong>整理：LeoTse</strong></p>
-<h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
-<p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
-<p>接下来我们对每一步进行详细介绍。</p>
-<h2 id="SSH免密码登录设置">SSH免密码登录设置</h2><p>进行SSH免密码登录设置是为了避免在集群内部机器交互的时候频繁输入登录密码，我们在这里为集群内的每个机器都执行SSH免密码登录设置。在这里不具体介绍SSH免密码登录的具体步骤，可以参见<a href="https://github.com/leotse90/blogs/blob/master/SSH免密码登录设置.md" target="_blank" rel="external">SSH免密码登录设置</a></p>
-<h2 id="环境变量设置">环境变量设置</h2><p>修改hosts文件：<br><code>vi /etc/hosts</code><br>新增：<br><code>172.16.10.136   Master</code><br><code>172.16.10.137   Slave1</code>  </p>
-<p>一般，Java都已经安装好。如果没有，需要先行安装Java并配置JAVA_HOME。然后修改~/.bashrc文件，在文件的末尾增加JAVA和HADOOP的配置：  </p>
-<p><code>### set java home</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
-<p><code>### set hadoop env</code><br><code>export HADOOP_HOME=/home/xiefeng/dependecies/hadoop-2.6.0</code><br><code>export HADOOP_COMMON_HOME=$HADOOP_HOME</code><br><code>export HADOOP_HDFS_HOME=$HADOOP_HOME</code><br><code>export HADOOP_MAPRED_HOME=$HADOOP_HOME</code><br><code>export HADOOP_YARN_HOME=$HADOOP_HOME</code><br><code>export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop</code><br><code>export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/lib</code><br><code>export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native</code><br><code>export HADOOP_OPTS=&quot;-Djava.library.path=$HADOOP_HOME/lib&quot;</code>  </p>
-<p>然后：<br><code>source ~/.bashrc</code>  </p>
-<p>检查是否配置成功，可以<code>echo $HADOOP_HOME</code>看是否是配置中的路径。  </p>
-<h2 id="Master部署">Master部署</h2><p>1.解压Hadoop 2.6安装包到安装目录，在这个示例里是/home/xiefeng/dependecies/目录：<br><code>tar xvf hadoop-2.6.0.tar</code>  </p>
-<p>2.进入Hadoop目录，修改slaves文件，增加Slave1到slaves文件中：<br><code>cd hadoop-2.6.0</code><br><code>vi etc/hadoop/slaves</code><br>添加：<br><code>Slave1</code>  </p>
-<p>3.修改core-site.xml配置文件：<br><code>vi etc/hadoop/core-site.xml</code><br>修改为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;fs.defaultFS&lt;/name&gt;</code><br><code>&lt;value&gt;hdfs://Master:9000&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp&lt;/value&gt;</code><br><code>&lt;description&gt;Abase for other temporary directories.&lt;/description&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>4.修改hdfs-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</code><br><code>&lt;value&gt;Master:50090&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/name&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/data&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.replication&lt;/name&gt;</code><br><code>&lt;value&gt;1&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>5.复制mapred-site.xml.template得到mapred-site.xml文件：<br><code>cp mapred-site.xml.template mapred-site.xml</code><br>修改mapred-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</code><br><code>&lt;value&gt;yarn&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>6.修改yarn-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;!-- Site specific YARN configuration properties --&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</code><br><code>&lt;value&gt;Master&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</code><br><code>&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>7.一般的，我们还需要修改一下hadoop-env.sh，将其JAVA_HOME修改为当前机器的JAVA_HOME：<br><code># The java implementation to use.</code><br><code># export JAVA_HOME=${JAVA_HOME}</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
-<h2 id="Slave部署">Slave部署</h2><p>1.将 Master 上的 Hadoop 文件先打包然后复制到各个节点上：<br><code>sudo tar -zcf hadoop－2.6.0.tar.gz hadoop－2.6.0/</code><br><code>scp hadoop－2.6.0.tar.gz Slave1:/home/xiefeng/dependecies</code>  </p>
-<p>2.解压到Slave1的安装目录：<br><code>sudo tar -zxf hadoop－2.6.0.tar.gz</code><br><code>sudo chown -R xiefeng:xiefeng /home/xiefeng/dependecies/hadoop-2.6.0</code>  </p>
-<h2 id="集群启动">集群启动</h2><p>我们回到Master，进入hadoop安装目录：<br><code>cd /home/xiefeng/dependecies/hadoop-2.6.0</code><br>第一次执行，初始化：<br><code>bin/hdfs namenode -format</code>  </p>
-<p>启动dfs：<br><code>sbin/start-dfs.sh</code><br>启动yarn：<br><code>sbin/start-yarn.sh</code>  </p>
-<p>分别在Master和Slave1输入jps，看看是否有以下输出，有则表明安装ok：<br><code>[xiefeng@Master hadoop-2.6.0]$ jps</code><br><code>8498 NameNode</code><br><code>8837 ResourceManager</code><br><code>8680 SecondaryNameNode</code><br><code>9817 Jps</code>  </p>
-<p><code>[xiefeng@Slave1 logs]$ jps</code><br><code>20208 NodeManager</code><br><code>20344 Jps</code><br><code>20107 DataNode</code>  </p>
-<p>在浏览器输入：<a href="http://master：8088就可以查看集群All" target="_blank" rel="external">http://master：8088就可以查看集群All</a> Applications信息；输入<a href="http://master:50070可以查看namenode信息。" target="_blank" rel="external">http://master:50070可以查看namenode信息。</a></p>
-<p>停止dfs：<br><code>sbin/stop-dfs.sh</code><br>停止yarn：<br><code>sbin/stop-yarn.sh</code>  </p>
-<p>另外，还可以使用以下脚本进行集群的启动和停止：<br><code>sbin/start-all.sh</code><br><code>sbin/stop-all.sh</code></p>
-<p>至此，Hadoop集群搭建完毕！！！</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/09/29/Python多进程使用/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-29T07:50:58.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="Python多进程使用">Python多进程使用</h1><h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock" target="_blank" rel="external">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
-<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。</p>
-<h2 id="multiprocessing使用">multiprocessing使用</h2><p>在multiprocessing模块中，我们使用multiprocessing.Process()来创建一个新的进程对象。</p>
-<p>一般情况下，我们需要在创建Process对象时指定进程执行的函数，以及该函数的参数：<br><code>process = multiprocessing.Process(target=worker, args=(param1, param2)</code><br>该对象的主要方法有：<br><strong>start()</strong>：启动进程；每个进程最多只能调用一次；<br><strong>run()</strong>：进程的执行逻辑在run()里。如果Process对象没有指定target，就会默认执行Process的run()方法；<br><strong>join([timeout])</strong>：阻塞当前进程，直到调用join方法的那个进程执行完，再继续执行当前进程；<br><strong>is_alive()</strong>：返回该进程是否存活；<br><strong>terminate()</strong>：终结一个进程。当调用这个函数的时候，运行逻辑中的exit和finally代码段将不会执行。而且这个进程的子进程不会被终结而是成为孤儿进程；  </p>
-<p>下面我们给出一段多进程使用的示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param):</code><br><code>print param</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>  </p>
-<p>我们可以得到如下的输出：<br><code>1</code><br><code>0</code><br><code>2</code><br><code>4</code><br><code>3</code>  </p>
-<h2 id="子进程通信">子进程通信</h2><p>multiprocessing支持两种类型的进程通信手段，分别是Queue和Pipe。  </p>
-<h3 id="Queue">Queue</h3><p>Queue是一种多线程优先队列。它允许多个进程读和写，我们通过<code>mutiprocessing.Queue(maxsize)</code>创建一个Queue，maxsize表示队列中可以存放对象的最大数量。它的一些主要方法有：<br><strong>get()</strong>：删除并返回队列中的一个元素；<br><strong>put()</strong>: 添加元素到队列；<br><strong>qsize()</strong> : 返回队列中元素的个数；<br><strong>empty()</strong>: 队列为空返回True否则返回False；<br><strong>full()</strong>: 队列已满返回True，负责返回False；  </p>
-<p>在下面的示例里，我们用Queue实现获取多进程执行时的输出：   </p>
-<p><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>result_queue = multiprocessing.Queue()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, result_queue])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>while not result_queue.empty():</code><br><code>print result_queue.get()</code><br><code>def worker(param, result_queue):</code><br><code>result_queue.put(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>   </p>
-<p>执行这段代码，输出为：<br><code>101</code><br><code>102</code><br><code>103</code><br><code>100</code><br><code>104</code>  </p>
-<h3 id="Pipe">Pipe</h3><p>Pipe可以是单向，也可以是双向。我们通过mutiprocessing.Pipe(duplex=False)创建单向管道 (默认为双向)。它主要有send()和recv()两种方法，顾名思义，分别是发送消息和接受消息。<br>我们同样来看一段示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>parent_conn, child_conn = multiprocessing.Pipe()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, child_conn])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>print parent_conn.recv()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param, child_conn):</code><br><code>child_conn.send(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code><br>执行这段代码，输出为：<br><code>100</code><br><code>101</code><br><code>102</code><br><code>103</code><br><code>104</code>  </p>
-<h2 id="Q&amp;A">Q&amp;A</h2><p>为什么要先依次调用start再调用join，而不是start完了就调用join呢？<br>答：假设我们有两个进程p1，p2，如果我们在p1执行后先join()然后再p2.start()，我们就会发现是先执行完p1，再执行主线程，最后才开始p2。这是因为join是用来阻塞当前线程的，p1.start()之后，p1就提示主线程，需要等待p1结束才向下执行，那主线程就乖乖的等着啦，自然没有执行p2.start()。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
+    <time datetime="2015-09-29T07:50:58.000Z" itemprop="datePublished">2015-09-29</time>
+  </a>
+</section>
 
 
 
@@ -370,7 +160,7 @@
 
 
 
-  <nav id="page-nav" class="clearfix">
+  <nav id="page-nav" class="clearfix unexpand">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
   </nav>
 
