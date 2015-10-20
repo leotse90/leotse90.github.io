@@ -78,17 +78,17 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2015/09/29/FastDFS概览/" title="" itemprop="url">
+    <a href="/2015/09/29/Python任务调度队列Celery/" title="" itemprop="url">
   
     <h1 itemprop="name"></h1>
     
      
-           <p itemprop="description" >FastDFS概览整理：LeoTse
-DefinitionFastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。
-ArchitectureFastDF</p>
+           <p itemprop="description" >Python任务调度队列CeleryBY:leotse
+Introduction在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。
+C</p>
         
     
-    <time datetime="2015-09-29T07:51:49.000Z" itemprop="datePublished">2015-09-29</time>
+    <time datetime="2015-09-29T07:50:40.000Z" itemprop="datePublished">2015-09-29</time>
   </a>
 </section>
 
@@ -100,16 +100,16 @@ ArchitectureFastDF</p>
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2015/09/29/你真的懂单链表吗/" title="" itemprop="url">
+    <a href="/2015/09/29/Hive浮点数比较与计算/" title="" itemprop="url">
   
     <h1 itemprop="name"></h1>
     
      
-           <p itemprop="description" >你真的懂单链表吗引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
-我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢</p>
+           <p itemprop="description" >Hive浮点数比较与计算author:leotse
+Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：hive&amp;gt; select * from float_compare where weight&amp;gt;120.9;OKxiefeng 128</p>
         
     
-    <time datetime="2015-09-29T07:51:37.000Z" itemprop="datePublished">2015-09-29</time>
+    <time datetime="2015-09-29T07:50:05.000Z" itemprop="datePublished">2015-09-29</time>
   </a>
 </section>
 
@@ -121,16 +121,17 @@ ArchitectureFastDF</p>
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2015/09/29/Hadoop集群部署(RedHat)/" title="" itemprop="url">
+    <a href="/2015/09/29/Hive之JOIN操作/" title="" itemprop="url">
   
     <h1 itemprop="name"></h1>
     
      
-           <p itemprop="description" >Hadoop集群部署（RedHat）整理：LeoTse
-概述安装环境：Red Hat 4.8.3-9Hadoop版本：Apache Hadoop 2.6.0Java版本：1.8.0Master：172.16.10.136Slave1：172.16.10.137用户：xiefeng</p>
+           <p itemprop="description" >Hive之JOIN操作整理：leotse
+Introduction在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  
+在Hive中，也存在这样的场景，特别是</p>
         
     
-    <time datetime="2015-09-29T07:51:21.000Z" itemprop="datePublished">2015-09-29</time>
+    <time datetime="2015-09-29T07:49:41.000Z" itemprop="datePublished">2015-09-29</time>
   </a>
 </section>
 
@@ -142,15 +143,38 @@ ArchitectureFastDF</p>
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2015/09/29/Python多进程使用/" title="" itemprop="url">
+    <a href="/2015/09/29/Hive本地模式/" title="" itemprop="url">
   
     <h1 itemprop="name"></h1>
     
      
-           <p itemprop="description" >Python多进程使用Intro我们知道，由于GIL的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我</p>
+           <p itemprop="description" >Hive 本地模式by:leotse
+我们都知道，Hive是通过将HiveQL转化为MR job进行数据查询和处理。当然，不是全部的HQL语句都需要转为MR，比如我们常见的：SELECT * FROM access_log;这时候，Hive Shell能很快地返回给我们结果，这是</p>
         
     
-    <time datetime="2015-09-29T07:50:58.000Z" itemprop="datePublished">2015-09-29</time>
+    <time datetime="2015-09-29T03:53:37.000Z" itemprop="datePublished">2015-09-29</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/09/29/HDFS文件系统命名空间/" title="" itemprop="url">
+  
+    <h1 itemprop="name"></h1>
+    
+     
+           <p itemprop="description" >HDFS文件系统命名空间整理:leotse
+HDFS Namespace在HDFS中，我们知道NameNode负责管理文件系统的命名空间，那么NameNode到底怎么管理HDFS的命名空间，又有哪些内容需要管理呢？我们接下来将讨论到这两个问题。
+作为HDFS的Master，Nam</p>
+        
+    
+    <time datetime="2015-09-29T03:52:25.000Z" itemprop="datePublished">2015-09-29</time>
   </a>
 </section>
 
@@ -161,7 +185,7 @@ ArchitectureFastDF</p>
 
 
   <nav id="page-nav" class="clearfix unexpand">
-    <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 </div>
