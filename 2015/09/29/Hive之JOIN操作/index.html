@@ -1,0 +1,455 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Scorpio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Leo Tse">
+    
+
+    
+    <meta name="description" content="Hive之JOIN操作整理：leotse
+Introduction在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  
+在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是只限于等值连接，也就是说，只支持a.col=b.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scorpio">
+<meta property="og:url" content="http://leotse90.com/2015/09/29/Hive之JOIN操作/index.html">
+<meta property="og:site_name" content="Scorpio">
+<meta property="og:description" content="Hive之JOIN操作整理：leotse
+Introduction在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  
+在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是只限于等值连接，也就是说，只支持a.col=b.c">
+<meta property="og:updated_time" content="2015-09-29T07:49:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scorpio">
+<meta name="twitter:description" content="Hive之JOIN操作整理：leotse
+Introduction在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  
+在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是只限于等值连接，也就是说，只支持a.col=b.c">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Scorpio" title="Scorpio"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Scorpio">Scorpio</a></h1>
+				<h2 class="blog-motto">My name is L.T.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:leotse90.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/Hive之JOIN操作/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:49:41.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive之JOIN操作"><span class="toc-number">1.</span> <span class="toc-text">Hive之JOIN操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.0.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#INNER_JOIN"><span class="toc-number">1.0.2.</span> <span class="toc-text">INNER JOIN</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Hive之JOIN操作">Hive之JOIN操作</h1><p><em>整理：leotse</em></p>
+<h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
+<p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
+<p>接下来，我们将分析和介绍Hive中主要的JOIN操作。</p>
+<p>我们假定我们有两张表：human和assets。它们分别记录了人口以及资产信息，它们的字段如下：<br><code>hive&gt; describe human;</code><br><code>OK</code><br><code>name                    string</code><br><code>age                     int</code><br><code>job                     string</code><br><code>addr                    string</code>  </p>
+<p><code>hive&gt; describe assets;</code><br><code>OK</code><br><code>name                    string</code><br><code>bank                    string</code><br><code>fund                    int</code>  </p>
+<p>在下面的例子中，将会用到这两张表。</p>
+<h3 id="INNER_JOIN">INNER JOIN</h3><p>INNER JOIN，又称内连接。是较为常见的一种JOIN操作：<br><strong>Input</strong>: 表A、表B<br><strong>Condition</strong>: A.col = B.col<br><strong>Output</strong>: 表A和表B中满足Condition的所有数据记录<br><strong>Example</strong>:<br><code>SELECT a.col1, a.col2, b.col2, b.col3</code><br><code>FROM A a JOIN B b</code><br><code>ON a.col1 = b.col1</code><br><code>WHERE a.col3 = &#39;CONDITION&#39;;</code>  </p>
+<p>我们来看一个具体的例子，我们想知道human表中每一个人在不同银行的存款记录，我们可以用以下SQL语句进行查询：<br><code>SELECT h.name, h.age, h.job, a.bank, a.fund FROM human h JOIN assets a ON h.name=a.name;</code><br>ON关键字指定了两种表联接的条件，<br>我们对输出结果进行了截取，只选取最终的数据查询记录，如下：<br><code>xiefeng    24    big data    CMB    15000000</code><br><code>leotse    25    programmer    CMB    200000000</code><br><code>leotse    25    programmer    CAB    10000000</code><br><code>yolovon    26    CEO    HB    5000000</code><br><code>yolovon    26    CEO    CCB    3200000</code>  </p>
+<p>另外，我们需要注意的是，在Hive中，ON子句中尚不支持谓词OR。</p>
+<p>如果我们对多表进行INNER JOIN操作，如:<br><code>SELECT a.col1, a.col2, b.col4, c.col5 FROM a</code><br><code>JOIN b ON a.col1 = b.col2</code><br><code>JOIN c ON a.col2 = c.col3</code><br><code>WHERE CLAUSE;</code><br>大多数情况下，Hive会对每次JOIN操作启动一个MR Job，（在Hive中，SQL的执行是从左至右的）这上面这个SQL语句的执行过程中，首先启动一个MR Job对表a和表b进行一次JOIN操作，然后再启动另一个新的MR Job对表a和表c进行一次JOIN操作。<br>上面说到是大多数情况下，那种小部分的情况是指只要我们使用的ON后的条件（即连接键）一致的话，那就只会产生一个MR Job。</p>
+<p>Hive还假定最后一张JOIN的表最大，从而先将前面的表先缓存起来，直到最后一张表才进行计算，因此为了防止内存消耗过大，我们应该尽量保证JOIN操作的表从左到右表大小递增。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://leotse90.com/2015/09/29/Hive之JOIN操作/" data-title="Scorpio" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/09/29/Hive浮点数比较与计算/" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/09/29/Hive本地模式/"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive之JOIN操作"><span class="toc-number">1.</span> <span class="toc-text">Hive之JOIN操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.0.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#INNER_JOIN"><span class="toc-number">1.0.2.</span> <span class="toc-text">INNER JOIN</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="leotse90" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/leotse90" target="_blank" title="Leotse&#39;s Github">Leotse&#39;s Github</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> You know I&#39;m hoping you&#39;ll sing along . <br/>
+			Though it&#39;s not your favorite song.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/proleo" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/leotse90" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Leo Tse">Leo Tse</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

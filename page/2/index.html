@@ -1,0 +1,564 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Scorpio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Leo Tse">
+    
+
+    
+    <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Scorpio">
+<meta property="og:url" content="http://leotse90.com/page/2/index.html">
+<meta property="og:site_name" content="Scorpio">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scorpio">
+<meta name="twitter:description">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Scorpio" title="Scorpio"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Scorpio">Scorpio</a></h1>
+				<h2 class="blog-motto">My name is L.T.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:leotse90.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/改变FastDFS中某个机器的分组/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:53:05.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="改变FastDFS中某个机器的分组">改变FastDFS中某个机器的分组</h1><p><em>By：LeoTse</em></p>
+<p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
+<p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>
+<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code></p>
+<p><em>step3：修改C机器的storage.conf配置</em><br><code># the name of the group this storage server belongs to</code><br><code>#</code><br><code># comment or remove this item for fetching from tracker server,</code><br><code># in this case, use_storage_id must set to true in tracker.conf,</code><br><code># and storage_ids.conf must be configed correctly.</code><br><code>group_name=group2</code>  </p>
+<p>将group_name改为group2。</p>
+<p>注意：如果Tracker为指定store_lookup方式，即tracker.conf配置中：<br><code># the method of selecting group to upload files</code><br><code># 0: round robin</code><br><code># 1: specify group</code><br><code># 2: load balance, select the max free space group to upload file</code><br><code>store_lookup=2</code>    </p>
+<p><code># which group to upload file</code><br><code># when store_lookup set to 1, must set store_group to the group name</code><br><code>store_group=group1</code>    </p>
+<p>如果store_lookup=1，则需要将其修改为0或者2，酌情选择。如果store_lookup不是1，则store_group会忽略。</p>
+<p><em>step4：删除base_path下的data目录</em><br>这个时候要看我们是否需要删除C机器已经存储的文件。如果我们不再需要C机器上保存的文件，则可以删除base_path下data目录，重新启动FastDFS服务时会新建data目录；如果我们不想删除C机器上现有的文件，则可以删除除了存储目录以外的其他目录和文件：fdfs_storaged.pid文件、storage_stat.dat文件、.data_init_flag文件以及sync目录。</p>
+<p><em>step5：重启C机器的FastDFS服务</em><br><code>/usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code>  </p>
+<p>（如果我们想要卸载FastDFS，直接删除base_path下的data目录即可。）</p>
+<p>至此，我们对集群重新分组完成。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/SSH免密码登录设置/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:52:54.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="SSH免密码登录设置">SSH免密码登录设置</h1><p><strong>整理：LeoTse</strong></p>
+<h2 id="SSH免密码登录设置-1">SSH免密码登录设置</h2><p>准备工作：<br>两台机器S1，S2。IP分别为IP1，IP2，用户名为user。<br>我们想从S1免密码登录S2机器。以下为SSH设置的步骤：</p>
+<p>Step1：生产key。在S1上输入：<br><code>ssh-keygen -t rsa</code><br>然后一直enter，直到结束。</p>
+<p>Step2: 我们进入到~/.ssh目录，然后将生成的key通过scp复制到S2的.ssh目录（我们首先要确保目录存在）：<br><code>cd ~/.ssh</code><br><code>scp ~/.ssh/id_rsa.pub user@IP2:/home/user/.ssh/IP2</code><br>截至目前，S1上的配置已经完成。</p>
+<p>Step3：接下来我们登录S2机器。进入.ssh目录，确保authorized_keys文件存在：<br><code>cd ~/.ssh</code><br><code>cat IP2 &gt;&gt; authorized_keys</code><br>SSH免登录已经设置完毕，如果是普通用户，继续往下看。</p>
+<h2 id="普通用户">普通用户</h2><p>对于普通用户authorized_keys的权限必须限定为600，否则普通用户无法实现无密钥访问，而ROOT用户按照默认即可实现无密码访问：<br><code>sudo chmod 600 authorized_keys</code>  </p>
+<h2 id="免密码登录验证">免密码登录验证</h2><p>我们在S1上直接ssh连接S2机器，看能否免密码登录：<br><code>ssh IP2</code><br>如果可以直接登录上去，则说明已经设置成功。</p>
+<p>另，如果要设置S1和S2互相免密码登录，以上步骤在S1和S2都执行一次就好了！</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/MySQL的主从配置/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:52:37.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="MySQL的主从配置">MySQL的主从配置</h1><p>整理：LeoTse</p>
+<h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
+<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br>这个账号可以说是Slave访问Master的通行证。</p>
+<p>2.Master配置    </p>
+<p>我们开始配置Master，修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 1</code><br><code>binlog-do-db    = test_db</code><br><code>expire-logs-days= 7</code><br>下面来解释一下这些字段：<br><code>log-bin         = mysql-bin</code>表示启用二进制日志，用以记录Master中数据的更新日志；<br><code>server-id       = 1</code>唯一标识Master的ID，一般建议使用IP地址的最后一段；<br><code>binlog-do-db    = test_db</code>选择需要备份的数据库，<strong>如果需要备份全部，可以不增加这行</strong>；<br><code>expire-logs-days= 7</code>指定只保存7天的二进制日志，防止占用磁盘空间；  </p>
+<p>配置好后，我们需要重启MySQL服务。<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>我们需要看看是否已经配置成功了，我们可以执行以下SQL语句：<br>SHOW MASTER STATUS\G;<br>如果你看到类似下面的信息，则说明Master基本ok，如果数据库中已经有数据，这个信息将会用到：<br><code>File: mysql-bin.000002</code><br><code>Position: 107</code><br><code>Binlog_Do_DB: test_db</code><br><code>Binlog_Ignore_DB:</code>  </p>
+<p>3.主数据库已经有数据的Master配置</p>
+<p>如果Master的数据库已经有数据了，你可以遵照下面的步骤：<br>1）进入MySQL终端，查看当前正在使用的库有哪些：<br><code>SHOW databases;</code>  </p>
+<p>2）停止当前MySQL的所有写操作，并查看当前数据库的状态：<br><code>FLUSH TABLES WITH READ LOCK;</code>  </p>
+<p>3）打开另一个终端（也可以直接exit离开当前MySQL，但是为了避免重复进入MySQL输密码，建议打开一个新的终端），将要备份的数据库导出成sql文件，并将其传到Slave机器上：<br><code>mysqldump -uroot -p****** test_db &gt; test_db.sql</code><br><code>scp test_db.sql root@10.0.0.2:/root/</code>  </p>
+<p>4）切换到MySQL终端，解锁：<br><code>UNLOCK TABLES;</code></p>
+<p>至此，Master配置结束。</p>
+<h3 id="Slave配置">Slave配置</h3><p>Slave的配置也很简单。同样修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 2</code><br><code>binlog-do-db    = test_db</code><br><code>relay-log       = mysql-relay-bin</code><br><code>log-slave-updates = 1</code><br>我们解释一下2个在Master中没有出现的字段：<br><code>relay-log       = mysql-relay-bin</code>配置中继日志（主要是在MySQL服务器的主从架构中的Slave上用到的，当Slave想要和Master进行数据的同步时，从服务器将Master的二进制日志文件拷贝到自己的主机上放在中继日志中，然后调用SQL线程按照拷中继日志文件中的二进制日志文件执行以便就可达到数据的同步。）<br><code>log-slave-updates = 1</code>表示slave将复制事件写进自己的二进制日志；  </p>
+<p>重启MySQL服务：<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>如果主数据库已经有数据，需要将新建database并将数据导入：<br><code>CREATE DATABASE test_db;</code><br>切换到终端（linux终端）：<br><code>mysql -uroot -p****** test_db &lt; test_db.sql</code>  </p>
+<p>接下来就是让Slave连接Master，在Slave上执行以下SQL语句：<br><code>CHANGE MASTER TO MASTER_HOST=&#39;10.0.0.1&#39;,MASTER_USER=&#39;backup&#39;, MASTER_PASSWORD=&#39;backup_mysql&#39;, MASTER_LOG_FILE=&#39;mysql-bin.000001&#39;,MASTER_LOG_POS=0;</code><br>(如果主数据库有数据，需要将MASTER_LOG_FILE和MASTER_LOG_POS按照SHOW MASTER STATUS\G;的结果修改，如MASTER_LOG_FILE=’mysql-bin.000002’,MASTER_LOG_POS=107)<br><code>START SLAVE\G;</code>   </p>
+<p>最后，我们通过执行<code>SHOW SLAVE STATUS\G;</code>来查看是否配置成功，如果出现：<br><code>*************************** 1. row ***************************</code><br><code>Slave_IO_State:</code><br><code>Master_Host: 10.0.0.1</code><br><code>Master_User: backup</code><br><code>Master_Port: 3306</code><br><code>Connect_Retry: 60</code><br><code>Master_Log_File: mysql-bin.000001</code><br><code>Read_Master_Log_Pos: 4</code><br><code>Relay_Log_File: mysqld-relay-bin.000001</code><br><code>Relay_Log_Pos: 4</code><br><code>Relay_Master_Log_File: mysql-bin.000001</code><br><code>Slave_IO_Running: No</code><br><code>Slave_SQL_Running: No</code><br><code>Replicate_Do_DB:</code><br><code>Replicate_Ignore_DB:</code><br><code>Replicate_Do_Table:</code><br><code>Replicate_Ignore_Table:</code><br><code>Replicate_Wild_Do_Table:</code><br><code>Replicate_Wild_Ignore_Table:</code><br><code>Last_Errno: 0</code><br><code>Last_Error:</code><br><code>Skip_Counter: 0</code><br><code>Exec_Master_Log_Pos: 4</code><br><code>Relay_Log_Space: 107</code><br><code>Until_Condition: None</code><br><code>Until_Log_File:</code><br><code>Until_Log_Pos: 0</code><br><code>Master_SSL_Allowed: No</code><br><code>Master_SSL_CA_File:</code><br><code>Master_SSL_CA_Path:</code><br><code>Master_SSL_Cert:</code><br><code>Master_SSL_Cipher:</code><br><code>Master_SSL_Key:</code><br><code>Seconds_Behind_Master: NULL</code><br><code>Master_SSL_Verify_Server_Cert: No</code><br><code>Last_IO_Errno: 0</code><br><code>Last_IO_Error:</code><br><code>Last_SQL_Errno: 0</code><br><code>Last_SQL_Error:</code><br><code>Replicate_Ignore_Server_Ids:</code><br><code>Master_Server_Id: 0</code>  </p>
+<p>那么恭喜你，配置成功。</p>
+<p>至此，整个MySQL主从集群已经搭建好了。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/FastDFS 安装使用说明/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:52:10.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="FastDFS安装使用说明">FastDFS安装使用说明</h1><p>整理：LeoTse</p>
+<h2 id="一、概述">一、概述</h2><p>FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。<br>更多内容见论坛：<a href="http://bbs.chinaunix.net/forum-240-1.html" target="_blank" rel="external">http://bbs.chinaunix.net/forum-240-1.html</a></p>
+<p>本文档内容包括：FastDFS安装、Python API安装及调用、通过Nginx访问文件。FastDFS安装又包括Tracker、Storage以及Nginx的安装。  </p>
+<h2 id="二、准备工作">二、准备工作</h2><p>1.建议先了解一下FastDFS；  </p>
+<p>2.所用到的环境或软件有如下一些：<br>1）Ubuntu 12.04<br>2）libfastcommon-master.zip<br>3）fastdfs-5.05.tar.gz<br>4）fastdfs-nginx-module_v1.16.tar.gz<br>5）nginx-1.9.0.tar.gz<br>6）pcre-8.33.tar.gz<br>7）zlib-1.2.8.tar.gz<br>8）fdfs_client-py-master.zip<br>虽然看起来用到的软件比较多，但是安装配置过程比较简单。（注：相关软件都可以在本压缩文件中找到。）  </p>
+<p>3.我们假设我们用到的机器有：<br><strong>Tracker</strong>：192.168.9.229<br><strong>Storage</strong>：192.168.9.230， 192.168.9.231  </p>
+<h2 id="三、安装步骤">三、安装步骤</h2><h3 id="1-安装libfastcommon（Tracker和Storage都需要）：">1.安装libfastcommon（Tracker和Storage都需要）：</h3><p>相较于旧版的FastDFS，新版的FastDFS已经不需要依赖libevent，我们需要先安装它的依赖包libfastcommon。<br>a)解压libfastcommon-master.zip：<br>unzip libfastcommon-master.zip  </p>
+<p>b)进入libfastcommon-master目录，执行：<br>./make.sh<br>./make.sh install   </p>
+<p>我们可以看到libfastcommon.so安装到了/usr/lib64/libfastcommon.  so。但是FastDFS主程序设置的目录lib的目录是/usr/local/lib，所以需要创建软连接：<br>ln -s /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so<br>ln -s /usr/lib64/libfastcommon.so /usr/lib/libfastcommon.so<br>ln -s /usr/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so<br>ln -s /usr/lib64/libfdfsclient.so /usr/lib/libfdfsclient.so   </p>
+<h3 id="2-安装FastDFS（Tracker和Storage都需要）：">2.安装FastDFS（Tracker和Storage都需要）：</h3><p>a）解压fastdfs-5.05.tar.gz；<br>tar -xzvf fastdfs-5.05.tar.gz<br>b）进入fastdfs-5.05目录，依次执行：<br>cd fastdfs-5.05<br>./make.sh<br>./make.sh install<br>到此我们的安装暂时结束，相应的配置等会会介绍到。我们下一步来安装Nginx依赖。</p>
+<h3 id="3-安装Nginx依赖模块（只需要在Storage上安装，如果需要Tracker直接提供文件访问服务，Tracker也需安装）：">3.安装Nginx依赖模块（只需要在Storage上安装，如果需要Tracker直接提供文件访问服务，Tracker也需安装）：</h3><p>FastDFS通过HTTP服务器来去提供HTTP服务。我们采用Nginx作为HTTP服务器，因为Nginx能支持高并发的访问并提供负载均衡等高性能的服务。<br>我们约定，所有的这些包都在/home/leotse/fastdfs/下。<br>a）fastdfs-nginx-module安装:<br>我们知道FastDFS通过Tracker将用户上传的文件保存在Storage服务器上，但是同一个Group上的机器进行文件复制会有一定的延时。假设我们有A、B两台Storage服务器，一开始c文件保存在A，在c文件复制到B服务器之前用户到B服务器访问c文件，势必会报错，fastdfs-nginx-module的作用就是重定向到源服务器（即示例中的A）读文件，避免了复制延迟的问题。<br>tar -xzvf fastdfs-nginx-module_v1.16.tar.gz<br>我们需要根据fastdfs以及fastcommon的文件位置判断是不是需要修改config文件。<br>CORE_INCS=”$CORE_INCS /usr/local/include/fastdfs /usr/local/include/fastcommon/“<br>改成：<br>CORE_INCS=”$CORE_INCS /usr/include/fastdfs /usr/include/fastcommon/“  </p>
+<p>b）zlib库安装：<br>tar -xzvf zlib-1.2.8.tar.gz<br>cd zlib-1.2.8<br>设置安装路径并安装：<br>./configure –prefix=/usr/local/zlib<br>make<br>make install  </p>
+<p>c）pcre库安装：<br>tar -xzvf pcre-8.33.tar.gz<br>cd pcre-8.33<br>./configure –prefix=/usr/local/pcre –libdir=/usr/local/lib/pcre –includedir=/usr/local/include/pcre<br>make<br>make install  </p>
+<h3 id="4-安装Nginx：">4.安装Nginx：</h3><p>a）解压Nginx安装包：<br>tar -xzvf nginx-1.9.0.tar.gz  </p>
+<p>b）进入Nginx目录并设置安装路径以及指定依赖库：<br>cd nginx-1.9.0<br>./configure –prefix=/usr/local/nginx \<br>–with-zlib=/home/leotse/fastdfs/zlib-1.2.8\<br>–with-pcre=/home/leotse/fastdfs/pcre-8.33\<br>–sbin-path=/usr/local/nginx\<br>–add-module=/home/leotse/fastdfs/fastdfs-nginx-module/src  </p>
+<p>c）make安装：<br>make<br>make install  </p>
+<h3 id="5-Tracker配置与启动：">5.Tracker配置与启动：</h3><p>在配置之前，非常郑重地推荐这个：<a href="http://bbs.chinaunix.net/thread-1941456-1-1.html" target="_blank" rel="external">FastDFS 配置文件详解(修订版1) </a>，里面非常详尽地介绍了FastDFS的配置文件具体参数。  </p>
+<p>a）修改tracker.conf文件，该文件的位置在fastdfs-5.05/conf下。在此之前，我们需要创建一个目录存放Tracker的data和log，我们在这里假定这个路径为：/home/leotse/fastdfs/tracker/，我们需要确保该路径存在。我们只需要修改：<br>base_path=/home/leotse/fastdfs/tracker/  </p>
+<p>b）复制tracker.conf文件到/etc/fdfs/目录下：<br>cp tracker.conf /etc/fdfs/  </p>
+<p>c）运行Tracker：<br>fdfs_tracker /etc/fdfs/tracker.conf<br>停止Tracker：/usr/local/bin/stop.sh fdfs_tracker /etc/fdfs/tracker.conf<br>重启Tracker：/usr/local/bin/restart.sh fdfs_tracker /etc/fdfs/tracker.conf </p>
+<h3 id="6-Storage配置与运行：">6.Storage配置与运行：</h3><p>在这里，同样我们需要创建一个目录保存Storage的data和log，我们假定Storage上该目录为/home/leotse/fastdfs/storage/。<br>a）修改Nginx端口（可选）：<br>Nginx默认的端口号为80，为了防止引起冲突，我们建议修改Nginx的端口：<br>vi /usr/local/nginx/conf/nginx.conf<br>修改<br>    server {<br>        listen       80;<br>        server_name  localhost;<br>在这个示例里，我们将80改为9096（可以更改）。  </p>
+<p>b）在Nginx中支持FastDFS模块：<br>vi /usr/local/nginx/conf/nginx.conf<br>我们在server模块中增加：<br>location /group1/M00{<br>    root /home/leotse/fastdfs/storage/data;<br>    ngx_fastdfs_module;<br>}    </p>
+<p>c）给Storage的存储目录做一个软连接：<br> ln -s /home/leotse/ fastdfs /storage/data  /home/leotse/ fastdfs /storage /data /M00  </p>
+<p>d）修改Storage配置。我们将注意力从Nginx转到FastDFS上来，<br>修改storage.conf文件，该文件的位置在fastdfs-5.  05/conf下，我们需要创建目录/home/leotse/fastdfs/storage/用以保存Storage的data和logs。我们需要做以下修改：<br>修改group_name，根据实际配置确定：<br>group_name=group1<br>接下来修改存储data和logs的目录：<br>base_path=/home/leotse/fastdfs/storage/<br>然后就是放置文件的目录，需要和nginx中的server中的设置保持一样。建议与上面的目录保持一致：<br>store_path0=/home/leotse/fastdfs/storage/<br>接着就是修改Tracker的host，如果有多个Tracker可以分行写：<br>tracker_server=192.169.9.229:22122<br>然后就是配置web server的端口，需要和Nginx的端口保持一致：<br>http.server_port=9096<br>修改storage.conf文件后，将其copy到/etc/fdfs/目录下：<br>cp storage.conf /etc/fdfs/  </p>
+<p>e）修改fastdfs-nginx-module配置：<br>将mod_fastdfs.conf复制到/etc/fdfs/目录下：<br>cp mod_fastdfs.conf /etc/fdfs/<br>修改mod_fastdfs.conf文件：<br>vi /etc/fdfs/mod_fastdfs.conf<br>修改base_path以及store_path0，使其和storage.conf中保持一致：<br>base_path=/home/leotse/fastdfs/storage/<br>store_path0=/ home/leotse/fastdfs/storage/<br>修改tracker server以及group_name：<br>tracker_server=192.168.9.229:22122<br>group_name=group1<br>修改group count，注意，如果只有单个group，设置为0，如果有多个group，根据实际情况配置：<br>group_count = 0<br>在url中包含group name，一定要设置为true：<br>url_have_group_name = true<br>修改完毕。  </p>
+<p>conf目录下的http.conf和mime.types两个文件也需要copy到/etc/fdfs目录下。</p>
+<p>运行nginx：<br>/usr/local/nginx/sbin/nginx<br>运行Storage：<br>fdfs_storaged /etc/fdfs/storage.conf<br>停止Storage：<br>/usr/local/bin/stop.sh fdfs_storaged /etc/fdfs/storage.conf<br>重启Storage：<br>/usr/local/bin/restart.sh fdfs_storaged /etc/fdfs/storage.conf</p>
+<h3 id="7-运行：">7.运行：</h3><p>我们已经成功配置了Tracker和Storage以及Nginx，接下来就是上传和下载文件。<br>我们这里要用到client.conf文件来获取FastDFS的相关信息，该文件在fastdfs中的conf目录下：<br>修改如下地方：<br>base_path=/home/leotse/fastdfs/tracker<br>tracker_server=192.168.9.229:22122<br>http.tracker_server_port=9096    </p>
+<p>我们可以直接使用直接调用或者调用API（我们这里介绍的是Python API）。<br>首先是直接调用，我们假设/home/leotse/test/下有文件test_fdfs.txt<br>fdfs_test /etc/fdfs/client.conf upload /home/leotse/test/test_fdfs.txt<br>我们可以看到这样的返回：<br>example file url: <a href="http://192.168.9.230:9096/group1/M00/00/08/wKgJ5lVPFzCAJVXwAAApRhJa9hc052_big.txt" target="_blank" rel="external">http://192.168.9.230:9096/group1/M00/00/08/wKgJ5lVPFzCAJVXwAAApRhJa9hc052_big.txt</a><br>我们可以通过这个url获取这个文件。</p>
+<p>同样，我们来测试FastDFS的下载文件，以上面的文件为例：<br>fdfs_download_file /etc/fdfs/client.conf group1/M00/00/08/wKgJ5lVPFzCAJVXwAAApRhJa9hc052_big.txt download_test.txt<br>我们可以看到我们将这个文件下载下来并且文件名为download_test.txt。</p>
+<p>接下来介绍Python API调用。我们首先要获取最新的python api包，我们这里用到的是fdfs_client-py-master.  zip。我们将其在机器上解压，然后调用：<br>python setup.py install<br>安装完毕后即可调用。<br>我们主要用到的方法有：<br>上传文件：upload_by_filename<br>下载文件：download_to_file<br>删除文件：delete_file<br>我们在这里也上传了两个脚本（与该blog在同一级目录），fdfs_test.py演示了Python API的使用方法，fdfs_nginx_test.py演示了如何以nginx的方式下载文件。  </p>
+<h2 id="四、FastDFS性能测试">四、FastDFS性能测试</h2><p>我们测试了FastDFS的性能，主要是Python API的上传文件以及下载文件， Nginx下的下载文件性能，下面为测试结果：  </p>
+<p>a）FastDFS Python API Test Results:<br>==============================result============================<br>file size: 8.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 0.317473113537 s<br>download average duration: 0.165269041061 s  </p>
+<p>==============================result============================<br>file size: 39.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 1.21865663528 s<br>download average duration: 0.707462477684 s  </p>
+<p>==============================result============================<br>file size: 128.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 3.0637313962 s<br>download average duration: 1.59568111897 s  </p>
+<p>=============================result=============================<br>file size: 336.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 5.62887555361 s<br>download average duration: 4.49918934107 s  </p>
+<p>b）FastDFS Nginx Download Test Results:<br>==============================result============================<br>file size: 8.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 0.0893847703934 s  </p>
+<p>==============================result============================<br>file size: 39.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 0.36199669838 s  </p>
+<p>==============================result============================<br>file size: 128.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 1.27810112 s  </p>
+<p>==============================result============================<br>file size: 336.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 3.0081551671 s  </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="leotse90" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/leotse90" target="_blank" title="Leotse&#39;s Github">Leotse&#39;s Github</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> You know I&#39;m hoping you&#39;ll sing along . <br/>
+			Though it&#39;s not your favorite song.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/proleo" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/leotse90" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Leo Tse">Leo Tse</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>
