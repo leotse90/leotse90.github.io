@@ -96,13 +96,6 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive浮点数比较与计算"><span class="toc-number">1.</span> <span class="toc-text">Hive浮点数比较与计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive浮点数比较"><span class="toc-number">1.0.1.</span> <span class="toc-text">Hive浮点数比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive浮点数计算"><span class="toc-number">1.0.2.</span> <span class="toc-text">Hive浮点数计算</span></a></li></ol></li></ol></li></ol>
-		
-		</div>
-		
 		<h1 id="Hive浮点数比较与计算">Hive浮点数比较与计算</h1><p><strong>author:leotse</strong></p>
 <h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。</p>
 <p>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>

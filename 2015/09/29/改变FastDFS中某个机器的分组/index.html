@@ -99,13 +99,6 @@ step1：停止C机器上的FastDFS服务/usr/bin/stop.sh /usr/bin/fdfs_storaged 
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#改变FastDFS中某个机器的分组"><span class="toc-number">1.</span> <span class="toc-text">改变FastDFS中某个机器的分组</span></a></li></ol>
-		
-		</div>
-		
 		<h1 id="改变FastDFS中某个机器的分组">改变FastDFS中某个机器的分组</h1><p><em>By：LeoTse</em></p>
 <p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
 <p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>

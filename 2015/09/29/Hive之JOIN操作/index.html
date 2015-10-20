@@ -99,13 +99,6 @@ Introduction在MySQL等关系型数据库中，我们经常会用到联表查询
 </header>
 	<div class="article-content">
 		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive之JOIN操作"><span class="toc-number">1.</span> <span class="toc-text">Hive之JOIN操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.0.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#INNER_JOIN"><span class="toc-number">1.0.2.</span> <span class="toc-text">INNER JOIN</span></a></li></ol></li></ol></li></ol>
-		
-		</div>
-		
 		<h1 id="Hive之JOIN操作">Hive之JOIN操作</h1><p><em>整理：leotse</em></p>
 <h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
 <p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
