@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Scorpio</title>
+  <meta name="author" content="Leo Tse">
+  
+  <meta name="description" content="Hadoop集群部署（RedHat）整理：LeoTse
+概述安装环境：Red Hat 4.8.3-9Hadoop版本：Apache Hadoop 2.6.0Java版本：1.8.0Master：172.16.10.136Slave1：172.16.10.137用户：xiefeng安装目录：/home">
+  
+  
+  
+  <meta property="og:site_name" content="Scorpio"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+   <link rel="apple-touch-icon" href="/icon.png" />
+   <link rel="shortcut icon" href="/favicon.png" >
+   <link rel="alternate" href="http://xxx.xx/atom.xml" title="Scorpio" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <div id="content" class="inner">
+    <aside id="sidebar" class="alignleft">
+      <div class="navigationBar">
+        <a href="/">Scorpio</a>
+      </div>
+    	
+  <nav class="widget" id="menu">
+	<ul>
+    
+      <li class="cell"><a class="next" href="/">Home</a><li>
+    
+      <li class="cell"><a class="next" href="/archives/">Archives</a><li>
+    
+      <li class="cell"><a class="next" href="/about/">About</a><li>
+    
+      <li class="cell"><a class="next" href="/atom.xml">Subscribe</a><li>
+    
+    </ul>
+</nav>
+
+  <div class="widget weibo">
+<iframe width="100%" height="100" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=110&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=0&isWeibo=0&isFans=0&uid=null&verifier=78e1ee4d&colors=ffffff,ffffff,999,000,ecfbfd&dpc=1"></iframe>
+</div>
+
+  
+
+  
+
+    	<footer id="footer" class="inner"><div class="copyright">
+  
+  &copy; 2015 Leo Tse
+  
+</div>
+
+
+
+</footer>
+    </aside>
+    
+    
+    <div id="hidden-navigationBar" class="navigationBar">
+      <a href="/">Scorpio</a>
+    </div>
+    <div id="main-col" class="alignright">
+    <div id="wrapper">
+      
+<article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+  <header>
+      
+      
+  
+    <h1 class="title"></h1>
+  
+
+      <time datetime="2015-09-29T07:51:21.000Z"><a href="/2015/09/29/Hadoop集群部署(RedHat)/">2015-09-29</a></time>
+      
+  </header>
+    <div class="entry">
+      
+        <h1 id="Hadoop集群部署（RedHat）">Hadoop集群部署（RedHat）</h1><p><strong>整理：LeoTse</strong></p>
+<h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
+<p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
+<p>接下来我们对每一步进行详细介绍。</p>
+<h2 id="SSH免密码登录设置">SSH免密码登录设置</h2><p>进行SSH免密码登录设置是为了避免在集群内部机器交互的时候频繁输入登录密码，我们在这里为集群内的每个机器都执行SSH免密码登录设置。在这里不具体介绍SSH免密码登录的具体步骤，可以参见<a href="https://github.com/leotse90/blogs/blob/master/SSH免密码登录设置.md" target="_blank" rel="external">SSH免密码登录设置</a></p>
+<h2 id="环境变量设置">环境变量设置</h2><p>修改hosts文件：<br><code>vi /etc/hosts</code><br>新增：<br><code>172.16.10.136   Master</code><br><code>172.16.10.137   Slave1</code>  </p>
+<p>一般，Java都已经安装好。如果没有，需要先行安装Java并配置JAVA_HOME。然后修改~/.bashrc文件，在文件的末尾增加JAVA和HADOOP的配置：  </p>
+<p><code>### set java home</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
+<p><code>### set hadoop env</code><br><code>export HADOOP_HOME=/home/xiefeng/dependecies/hadoop-2.6.0</code><br><code>export HADOOP_COMMON_HOME=$HADOOP_HOME</code><br><code>export HADOOP_HDFS_HOME=$HADOOP_HOME</code><br><code>export HADOOP_MAPRED_HOME=$HADOOP_HOME</code><br><code>export HADOOP_YARN_HOME=$HADOOP_HOME</code><br><code>export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop</code><br><code>export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/lib</code><br><code>export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native</code><br><code>export HADOOP_OPTS=&quot;-Djava.library.path=$HADOOP_HOME/lib&quot;</code>  </p>
+<p>然后：<br><code>source ~/.bashrc</code>  </p>
+<p>检查是否配置成功，可以<code>echo $HADOOP_HOME</code>看是否是配置中的路径。  </p>
+<h2 id="Master部署">Master部署</h2><p>1.解压Hadoop 2.6安装包到安装目录，在这个示例里是/home/xiefeng/dependecies/目录：<br><code>tar xvf hadoop-2.6.0.tar</code>  </p>
+<p>2.进入Hadoop目录，修改slaves文件，增加Slave1到slaves文件中：<br><code>cd hadoop-2.6.0</code><br><code>vi etc/hadoop/slaves</code><br>添加：<br><code>Slave1</code>  </p>
+<p>3.修改core-site.xml配置文件：<br><code>vi etc/hadoop/core-site.xml</code><br>修改为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;fs.defaultFS&lt;/name&gt;</code><br><code>&lt;value&gt;hdfs://Master:9000&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp&lt;/value&gt;</code><br><code>&lt;description&gt;Abase for other temporary directories.&lt;/description&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>4.修改hdfs-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</code><br><code>&lt;value&gt;Master:50090&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/name&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/data&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.replication&lt;/name&gt;</code><br><code>&lt;value&gt;1&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>5.复制mapred-site.xml.template得到mapred-site.xml文件：<br><code>cp mapred-site.xml.template mapred-site.xml</code><br>修改mapred-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</code><br><code>&lt;value&gt;yarn&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>6.修改yarn-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;!-- Site specific YARN configuration properties --&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</code><br><code>&lt;value&gt;Master&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</code><br><code>&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
+<p>7.一般的，我们还需要修改一下hadoop-env.sh，将其JAVA_HOME修改为当前机器的JAVA_HOME：<br><code># The java implementation to use.</code><br><code># export JAVA_HOME=${JAVA_HOME}</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
+<h2 id="Slave部署">Slave部署</h2><p>1.将 Master 上的 Hadoop 文件先打包然后复制到各个节点上：<br><code>sudo tar -zcf hadoop－2.6.0.tar.gz hadoop－2.6.0/</code><br><code>scp hadoop－2.6.0.tar.gz Slave1:/home/xiefeng/dependecies</code>  </p>
+<p>2.解压到Slave1的安装目录：<br><code>sudo tar -zxf hadoop－2.6.0.tar.gz</code><br><code>sudo chown -R xiefeng:xiefeng /home/xiefeng/dependecies/hadoop-2.6.0</code>  </p>
+<h2 id="集群启动">集群启动</h2><p>我们回到Master，进入hadoop安装目录：<br><code>cd /home/xiefeng/dependecies/hadoop-2.6.0</code><br>第一次执行，初始化：<br><code>bin/hdfs namenode -format</code>  </p>
+<p>启动dfs：<br><code>sbin/start-dfs.sh</code><br>启动yarn：<br><code>sbin/start-yarn.sh</code>  </p>
+<p>分别在Master和Slave1输入jps，看看是否有以下输出，有则表明安装ok：<br><code>[xiefeng@Master hadoop-2.6.0]$ jps</code><br><code>8498 NameNode</code><br><code>8837 ResourceManager</code><br><code>8680 SecondaryNameNode</code><br><code>9817 Jps</code>  </p>
+<p><code>[xiefeng@Slave1 logs]$ jps</code><br><code>20208 NodeManager</code><br><code>20344 Jps</code><br><code>20107 DataNode</code>  </p>
+<p>在浏览器输入：<a href="http://master：8088就可以查看集群All" target="_blank" rel="external">http://master：8088就可以查看集群All</a> Applications信息；输入<a href="http://master:50070可以查看namenode信息。" target="_blank" rel="external">http://master:50070可以查看namenode信息。</a></p>
+<p>停止dfs：<br><code>sbin/stop-dfs.sh</code><br>停止yarn：<br><code>sbin/stop-yarn.sh</code>  </p>
+<p>另外，还可以使用以下脚本进行集群的启动和停止：<br><code>sbin/start-all.sh</code><br><code>sbin/stop-all.sh</code></p>
+<p>至此，Hadoop集群搭建完毕！！！</p>
+
+	 
+	     <p style="margin:20px 0; color:#9f9f9f; font-size:12px;">
+<span>Posted by <a style="color:#9f9f9f;" href="null"><strong>null</strong></a> - 2015-09-29</span><br />
+<span style="line-height:13px;">如需转载，请注明： 本文来自 <a style="color:#9f9f9f;" href="http://leotse90.com"><strong>Scorpio</strong></a></span>
+</p>
+       	 
+      
+    </div>
+    <footer>
+      
+	 
+     		  
+       		
+     		  
+       	 
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div>
+    </div>
+    <div class="tabbar" onload="divideTabBar()">
+	
+      <div class="tabbaritem"><a class="next" href="/">Home</a></div>
+    
+      <div class="tabbaritem"><a class="next" href="/archives/">Archives</a></div>
+    
+      <div class="tabbaritem"><a class="next" href="/about/">About</a></div>
+    
+      <div class="tabbaritem"><a class="next" href="/atom.xml">Subscribe</a></div>
+    
+</div>
+
+
+  </div>
+</body>
+</html>

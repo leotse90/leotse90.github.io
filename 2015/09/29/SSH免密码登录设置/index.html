@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Scorpio</title>
+  <meta name="author" content="Leo Tse">
+  
+  <meta name="description" content="SSH免密码登录设置整理：LeoTse
+SSH免密码登录设置准备工作：两台机器S1，S2。IP分别为IP1，IP2，用户名为user。我们想从S1免密码登录S2机器。以下为SSH设置的步骤：
+Step1：生产key。在S1上输入：ssh-keygen -t rsa然后一直enter，直到结束。
+St">
+  
+  
+  
+  <meta property="og:site_name" content="Scorpio"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+   <link rel="apple-touch-icon" href="/icon.png" />
+   <link rel="shortcut icon" href="/favicon.png" >
+   <link rel="alternate" href="http://xxx.xx/atom.xml" title="Scorpio" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <div id="content" class="inner">
+    <aside id="sidebar" class="alignleft">
+      <div class="navigationBar">
+        <a href="/">Scorpio</a>
+      </div>
+    	
+  <nav class="widget" id="menu">
+	<ul>
+    
+      <li class="cell"><a class="next" href="/">Home</a><li>
+    
+      <li class="cell"><a class="next" href="/archives/">Archives</a><li>
+    
+      <li class="cell"><a class="next" href="/about/">About</a><li>
+    
+      <li class="cell"><a class="next" href="/atom.xml">Subscribe</a><li>
+    
+    </ul>
+</nav>
+
+  <div class="widget weibo">
+<iframe width="100%" height="100" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=110&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=0&isWeibo=0&isFans=0&uid=null&verifier=78e1ee4d&colors=ffffff,ffffff,999,000,ecfbfd&dpc=1"></iframe>
+</div>
+
+  
+
+  
+
+    	<footer id="footer" class="inner"><div class="copyright">
+  
+  &copy; 2015 Leo Tse
+  
+</div>
+
+
+
+</footer>
+    </aside>
+    
+    
+    <div id="hidden-navigationBar" class="navigationBar">
+      <a href="/">Scorpio</a>
+    </div>
+    <div id="main-col" class="alignright">
+    <div id="wrapper">
+      
+<article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+  <header>
+      
+      
+  
+    <h1 class="title"></h1>
+  
+
+      <time datetime="2015-09-29T07:52:54.000Z"><a href="/2015/09/29/SSH免密码登录设置/">2015-09-29</a></time>
+      
+  </header>
+    <div class="entry">
+      
+        <h1 id="SSH免密码登录设置">SSH免密码登录设置</h1><p><strong>整理：LeoTse</strong></p>
+<h2 id="SSH免密码登录设置-1">SSH免密码登录设置</h2><p>准备工作：<br>两台机器S1，S2。IP分别为IP1，IP2，用户名为user。<br>我们想从S1免密码登录S2机器。以下为SSH设置的步骤：</p>
+<p>Step1：生产key。在S1上输入：<br><code>ssh-keygen -t rsa</code><br>然后一直enter，直到结束。</p>
+<p>Step2: 我们进入到~/.ssh目录，然后将生成的key通过scp复制到S2的.ssh目录（我们首先要确保目录存在）：<br><code>cd ~/.ssh</code><br><code>scp ~/.ssh/id_rsa.pub user@IP2:/home/user/.ssh/IP2</code><br>截至目前，S1上的配置已经完成。</p>
+<p>Step3：接下来我们登录S2机器。进入.ssh目录，确保authorized_keys文件存在：<br><code>cd ~/.ssh</code><br><code>cat IP2 &gt;&gt; authorized_keys</code><br>SSH免登录已经设置完毕，如果是普通用户，继续往下看。</p>
+<h2 id="普通用户">普通用户</h2><p>对于普通用户authorized_keys的权限必须限定为600，否则普通用户无法实现无密钥访问，而ROOT用户按照默认即可实现无密码访问：<br><code>sudo chmod 600 authorized_keys</code>  </p>
+<h2 id="免密码登录验证">免密码登录验证</h2><p>我们在S1上直接ssh连接S2机器，看能否免密码登录：<br><code>ssh IP2</code><br>如果可以直接登录上去，则说明已经设置成功。</p>
+<p>另，如果要设置S1和S2互相免密码登录，以上步骤在S1和S2都执行一次就好了！</p>
+
+	 
+	     <p style="margin:20px 0; color:#9f9f9f; font-size:12px;">
+<span>Posted by <a style="color:#9f9f9f;" href="null"><strong>null</strong></a> - 2015-09-29</span><br />
+<span style="line-height:13px;">如需转载，请注明： 本文来自 <a style="color:#9f9f9f;" href="http://leotse90.com"><strong>Scorpio</strong></a></span>
+</p>
+       	 
+      
+    </div>
+    <footer>
+      
+	 
+     		  
+       		
+     		  
+       	 
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div>
+    </div>
+    <div class="tabbar" onload="divideTabBar()">
+	
+      <div class="tabbaritem"><a class="next" href="/">Home</a></div>
+    
+      <div class="tabbaritem"><a class="next" href="/archives/">Archives</a></div>
+    
+      <div class="tabbaritem"><a class="next" href="/about/">About</a></div>
+    
+      <div class="tabbaritem"><a class="next" href="/atom.xml">Subscribe</a></div>
+    
+</div>
+
+
+  </div>
+</body>
+</html>
