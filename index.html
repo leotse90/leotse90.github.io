@@ -79,6 +79,70 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/10/20/Scala入门/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-20T06:50:17.000Z" itemprop="datePublished"> 发表于 2015-10-20</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Scala入门">Scala入门</h1><p><em>by:leotse</em></p>
+<h3 id="为什么是Scala">为什么是Scala</h3><p>有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。</p>
+<p><code>During a meeting in the Community Corner (java.net booth) with James Gosling, a participant asked an interesting question:&quot;Which Programming Language would you use now on top of JVM, except Java?&quot;. The answer was surprisingly fast and very clear: - Scala.</code></p>
+<p>可见，Scala是一门很受待见的编程语言，另一位大牛Horstmann指出，Scala试图将以下三组对立的思想融合在一门编程语言中：<br><code>－函数式编程 VS 面向对象编程</code><br><code>－富有表达力的语法 VS 静态类型</code><br><code>－高级的语言特性 VS 与Java高度集成</code><br>这样看来，Scala就是想集各家所长，打造一种平衡的和谐，这看起来像是编程语言世界的乌邦托。<br>Scala和很多在Java基础上发展的语言一样，需要基于JVM，这一点使得Scala拥有强大的Java所拥有的特性，比如跨平台。但是成也JVM，败也JVM，JVM启动较慢的问题，需要编译等等这些也成为了Scala的瓶颈。只要还立足于JVM，Scala就一直会受到JVM的限制。</p>
+<p>但是这些都无碍于Scala本身成为一门成功的语言，现在很多公司都已经逐渐投靠Scala阵营，比如twitter，特别是当使用Scala编写的Spark兴起之后，Scala更是成为很多公司大数据编程语言的首选。</p>
+<h3 id="Scala_&amp;_REPL">Scala &amp; REPL</h3><p>首先，我们需要认识一下REPL，全称为Read-Eval-Print-Loop，亦即读取－求值－打印－循环。如果是第一次接触这个概念，会觉得有点奇怪，我们可以将REPL称为<strong>交互式解释器</strong>。一般的，我们通过REPL可以快速学习和验证一门语言的特性（前提是这门语言支持REPL）。<br>但是并不是所有的语言都支持REPL，常见的编程语言支持REPL的有Ruby、Python、Lua，使用很广的Java、C++、C#、PHP以及JS等并不支持原生的REPL。当然，我们既然在这里讨论REPL，Scala是肯定支持REPL的。我们在学习Scala的时候可以直接在REPL coding。实际上，我们敲进去的代码首先被编译，然后JVM会执行编译后的字节码，然后返回执行的结果。</p>
+<p>我们看一个示例：<br><code>scala&gt; &quot;Hello, Scala&quot;</code><br><code>res0: String = Hello, Scala</code><br>从这个示例中，我们可以看到输入的是文本“Hello, Scala”，下面一行是输出，这里的res0是REPL为这个文本起的名字，后面的String表明这个文本是字符串类型。我们可以直接使用res0这个变量名去调用这个字符串文本。</p>
+<h3 id="变量声明：val和var">变量声明：val和var</h3><p>在上一小节里面，我们已经见识到了Scala的变量声明，但是，我们一般情况下都希望将变量命名的权力牢牢控制在自己手上，因此我们可以使用以下方式声明变量。<br>－var：variable的缩写。用法如下：<br><code>var variable_name: [variable_type] = variable_value</code><br>变量的类型是可选的，因为如果没有指定变量的类型，Scala的编译器会根据变量的值推断出它的类型。我们看下面的示例：</p>
+<p><code>scala&gt; var x: Int = 1  // 指定x的类型为Int</code><br><code>x: Int = 1</code><br><code>scala&gt; x = 2  // 改变变量x的值</code><br><code>x: Int = 2</code><br><code>scala&gt; var y = 3  // 没有指定y的类型</code><br><code>y: Int = 3</code></p>
+<p>－val：这里说变量其实不太准确，因为val声明的是不可变的常量。使用方法和var类似，只是不能修改它的值。在实际开发中，除非我们可以预知需要改变一个值的内容，否则我们一般用val声明。示例如下：  </p>
+<p><code>scala&gt; val z = 3</code><br><code>z: Int = 3</code><br><code>scala&gt; z = 2  // 不可以修改一个常量的值</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
+<p>一般的，我们不需要声明类型，除非必须。而且我们注意到Scala和Java等语言不一样，变量的类型声明在变量名后面。</p>
+<p>另外，我们在REPL中的示例中可以看到，解释器为我们没有命名的变量定义res0这个名字，凡是解释器定义的变量，如res0、res1等等，都是常量，不可修改:<br><code>scala&gt; res0</code><br><code>res1: String = Hello, Scala</code><br><code>scala&gt; res0 = 1990</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
+<p>在Scala中，有8种类型，它们分别为Boolean、Byte、Char、Short、Int、Long、Float以及Double。在这里，我们和Java那样称它们为八大基本类型，因为Scala中并不会刻意去区分基本类型和引用类型，因为他们都是类。</p>
+<h3 id="参考资料">参考资料</h3><p>《快学Scala》Cay S. Horstmann 电子工业出版社<br>《深入理解Scala》 Joshua D. Suereth 人民邮电出版社<br><a href="http://www.scala-lang.org/api/current/#package" target="_blank" rel="external">Scala官方API</a><br><a href="http://docs.scala-lang.org/tutorials/?_ga=1.213857492.1110750532.1444722905" target="_blank" rel="external">Scala官方Tutorials</a><br><a href="http://www.scalachina.com" target="_blank" rel="external">Scala中文社区</a><br>网上前辈们学习交流的技术博客与论坛</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/10/03/Hadoop安装之你不知道的事/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -298,71 +362,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/09/29/改变FastDFS中某个机器的分组/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-29T07:53:05.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="改变FastDFS中某个机器的分组">改变FastDFS中某个机器的分组</h1><p><em>By：LeoTse</em></p>
-<p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
-<p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>
-<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code></p>
-<p><em>step3：修改C机器的storage.conf配置</em><br><code># the name of the group this storage server belongs to</code><br><code>#</code><br><code># comment or remove this item for fetching from tracker server,</code><br><code># in this case, use_storage_id must set to true in tracker.conf,</code><br><code># and storage_ids.conf must be configed correctly.</code><br><code>group_name=group2</code>  </p>
-<p>将group_name改为group2。</p>
-<p>注意：如果Tracker为指定store_lookup方式，即tracker.conf配置中：<br><code># the method of selecting group to upload files</code><br><code># 0: round robin</code><br><code># 1: specify group</code><br><code># 2: load balance, select the max free space group to upload file</code><br><code>store_lookup=2</code>    </p>
-<p><code># which group to upload file</code><br><code># when store_lookup set to 1, must set store_group to the group name</code><br><code>store_group=group1</code>    </p>
-<p>如果store_lookup=1，则需要将其修改为0或者2，酌情选择。如果store_lookup不是1，则store_group会忽略。</p>
-<p><em>step4：删除base_path下的data目录</em><br>这个时候要看我们是否需要删除C机器已经存储的文件。如果我们不再需要C机器上保存的文件，则可以删除base_path下data目录，重新启动FastDFS服务时会新建data目录；如果我们不想删除C机器上现有的文件，则可以删除除了存储目录以外的其他目录和文件：fdfs_storaged.pid文件、storage_stat.dat文件、.data_init_flag文件以及sync目录。</p>
-<p><em>step5：重启C机器的FastDFS服务</em><br><code>/usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code>  </p>
-<p>（如果我们想要卸载FastDFS，直接删除base_path下的data目录即可。）</p>
-<p>至此，我们对集群重新分组完成。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>

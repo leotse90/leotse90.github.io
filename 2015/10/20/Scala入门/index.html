@@ -11,25 +11,22 @@
     
 
     
-    <meta name="description" content="Hadoop安装之你不知道的事整理:leotse
-概述这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到这里.md)。
-那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。
-我们先简单总结一下Hado">
+    <meta name="description" content="Scala入门by:leotse
+为什么是Scala有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。
+During a meeting in the Community Corner (java.net booth) with James Gosling, a participant asked an">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scorpio">
-<meta property="og:url" content="http://leotse90.com/2015/10/03/Hadoop安装之你不知道的事/index.html">
+<meta property="og:url" content="http://leotse90.com/2015/10/20/Scala入门/index.html">
 <meta property="og:site_name" content="Scorpio">
-<meta property="og:description" content="Hadoop安装之你不知道的事整理:leotse
-概述这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到这里.md)。
-那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。
-我们先简单总结一下Hado">
-<meta property="og:updated_time" content="2015-10-03T02:46:49.000Z">
+<meta property="og:description" content="Scala入门by:leotse
+为什么是Scala有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。
+During a meeting in the Community Corner (java.net booth) with James Gosling, a participant asked an">
+<meta property="og:updated_time" content="2015-10-20T06:50:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scorpio">
-<meta name="twitter:description" content="Hadoop安装之你不知道的事整理:leotse
-概述这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到这里.md)。
-那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。
-我们先简单总结一下Hado">
+<meta name="twitter:description" content="Scala入门by:leotse
+为什么是Scala有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。
+During a meeting in the Community Corner (java.net booth) with James Gosling, a participant asked an">
 
     
     <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
@@ -87,14 +84,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/03/Hadoop安装之你不知道的事/" title="" itemprop="url"></a>
+      <a href="/2015/10/20/Scala入门/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-03T02:46:49.000Z" itemprop="datePublished"> 发表于 2015-10-03</time>
+    <time datetime="2015-10-20T06:50:17.000Z" itemprop="datePublished"> 发表于 2015-10-20</time>
     
   </p>
 </header>
@@ -103,21 +100,25 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop安装之你不知道的事"><span class="toc-number">1.</span> <span class="toc-text">Hadoop安装之你不知道的事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop集群搭建的那些事"><span class="toc-number">1.2.</span> <span class="toc-text">Hadoop集群搭建的那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要进行SSH免密码登录的设置？"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么需要进行SSH免密码登录的设置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要配置Hostname？"><span class="toc-number">1.2.2.</span> <span class="toc-text">为什么需要配置Hostname？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#要修改哪些配置文件？"><span class="toc-number">1.2.3.</span> <span class="toc-text">要修改哪些配置文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode在format时都干了些什么？"><span class="toc-number">1.2.4.</span> <span class="toc-text">NameNode在format时都干了些什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">1.3.</span> <span class="toc-text">结语</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Scala入门"><span class="toc-number">1.</span> <span class="toc-text">Scala入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么是Scala"><span class="toc-number">1.0.1.</span> <span class="toc-text">为什么是Scala</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scala_&_REPL"><span class="toc-number">1.0.2.</span> <span class="toc-text">Scala & REPL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量声明：val和var"><span class="toc-number">1.0.3.</span> <span class="toc-text">变量声明：val和var</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">1.0.4.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-		<h1 id="Hadoop安装之你不知道的事">Hadoop安装之你不知道的事</h1><p><em>整理:leotse</em></p>
-<h2 id="概述">概述</h2><p>这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到<a href="https://github.com/leotse90/blogs/blob/master/Hadoop集群部署\(RedHat\" target="_blank" rel="external">这里</a>.md)。</p>
-<p>那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。</p>
-<p>我们先简单总结一下Hadoop集群的安装过程：<br>1.准备工作：SSH免密码登录设置以及HostName配置；<br>2.NameNode安装与配置：解压Hadoop安装包到NameNode服务器上，并修改配置文件；<br>3.DataNode安装与配置：将NameNode的Hadoop文件分发到各DataNode服务器；<br>4.集群启动：格式化NameNode，然后先后启动Hadoop集群的dfs以及yarn；</p>
-<h2 id="Hadoop集群搭建的那些事">Hadoop集群搭建的那些事</h2><h3 id="为什么需要进行SSH免密码登录的设置？">为什么需要进行SSH免密码登录的设置？</h3><p>我们都知道SSH免密码登录可以让服务器之间在SSH登录时畅通无阻。那么，我们在Hadoop集群中，哪些过程需要用到SSH登录呢？<br>首先，是DataNode与DataNode之间的文件传输；<br>其次，在Hadoop的启动过程中，需要登录到其他机器的sbin目录下执行一些文件。</p>
-<p>这样，为了方便Hadoop运作，我们建议事先在集群的所有机器进行SSH免密码登录设置。<br>你可能注意到，我们在这里只是建议设置，并没有强制进行SSH免密码登录，因为我们只是为了方便Hadoop集群的运作如此设置，也就是说就算不这样设置我们也能搭建和运转Hadoop集群。</p>
-<h3 id="为什么需要配置Hostname？">为什么需要配置Hostname？</h3><p>这个的目的就更加简单了，只要配置了Hostname，我们就能较为灵活地进行配置，就算IP发生了变更，也不用改变所有服务器上所有的配置文件。</p>
-<h3 id="要修改哪些配置文件？">要修改哪些配置文件？</h3><p>刚开始搭建Hadoop集群时，总是会被其复杂的配置文件弄得头昏脑胀；那么多的文件，有哪些是需要我们配置的？每个文件又是干嘛的？我们要配置哪些字段？还有一些相关的问题，如果我们想要解答这些问题，我们就需要系统了解一下Hadoop的构造，Hadoop主要有HDFS、Yarn以及MR，分别对应Hadoop集群的三大功能：数据存储、集群管理以及数据计算。这些功能模块分别对应hdfs-site.xml、yarn-site.xml和mapred-site.xml三个配置文件，这样我们就逐渐清晰了我们需要调整和配置的文件。</p>
-<p>另外，我们需要告诉Hadoop中的Master角色服务器了解集群有哪些Slave机器，因此我们还需要配置一下Slaves文件。这个文件我们常常结合Hostname中的配置进行设置。</p>
-<h3 id="NameNode在format时都干了些什么？">NameNode在format时都干了些什么？</h3><p>我在<a href="https://github.com/leotse90/SparkNotes/blob/master/HDFS文件系统命名空间.md" target="_blank" rel="external">另一篇文章</a>的最后提到了NameNode会在format的时候会创建fsimage、edits等文件，这些文件作为Hadoop集群HDFS的文件目录树及其目录和文件。</p>
-<h2 id="结语">结语</h2><p>一开始接触Hadoop的时候，搭建集群以及一些细枝末节的问题常常会成为我们掌握和驾驭Hadoop的障碍，我们除了简单粗暴直接上手搭建之外，也需要了解Hadoop集群内部的一些设计理念以及实现思路，这是我们学习和掌握Hadoop的必要储备。这里讲到了一些有关Hadoop集群搭建配置的相关信息，虽然不够全面，但是也希望能帮助大家通过Hadoop的搭建了解更真实的Hadoop集群。</p>
+		<h1 id="Scala入门">Scala入门</h1><p><em>by:leotse</em></p>
+<h3 id="为什么是Scala">为什么是Scala</h3><p>有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。</p>
+<p><code>During a meeting in the Community Corner (java.net booth) with James Gosling, a participant asked an interesting question:&quot;Which Programming Language would you use now on top of JVM, except Java?&quot;. The answer was surprisingly fast and very clear: - Scala.</code></p>
+<p>可见，Scala是一门很受待见的编程语言，另一位大牛Horstmann指出，Scala试图将以下三组对立的思想融合在一门编程语言中：<br><code>－函数式编程 VS 面向对象编程</code><br><code>－富有表达力的语法 VS 静态类型</code><br><code>－高级的语言特性 VS 与Java高度集成</code><br>这样看来，Scala就是想集各家所长，打造一种平衡的和谐，这看起来像是编程语言世界的乌邦托。<br>Scala和很多在Java基础上发展的语言一样，需要基于JVM，这一点使得Scala拥有强大的Java所拥有的特性，比如跨平台。但是成也JVM，败也JVM，JVM启动较慢的问题，需要编译等等这些也成为了Scala的瓶颈。只要还立足于JVM，Scala就一直会受到JVM的限制。</p>
+<p>但是这些都无碍于Scala本身成为一门成功的语言，现在很多公司都已经逐渐投靠Scala阵营，比如twitter，特别是当使用Scala编写的Spark兴起之后，Scala更是成为很多公司大数据编程语言的首选。</p>
+<h3 id="Scala_&amp;_REPL">Scala &amp; REPL</h3><p>首先，我们需要认识一下REPL，全称为Read-Eval-Print-Loop，亦即读取－求值－打印－循环。如果是第一次接触这个概念，会觉得有点奇怪，我们可以将REPL称为<strong>交互式解释器</strong>。一般的，我们通过REPL可以快速学习和验证一门语言的特性（前提是这门语言支持REPL）。<br>但是并不是所有的语言都支持REPL，常见的编程语言支持REPL的有Ruby、Python、Lua，使用很广的Java、C++、C#、PHP以及JS等并不支持原生的REPL。当然，我们既然在这里讨论REPL，Scala是肯定支持REPL的。我们在学习Scala的时候可以直接在REPL coding。实际上，我们敲进去的代码首先被编译，然后JVM会执行编译后的字节码，然后返回执行的结果。</p>
+<p>我们看一个示例：<br><code>scala&gt; &quot;Hello, Scala&quot;</code><br><code>res0: String = Hello, Scala</code><br>从这个示例中，我们可以看到输入的是文本“Hello, Scala”，下面一行是输出，这里的res0是REPL为这个文本起的名字，后面的String表明这个文本是字符串类型。我们可以直接使用res0这个变量名去调用这个字符串文本。</p>
+<h3 id="变量声明：val和var">变量声明：val和var</h3><p>在上一小节里面，我们已经见识到了Scala的变量声明，但是，我们一般情况下都希望将变量命名的权力牢牢控制在自己手上，因此我们可以使用以下方式声明变量。<br>－var：variable的缩写。用法如下：<br><code>var variable_name: [variable_type] = variable_value</code><br>变量的类型是可选的，因为如果没有指定变量的类型，Scala的编译器会根据变量的值推断出它的类型。我们看下面的示例：</p>
+<p><code>scala&gt; var x: Int = 1  // 指定x的类型为Int</code><br><code>x: Int = 1</code><br><code>scala&gt; x = 2  // 改变变量x的值</code><br><code>x: Int = 2</code><br><code>scala&gt; var y = 3  // 没有指定y的类型</code><br><code>y: Int = 3</code></p>
+<p>－val：这里说变量其实不太准确，因为val声明的是不可变的常量。使用方法和var类似，只是不能修改它的值。在实际开发中，除非我们可以预知需要改变一个值的内容，否则我们一般用val声明。示例如下：  </p>
+<p><code>scala&gt; val z = 3</code><br><code>z: Int = 3</code><br><code>scala&gt; z = 2  // 不可以修改一个常量的值</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
+<p>一般的，我们不需要声明类型，除非必须。而且我们注意到Scala和Java等语言不一样，变量的类型声明在变量名后面。</p>
+<p>另外，我们在REPL中的示例中可以看到，解释器为我们没有命名的变量定义res0这个名字，凡是解释器定义的变量，如res0、res1等等，都是常量，不可修改:<br><code>scala&gt; res0</code><br><code>res1: String = Hello, Scala</code><br><code>scala&gt; res0 = 1990</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
+<p>在Scala中，有8种类型，它们分别为Boolean、Byte、Char、Short、Int、Long、Float以及Double。在这里，我们和Java那样称它们为八大基本类型，因为Scala中并不会刻意去区分基本类型和引用类型，因为他们都是类。</p>
+<h3 id="参考资料">参考资料</h3><p>《快学Scala》Cay S. Horstmann 电子工业出版社<br>《深入理解Scala》 Joshua D. Suereth 人民邮电出版社<br><a href="http://www.scala-lang.org/api/current/#package" target="_blank" rel="external">Scala官方API</a><br><a href="http://docs.scala-lang.org/tutorials/?_ga=1.213857492.1110750532.1444722905" target="_blank" rel="external">Scala官方Tutorials</a><br><a href="http://www.scalachina.com" target="_blank" rel="external">Scala中文社区</a><br>网上前辈们学习交流的技术博客与论坛</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -130,7 +131,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://leotse90.com/2015/10/03/Hadoop安装之你不知道的事/" data-title="Scorpio" data-tsina="null" class="share clearfix">
+	  <div data-url="http://leotse90.com/2015/10/20/Scala入门/" data-title="Scorpio" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -143,17 +144,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/10/20/Scala入门/" title="">
-  <strong>上一篇：</strong><br/>
-  <span>
-  (no title)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/09/29/MooseFS概览/"  title="">
+<a href="/2015/10/03/Hadoop安装之你不知道的事/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -170,7 +163,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop安装之你不知道的事"><span class="toc-number">1.</span> <span class="toc-text">Hadoop安装之你不知道的事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop集群搭建的那些事"><span class="toc-number">1.2.</span> <span class="toc-text">Hadoop集群搭建的那些事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要进行SSH免密码登录的设置？"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么需要进行SSH免密码登录的设置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要配置Hostname？"><span class="toc-number">1.2.2.</span> <span class="toc-text">为什么需要配置Hostname？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#要修改哪些配置文件？"><span class="toc-number">1.2.3.</span> <span class="toc-text">要修改哪些配置文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NameNode在format时都干了些什么？"><span class="toc-number">1.2.4.</span> <span class="toc-text">NameNode在format时都干了些什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结语"><span class="toc-number">1.3.</span> <span class="toc-text">结语</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Scala入门"><span class="toc-number">1.</span> <span class="toc-text">Scala入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么是Scala"><span class="toc-number">1.0.1.</span> <span class="toc-text">为什么是Scala</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scala_&_REPL"><span class="toc-number">1.0.2.</span> <span class="toc-text">Scala & REPL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量声明：val和var"><span class="toc-number">1.0.3.</span> <span class="toc-text">变量声明：val和var</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">1.0.4.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol></li></ol>
  
   </div>
 

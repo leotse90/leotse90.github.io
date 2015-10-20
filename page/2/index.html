@@ -79,6 +79,68 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/09/29/改变FastDFS中某个机器的分组/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:53:05.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="改变FastDFS中某个机器的分组">改变FastDFS中某个机器的分组</h1><p><em>By：LeoTse</em></p>
+<p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
+<p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>
+<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code></p>
+<p><em>step3：修改C机器的storage.conf配置</em><br><code># the name of the group this storage server belongs to</code><br><code>#</code><br><code># comment or remove this item for fetching from tracker server,</code><br><code># in this case, use_storage_id must set to true in tracker.conf,</code><br><code># and storage_ids.conf must be configed correctly.</code><br><code>group_name=group2</code>  </p>
+<p>将group_name改为group2。</p>
+<p>注意：如果Tracker为指定store_lookup方式，即tracker.conf配置中：<br><code># the method of selecting group to upload files</code><br><code># 0: round robin</code><br><code># 1: specify group</code><br><code># 2: load balance, select the max free space group to upload file</code><br><code>store_lookup=2</code>    </p>
+<p><code># which group to upload file</code><br><code># when store_lookup set to 1, must set store_group to the group name</code><br><code>store_group=group1</code>    </p>
+<p>如果store_lookup=1，则需要将其修改为0或者2，酌情选择。如果store_lookup不是1，则store_group会忽略。</p>
+<p><em>step4：删除base_path下的data目录</em><br>这个时候要看我们是否需要删除C机器已经存储的文件。如果我们不再需要C机器上保存的文件，则可以删除base_path下data目录，重新启动FastDFS服务时会新建data目录；如果我们不想删除C机器上现有的文件，则可以删除除了存储目录以外的其他目录和文件：fdfs_storaged.pid文件、storage_stat.dat文件、.data_init_flag文件以及sync目录。</p>
+<p><em>step5：重启C机器的FastDFS服务</em><br><code>/usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code>  </p>
+<p>（如果我们想要卸载FastDFS，直接删除base_path下的data目录即可。）</p>
+<p>至此，我们对集群重新分组完成。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/09/29/SSH免密码登录设置/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
@@ -288,103 +350,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/09/29/FastDFS概览/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
-		
-  <p class="article-time">
-    <time datetime="2015-09-29T07:51:49.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="FastDFS概览">FastDFS概览</h1><p><em>整理：LeoTse</em></p>
-<h2 id="Definition">Definition</h2><p>FastDFS是C语言实现的、开源的、轻量级的<strong>应用级分布式文件系统</strong>，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。</p>
-<h2 id="Architecture">Architecture</h2><p>FastDFS一共由三部分组成：<br><strong>TrackerServer</strong>：负责负载均衡和调度。是整个FastDFS的中心，它将StorageServer的分组信息以及状态信息保存在内存中；<br><strong>StorageServer</strong>：存储文件和文件meta信息。直接使用操作系统的文件系统管理DFS上的文件；<br><strong>Client</strong>：使用者与请求发起方。通过专有接口，使用TCP/IP协议与跟踪器服务器或存储节点进行数据交互；  </p>
-<p><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs01.gif" alt="FastDFS架构"></p>
-<p><strong>上传文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs02.gif" alt="FastDFS上传文件"></p>
-<p><strong>下载文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs03.gif" alt="FastDFS下载文件"></p>
-<h2 id="Applies">Applies</h2><p>适合大中型网站使用，用于视频、图片、音频等中小资源文件的存储。（建议范围：4KB&lt;file_size&lt;500MB）</p>
-<h2 id="Features">Features</h2><h3 id="1-Advantages">1.Advantages</h3><p>1）支持Linux、FreeBSD、AIX等Unix系统；<br>2）支持Java、Python、PHP API；<br>3）轻量级：相比GFS简化了master角色，不再管理meta数据信息；代码量较小，总代码行数不到5.2w行；<br>4）对等结构：FastDFS集群中的TrackerServer也可以有多台，TrackerServer和StorageServer均<strong>不存在单点问题</strong>。TrackerServer之间是对等关系，组内的StoragServer之间也是对等关系。和MasterSlave结构相比，对等结构中所有结点的地位是相同的，每个结点都是Master，不存在单点问题；<br>5）分组：FastDFS采用了分组存储方式。集群由一个或多个组构成，集群存储总容量为集群中所有组的存储容量之和。一个组由一台或多台存储服务器组成，同组内的多台StorageServer之间是互备关系，同组存储服务器上的文件是完全一致的。文件上传、下载、删除等操作可以在组内任意一台StorageServer上进行。所有的存储服务器均是同时在线服务，极大的提高的服务器的使用率，分担了数据访问压力；<br>6）可以使用Apache、Nginx等WebServer访问和下载文件；<br>7）FastDFS不对文件进行分块存储，与支持文件分块存储的DFS相比，更加简洁高效，并且完全能满足绝大多数互联网应用的实际需要。<br>8）FastDFS的设计目标就是支持大容量和高访问量，因此对于大量的小文件，可以支持得很好；<br>9）FastDFS自v1.14开始支持相同文件内容只存储一份，但是需要安装FastDHT，如果已经存在上传的文件，则建立一个符号链接以节省磁盘空间；</p>
-<h3 id="2-Disadvantages">2.Disadvantages</h3><p>1）FastDFS不支持POSIX接口方式，不是通用的文件系统，不支持FUSE，不能<a href="http://en.wikipedia.org/wiki/Mount_(Unix" target="_blank" rel="external">mount使用</a>)；<br>2）不适用于分布式计算环境；<br>3）Group容量受单机存储容量限制，同时，当Group内有机器坏掉，数据恢复只能从Group内其他机器复制，使得恢复时间较长；<br>4）FastDFS适合存储用户上传的文件，比如用户照片。如果只是存储网站的静态文件（如装饰图片、css、js等），那没有必要使用FastDFS；<br>5）文档不够完善。相较于GlusterFS等DFS，FastDFS的相关文档资料相对欠缺。当前比较活跃的是ChinaUnix上的<a href="http://bbs.chinaunix.net/forum-240-1.html" target="_blank" rel="external">FastDFS论坛</a>。  </p>
-<h2 id="others">others</h2><p>来源于论坛原作者的话：<br>1.单台tracker的性能特别高。因为tracker处理查询时，直接访问内存中的索引数据，不存在任何性能瓶颈。单台服务器支持的QPS超过5000没有任何问题。  </p>
-<p>2.出于性能等考虑，必须通过FastDFS的API来对文件进行存取，不能mount使用。 </p>
-<p>3.上传文件成功后，文件ID由storage server返回给客户端。文件ID中包括了分组、文件路径和文件名等信息，需要由客户端来保存文件ID。因此FastDFS 服务器端是不需要保存文件ID或索引等信息的。不再使用的文件（比如用户删除了自己的照片文件），应该由client调用delete file接口删除该文件。  </p>
-<p>4.FastDFS存储文件采用的是256 * 256的两级目录；  </p>
-<p>5.tracker不耗内存，有1GB内存足矣；   </p>
-<p>6.FastDFS如何做整体迁移？如换机房更换IP?  </p>
-<pre><code>如果新旧<span class="type">IP</span>地址一一对应，而且是一样的，那非常简单，直接将<span class="typedef"><span class="keyword">data</span>目录拷贝过去即可。</span>
-
-<span class="type">IP</span>不一样的话，会比较麻烦一些。
-如果使用了<span class="type">V4</span>的自定义server <span class="type">ID</span>特性，那么比较容易，直接将tracker上的<span class="type">IP</span>和<span class="type">ID</span>映射文件storage_ids.conf修改好即可。
-
-如果是用<span class="type">IP</span>地址作为服务器标识，那么需要修改tracker和storage的<span class="typedef"><span class="keyword">data</span>目录下的几个数据文件，将旧<span class="type">IP</span>调整为新<span class="type">IP</span>。</span>
-注意storage的<span class="typedef"><span class="keyword">data</span>目录下有一个.打头的隐藏文件也需要修改。</span>
-另外，需要将后缀为mark的<span class="type">IP</span>地址和端口命名的同步位置记录文件名改名。
-文件全部调整完成后才能启动集群服务。
-
-<span class="title">tracker</span> server上需要调整的文件列表：
-<span class="typedef"><span class="keyword">data</span>/storage_groups_new.dat</span>
-<span class="typedef"><span class="keyword">data</span>/storage_servers_new.dat</span>
-<span class="typedef"><span class="keyword">data</span>/storage_sync_timestamp.dat</span>
-
-<span class="title">storage</span> server需要调整的文件列表：
-<span class="typedef"><span class="keyword">data</span>/.data_init_flag</span>
-<span class="typedef"><span class="keyword">data</span>/sync/$<span class="container">{<span class="title">ip_addr</span>}</span>_$<span class="container">{<span class="title">port</span>}</span>.mark：此类文件，需要将文件名中的<span class="type">IP</span>地址调整过来。</span>
-</code></pre><p>7./etc/fdfs/mod_fastdfs.conf中的url_have_group_name项为true,否则会使用fdfs_test上传测试文件而后进行测试时，会报400错误。</p>
-<p>8.<a href="http://bbs.chinaunix.net/thread-3772130-1-4.html" target="_blank" rel="external">FastDFS监控系统</a></p>
-<p>9.<a href="http://bbs.chinaunix.net/thread-4164253-1-5.html" target="_blank" rel="external">FastDFS原理分析系列文章</a></p>
-<p>10.部署方式和存储方式：作者推荐采用多个storage服务器(多个group)，各自分别挂载几个单盘的方式，以期提高总的磁盘IO性能。</p>
-<p>11.相同内容的文件在系统里只保存一份文件实体，每次上传同一个文件，返回给client的文件ID是不同的，返回的文件ID通过链接的方式指向该实体文件，以unix的符号链接来理解：目标文件为实体文件，每次上传产生的文件为符号链接，指向对应的实体文件。</p>
-<p>12.Storage的状态：<br>    FDFS_STORAGE_STATUS：INIT      :初始化，尚未得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：WAIT_SYNC :等待同步，已得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：SYNCING   :同步中<br>    FDFS_STORAGE_STATUS：DELETED   :已删除，该服务器从本组中摘除<br>    FDFS_STORAGE_STATUS：OFFLINE   :离线<br>    FDFS_STORAGE_STATUS：ONLINE    :在线，尚不能提供服务<br>    FDFS_STORAGE_STATUS：ACTIVE    :在线，可以提供服务  </p>
-<p>13.安装pcre时，出现<br>configure: error: You need a C++ compiler for C++ support.<br>解决方案：yum install -y gcc gcc-c++</p>
-<p>14.上传文件时：<br>errno: 113, error info: No route to host<br>解决方案：有可能是防火墙问题。iptables -F</p>
-<p>15.启动nginx，permission denied，这时一般是权限问题。<br>解决方案：修改nginx配置，将#user  nobody;修改为user  root;（注意：可能有安全隐患），重启nginx即可。</p>
-<h2 id="Conclusion">Conclusion</h2><p>FastDFS，按照作者本人的说法，它把简洁和高效做到了极致，非常节约资源，中小网站完全用得起。<br>作为国人在mogileFS的基础上进行改进的key-value型文件系统，一方面，它是我们国人的骄傲，另一方面，也希望FastDFS发展越来越好，相关的文档也越来越完善。</p>
-<p><strong>备注</strong>：<br>该文档整理自网络，用于个人备忘与学习。如有侵权，衷心表示抱歉，并请联系本人及时删除相关内容。</p>
-<p><strong>参考</strong>：<br><a href="http://tech.uc.cn/?p=221" target="_blank" rel="external">分布式文件系统FastDFS原理介绍</a><br><a href="http://www.oschina.net/question/12_13316" target="_blank" rel="external">分布式文件系统FastDFS架构剖析</a><br><a href="http://blog.irebit.com/fastdfs-%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" target="_blank" rel="external">FastDFS 配置教程</a><br><a href="http://blog.csdn.net/monkey_d_meng/article/details/6038995" target="_blank" rel="external">轻量级分布式文件系统FastDFS使用安装说明手册</a>  </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
