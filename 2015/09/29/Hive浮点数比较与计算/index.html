@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>Scorpio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Hive浮点数比较与计算author:leotse
+    <title>Scorpio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Leo Tse">
+    
+
+    
+    <meta name="description" content="Hive浮点数比较与计算author:leotse
 Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：hive&amp;gt; select * from float_compare where weight&amp;gt;120.9;OKxiefeng 128.2yolovon 121.8leotse 120.9我们可以看到，leotse乱入了，他的weight等于120.9，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scorpio">
@@ -18,68 +24,84 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
 <meta name="twitter:title" content="Scorpio">
 <meta name="twitter:description" content="Hive浮点数比较与计算author:leotse
 Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：hive&amp;gt; select * from float_compare where weight&amp;gt;120.9;OKxiefeng 128.2yolovon 121.8leotse 120.9我们可以看到，leotse乱入了，他的weight等于120.9，">
-  
-    <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
-  
 
+    
+    <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Scorpio</a>
-      </h1>
+
+  <body>
+    <header>
       
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">My name is L.T.</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://leotse90.com"></form>
-      </div>
-    </div>
-  </div>
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Scorpio" title="Scorpio"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Scorpio">Scorpio</a></h1>
+				<h2 class="blog-motto">My name is L.T.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:leotse90.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/Hive浮点数比较与计算/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:50:05.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
 </header>
-      <div class="outer">
-        <section id="main"><article id="post-Hive浮点数比较与计算" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/29/Hive浮点数比较与计算/" class="article-date">
-  <time datetime="2015-09-29T07:50:05.000Z" itemprop="datePublished">2015-09-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Hive浮点数比较与计算">Hive浮点数比较与计算</h1><p><strong>author:leotse</strong></p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive浮点数比较与计算"><span class="toc-number">1.</span> <span class="toc-text">Hive浮点数比较与计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive浮点数比较"><span class="toc-number">1.0.1.</span> <span class="toc-text">Hive浮点数比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive浮点数计算"><span class="toc-number">1.0.2.</span> <span class="toc-text">Hive浮点数计算</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Hive浮点数比较与计算">Hive浮点数比较与计算</h1><p><strong>author:leotse</strong></p>
 <h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。</p>
 <p>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>
 <p>虽然这个问题已经解决，但是仍然给我们一些启示，当我们在进行浮点数比较的时候，需要警惕float和double的自动转型，特别需要避免从窄类型数值向宽类型数值的转型。</p>
@@ -87,120 +109,340 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
 <p>为了方便对比，我们先展示出表float_compare中的全部数据：<br><code>hive&gt; select * from float_compare;</code><br><code>OK</code><br><code>dooley 110.0</code><br><code>xiefeng 128.2</code><br><code>leotse    120.9</code><br><code>februus 119.0</code><br><code>yolovon 121.8</code>  </p>
 <p>接下来我们将表中的weight的字段除以10，得到如下结果：<br><code>hive&gt; select weight/10 from float_compare;</code><br><code>OK</code><br><code>11.0</code><br><code>12.819999694824219</code><br><code>12.09000015258789</code><br><code>11.9</code><br><code>12.180000305175781</code>  </p>
 <p>我们可以看到，除了110.0和120.0这种小数点后为0的，其他浮点数计算的结果都是不符合我们预期的。实际上，这个问题在Hive和Java中都存在（Hive用Java实现），而且所有使用IEEE标准进行浮点数编码的系统都存在这个问题。目前这个没有被解决，在这里摆出来是希望以后在遇到类似的浮点数计算的时候，我们能够长一个心眼，以免出现了谬误还不知道为什么。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://leotse90.com/2015/09/29/Hive浮点数比较与计算/" data-id="cifz2w97c0009u2s6az0867s0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/09/29/Python任务调度队列Celery/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/09/29/Hive之JOIN操作/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
-    </a>
-  
-</nav>
 
-  
-</article>
+</div>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  
-    
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">15</span></li></ul>
-    </div>
-  </div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2015/10/20/Scala入门/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/03/Hadoop安装之你不知道的事/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/29/MooseFS概览/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/29/【译】Python中yield关键字用法/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/29/改变FastDFS中某个机器的分组/">(no title)</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2015 Leo Tse<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://leotse90.com/2015/09/29/Hive浮点数比较与计算/" data-title="Scorpio" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/09/29/Python任务调度队列Celery/" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/09/29/Hive之JOIN操作/"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
 </nav>
-    
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	
 
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
-
-
-<script src="/js/script.js" type="text/javascript"></script>
-
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive浮点数比较与计算"><span class="toc-number">1.</span> <span class="toc-text">Hive浮点数比较与计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive浮点数比较"><span class="toc-number">1.0.1.</span> <span class="toc-text">Hive浮点数比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hive浮点数计算"><span class="toc-number">1.0.2.</span> <span class="toc-text">Hive浮点数计算</span></a></li></ol></li></ol></li></ol>
+ 
   </div>
-</body>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="leotse90" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/leotse90" target="_blank" title="Leotse&#39;s Github">Leotse&#39;s Github</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> You know I&#39;m hoping you&#39;ll sing along . <br/>
+			Though it&#39;s not your favorite song.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/proleo" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/leotse90" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Leo Tse">Leo Tse</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
 </html>
