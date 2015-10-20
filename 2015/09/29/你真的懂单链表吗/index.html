@@ -1,10 +1,459 @@
-@import '../_base/variables';
 
-@import 'header';
-@import 'footer';
-@import 'wrapper';
-@import 'widget';
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>LeoTse&#39;s Blogs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Leo Tse">
+    
+
+    
+    <meta name="description" content="你真的懂单链表吗引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
+我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  
+我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeoTse's Blogs">
+<meta property="og:url" content="http://leotse90.com/2015/09/29/你真的懂单链表吗/index.html">
+<meta property="og:site_name" content="LeoTse's Blogs">
+<meta property="og:description" content="你真的懂单链表吗引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
+我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  
+我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只">
+<meta property="og:updated_time" content="2015-09-29T07:51:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeoTse's Blogs">
+<meta name="twitter:description" content="你真的懂单链表吗引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
+我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  
+我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只">
+
+    
+    <link rel="alternative" href="/atom.xml" title="LeoTse&#39;s Blogs" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/leotse.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/leotse.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="LeoTse&#39;s Blogs" title="LeoTse&#39;s Blogs"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="LeoTse&#39;s Blogs">LeoTse&#39;s Blogs</a></h1>
+				<h2 class="blog-motto">My name is L.T.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:leotse90.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/你真的懂单链表吗/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:51:37.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#你真的懂单链表吗"><span class="toc-number">1.</span> <span class="toc-text">你真的懂单链表吗</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引子"><span class="toc-number">1.1.</span> <span class="toc-text">引子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单链表的反转"><span class="toc-number">1.1.1.</span> <span class="toc-text">单链表的反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单链表的排序"><span class="toc-number">1.1.2.</span> <span class="toc-text">单链表的排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除单链表中的最小元素"><span class="toc-number">1.1.3.</span> <span class="toc-text">删除单链表中的最小元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除所有重复结点"><span class="toc-number">1.1.4.</span> <span class="toc-text">删除所有重复结点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断一个链表是否包含另一个链表"><span class="toc-number">1.1.5.</span> <span class="toc-text">判断一个链表是否包含另一个链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#找出单链表中的倒数第K个元素"><span class="toc-number">1.1.6.</span> <span class="toc-text">找出单链表中的倒数第K个元素</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="你真的懂单链表吗">你真的懂单链表吗</h1><h2 id="引子">引子</h2><p><strong>首先，上一道开胃菜：怎么判断两个单链表是否相交？</strong>  </p>
+<p>我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  </p>
+<p>我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只能是Y形相交，而不可能是X形相交，亦即从第一个相同的结点开始，后面的结点全部一样。如果能想到这个，后面的就简单明了了：只要A链表和B链表的最后一个结点值相等，则证明A链表和B链表相交。该算法的时间复杂度也下降到O(m+n)。</p>
+<p>我们进一步来思考：<strong>怎么找到第一个相交的元素呢？</strong>  </p>
+<p>这里就当然不能像刚才那样，但是出发点还是一样，我们同样可以保证只要两次遍历。我们假设m &gt; n，那么如果我们将两个链表的末尾对齐，是不是从最后一个往前看（当然单链表不能往前遍历，我们先这样看）的时候，A链表会比B链表多m-n个元素，而A链表中的前m-n个元素可以忽略，直接从第m-n个元素开始和B链表一起向前遍历，比较A链表上第m-n+i个元素和B链表第i个元素（i&lt;n）即可。第一个相同的元素即为所求。  </p>
+<p>下面来看看其它的几个单链表相关的典型问题（贴代码太占空间，这里就只谈谈思路，大家可以动手试试）： </p>
+<h3 id="单链表的反转">单链表的反转</h3><p>如题，怎么实现一个单链表A（有m个元素）的反转呢？<br><strong>方案一</strong>：如果不能破坏原单链表，我们需要重新新建一个链表C，然后遍历原来的A链表，对C链表实行头插法建表（头插法即将新加入的结点作为链表的头结点，对应的还有尾插法，即直接在链表末尾添加元素）；<br><strong>方案二</strong>：如果可以破坏原单链表呢？暴力一点的办法是不断地交换相邻的两个元素，即首先将第一个元素通过m-1次交换使其变成链表的最后一个元素，然后又是同样的方法将现任的第一个元素通过m-2次交换使其成为链表的倒数第二个元素，以此类推。  </p>
+<h3 id="单链表的排序">单链表的排序</h3><p>就排序原理而言，个人觉得其实不用过多考虑存储结构的问题，即不管是顺序存储还是链式存储，都不影响排序的基本原理，只是不同的存储结构会影响不同排序方法的效率而已。因为我们完全可以夸张地将顺序存储也想象为不连续的存储只是它们相邻两者的间隙极端的小。即我们将货物分别存在美国和中国的仓库里和都存放在一个仓库里是一样的，只是运费问题而已。<br>明白了这一点，那么单链表的排序就和普通的数组排序没有什么太大的区别。我们现在要做的事就是针对性地选择一个时间性能相对较好的排序算法。<br>我们知道的排序方法有很多：插入排序、冒泡排序、快速排序、归并排序、堆排序以及基数排序等等，那么这其中哪些对顺序结构和链式结构不那么感冒呢？熟悉这些排序的童鞋肯定知道，是插入排序和冒泡排序。其他的几种常见排序方法就比较偏袒顺序存储结构了。所以，如果要对链表进行排序，我会选择插入排序或者冒泡排序。（不太清楚这些基本排序原理的click here：<a href="http://wlh0706-163-com.iteye.com/blog/1465570" target="_blank" rel="external">5种基本排序 娱乐版开脑解析</a>）  </p>
+<h3 id="删除单链表中的最小元素">删除单链表中的最小元素</h3><p>我能想到的办法就是遍历两次：第一次找到单链表中最小的元素，第二次遍历删除该元素。第一次遍历的时候需要借助两个变量，一个保存当前的最小元素的值，另一个保存当前最小值的位序。第二次遍历的时候当然就是删除第一次遍历得到的最小元素的位序上的元素了。 </p>
+<h3 id="删除所有重复结点">删除所有重复结点</h3><p>这个一般得借助其他的数据结构了。基本思路应该是：遍历链表，用一个数据结构保存当前已经遍历的元素，若下一个访问的链表里的元素已经存在于已经访问的元素集合中，则删除单链表中的该元素，否则继续，直至到达链表的末尾。保存已经访问过的元素可以用数组，也可以用其他的。 </p>
+<h3 id="判断一个链表是否包含另一个链表">判断一个链表是否包含另一个链表</h3><p>这个问题其实和开篇的问题一样，只是换了一种说法而已。因此只要找到第一个相同的元素就可以了。 </p>
+<h3 id="找出单链表中的倒数第K个元素">找出单链表中的倒数第K个元素</h3><p>我们首先要确保的就是单链表的元素个数大于K。<br>这里的实现思路也很巧妙：我们定义两个指针a和b，全部指向链表的头结点，然后a指针开始向后遍历，但a遍历到第K个元素的时候，b指针也开始从头开始遍历，接下来的事你应该知道了，当a指针到达链表的末尾时，b指针恰好指着链表的倒数第K个元素。这样的时间复杂度是O(n)。 </p>
+<p>那么，<strong>怎么找单链表中间的那个元素呢？</strong>  </p>
+<p>PS：这些问题肯定还有更好地解法和方案，希望您不吝赐教。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://leotse90.com/2015/09/29/你真的懂单链表吗/" data-title="LeoTse&#39;s Blogs" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/09/29/FastDFS概览/" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/09/29/Hadoop集群部署(RedHat)/"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#你真的懂单链表吗"><span class="toc-number">1.</span> <span class="toc-text">你真的懂单链表吗</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引子"><span class="toc-number">1.1.</span> <span class="toc-text">引子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单链表的反转"><span class="toc-number">1.1.1.</span> <span class="toc-text">单链表的反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单链表的排序"><span class="toc-number">1.1.2.</span> <span class="toc-text">单链表的排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除单链表中的最小元素"><span class="toc-number">1.1.3.</span> <span class="toc-text">删除单链表中的最小元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除所有重复结点"><span class="toc-number">1.1.4.</span> <span class="toc-text">删除所有重复结点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断一个链表是否包含另一个链表"><span class="toc-number">1.1.5.</span> <span class="toc-text">判断一个链表是否包含另一个链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#找出单链表中的倒数第K个元素"><span class="toc-number">1.1.6.</span> <span class="toc-text">找出单链表中的倒数第K个元素</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="leotse90" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/leotse90" target="_blank" title="Leotse&#39;s Github">Leotse&#39;s Github</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> You know I&#39;m hoping you&#39;ll sing along . <br/>
+			Though it&#39;s not your favorite song.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/proleo" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/leotse90" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Leo Tse">Leo Tse</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
 
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

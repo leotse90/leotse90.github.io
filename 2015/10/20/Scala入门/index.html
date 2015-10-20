@@ -1,10 +1,452 @@
-@import '../_base/variables';
 
-@import 'header';
-@import 'footer';
-@import 'wrapper';
-@import 'widget';
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>LeoTse&#39;s Blogs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Leo Tse">
+    
+
+    
+    <meta name="description" content="Scala入门by:leotse
+为什么是Scala有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。
+During a meeting in the Community Corner (java.net booth) with James Gosling,a participant asked an i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeoTse's Blogs">
+<meta property="og:url" content="http://leotse90.com/2015/10/20/Scala入门/index.html">
+<meta property="og:site_name" content="LeoTse's Blogs">
+<meta property="og:description" content="Scala入门by:leotse
+为什么是Scala有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。
+During a meeting in the Community Corner (java.net booth) with James Gosling,a participant asked an i">
+<meta property="og:updated_time" content="2015-10-20T06:54:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeoTse's Blogs">
+<meta name="twitter:description" content="Scala入门by:leotse
+为什么是Scala有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。
+During a meeting in the Community Corner (java.net booth) with James Gosling,a participant asked an i">
+
+    
+    <link rel="alternative" href="/atom.xml" title="LeoTse&#39;s Blogs" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/leotse.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/leotse.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="LeoTse&#39;s Blogs" title="LeoTse&#39;s Blogs"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="LeoTse&#39;s Blogs">LeoTse&#39;s Blogs</a></h1>
+				<h2 class="blog-motto">My name is L.T.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:leotse90.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/20/Scala入门/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-20T06:54:52.000Z" itemprop="datePublished"> 发表于 2015-10-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Scala入门"><span class="toc-number">1.</span> <span class="toc-text">Scala入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么是Scala"><span class="toc-number">1.0.1.</span> <span class="toc-text">为什么是Scala</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scala_&_REPL"><span class="toc-number">1.0.2.</span> <span class="toc-text">Scala & REPL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量声明：val和var"><span class="toc-number">1.0.3.</span> <span class="toc-text">变量声明：val和var</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">1.0.4.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Scala入门">Scala入门</h1><p><em>by:leotse</em></p>
+<h3 id="为什么是Scala">为什么是Scala</h3><p>有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。</p>
+<p><code>During a meeting in the Community Corner (java.net booth) with James Gosling,</code><br><code>a participant asked an interesting question:&quot;Which Programming Language would</code><br><code>you use now on top of JVM, except Java?&quot;. The answer was surprisingly fast and</code><br><code>very clear: - Scala.</code></p>
+<p>可见，Scala是一门很受待见的编程语言，另一位大牛Horstmann指出，Scala试图将以下三组对立的思想融合在一门编程语言中：<br><code>－函数式编程 VS 面向对象编程</code><br><code>－富有表达力的语法 VS 静态类型</code><br><code>－高级的语言特性 VS 与Java高度集成</code><br>这样看来，Scala就是想集各家所长，打造一种平衡的和谐，这看起来像是编程语言世界的乌邦托。<br>Scala和很多在Java基础上发展的语言一样，需要基于JVM，这一点使得Scala拥有强大的Java所拥有的特性，比如跨平台。但是成也JVM，败也JVM，JVM启动较慢的问题，需要编译等等这些也成为了Scala的瓶颈。只要还立足于JVM，Scala就一直会受到JVM的限制。</p>
+<p>但是这些都无碍于Scala本身成为一门成功的语言，现在很多公司都已经逐渐投靠Scala阵营，比如twitter，特别是当使用Scala编写的Spark兴起之后，Scala更是成为很多公司大数据编程语言的首选。</p>
+<h3 id="Scala_&amp;_REPL">Scala &amp; REPL</h3><p>首先，我们需要认识一下REPL，全称为Read-Eval-Print-Loop，亦即读取－求值－打印－循环。如果是第一次接触这个概念，会觉得有点奇怪，我们可以将REPL称为<strong>交互式解释器</strong>。一般的，我们通过REPL可以快速学习和验证一门语言的特性（前提是这门语言支持REPL）。<br>但是并不是所有的语言都支持REPL，常见的编程语言支持REPL的有Ruby、Python、Lua，使用很广的Java、C++、C#、PHP以及JS等并不支持原生的REPL。当然，我们既然在这里讨论REPL，Scala是肯定支持REPL的。我们在学习Scala的时候可以直接在REPL coding。实际上，我们敲进去的代码首先被编译，然后JVM会执行编译后的字节码，然后返回执行的结果。</p>
+<p>我们看一个示例：<br><code>scala&gt; &quot;Hello, Scala&quot;</code><br><code>res0: String = Hello, Scala</code><br>从这个示例中，我们可以看到输入的是文本“Hello, Scala”，下面一行是输出，这里的res0是REPL为这个文本起的名字，后面的String表明这个文本是字符串类型。我们可以直接使用res0这个变量名去调用这个字符串文本。</p>
+<h3 id="变量声明：val和var">变量声明：val和var</h3><p>在上一小节里面，我们已经见识到了Scala的变量声明，但是，我们一般情况下都希望将变量命名的权力牢牢控制在自己手上，因此我们可以使用以下方式声明变量。<br>－var：variable的缩写。用法如下：<br><code>var variable_name: [variable_type] = variable_value</code><br>变量的类型是可选的，因为如果没有指定变量的类型，Scala的编译器会根据变量的值推断出它的类型。我们看下面的示例：</p>
+<p><code>scala&gt; var x: Int = 1  // 指定x的类型为Int</code><br><code>x: Int = 1</code><br><code>scala&gt; x = 2  // 改变变量x的值</code><br><code>x: Int = 2</code><br><code>scala&gt; var y = 3  // 没有指定y的类型</code><br><code>y: Int = 3</code></p>
+<p>－val：这里说变量其实不太准确，因为val声明的是不可变的常量。使用方法和var类似，只是不能修改它的值。在实际开发中，除非我们可以预知需要改变一个值的内容，否则我们一般用val声明。示例如下：  </p>
+<p><code>scala&gt; val z = 3</code><br><code>z: Int = 3</code><br><code>scala&gt; z = 2  // 不可以修改一个常量的值</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
+<p>一般的，我们不需要声明类型，除非必须。而且我们注意到Scala和Java等语言不一样，变量的类型声明在变量名后面。</p>
+<p>另外，我们在REPL中的示例中可以看到，解释器为我们没有命名的变量定义res0这个名字，凡是解释器定义的变量，如res0、res1等等，都是常量，不可修改:<br><code>scala&gt; res0</code><br><code>res1: String = Hello, Scala</code><br><code>scala&gt; res0 = 1990</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
+<p>在Scala中，有8种类型，它们分别为Boolean、Byte、Char、Short、Int、Long、Float以及Double。在这里，我们和Java那样称它们为八大基本类型，因为Scala中并不会刻意去区分基本类型和引用类型，因为他们都是类。</p>
+<h3 id="参考资料">参考资料</h3><p>《快学Scala》Cay S. Horstmann 电子工业出版社<br>《深入理解Scala》 Joshua D. Suereth 人民邮电出版社<br><a href="http://www.scala-lang.org/api/current/#package" target="_blank" rel="external">Scala官方API</a><br><a href="http://docs.scala-lang.org/tutorials/?_ga=1.213857492.1110750532.1444722905" target="_blank" rel="external">Scala官方Tutorials</a><br><a href="http://www.scalachina.com" target="_blank" rel="external">Scala中文社区</a><br>网上前辈们学习交流的技术博客与论坛</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://leotse90.com/2015/10/20/Scala入门/" data-title="LeoTse&#39;s Blogs" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/10/03/Hadoop安装之你不知道的事/"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Scala入门"><span class="toc-number">1.</span> <span class="toc-text">Scala入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么是Scala"><span class="toc-number">1.0.1.</span> <span class="toc-text">为什么是Scala</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scala_&_REPL"><span class="toc-number">1.0.2.</span> <span class="toc-text">Scala & REPL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量声明：val和var"><span class="toc-number">1.0.3.</span> <span class="toc-text">变量声明：val和var</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">1.0.4.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="leotse90" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/leotse90" target="_blank" title="Leotse&#39;s Github">Leotse&#39;s Github</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> You know I&#39;m hoping you&#39;ll sing along . <br/>
+			Though it&#39;s not your favorite song.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/proleo" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/leotse90" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Leo Tse">Leo Tse</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
 
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
