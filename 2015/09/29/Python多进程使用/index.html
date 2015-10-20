@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Scorpio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Python多进程使用Intro我们知道，由于GIL的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  
+multiprocessing模块和thr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scorpio">
+<meta property="og:url" content="http://leotse90.com/2015/09/29/Python多进程使用/index.html">
+<meta property="og:site_name" content="Scorpio">
+<meta property="og:description" content="Python多进程使用Intro我们知道，由于GIL的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  
+multiprocessing模块和thr">
+<meta property="og:updated_time" content="2015-09-29T07:50:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scorpio">
+<meta name="twitter:description" content="Python多进程使用Intro我们知道，由于GIL的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  
+multiprocessing模块和thr">
+  
+    <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Scorpio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">My name is L.T.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://leotse90.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python多进程使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/29/Python多进程使用/" class="article-date">
+  <time datetime="2015-09-29T07:50:58.000Z" itemprop="datePublished">2015-09-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Python多进程使用">Python多进程使用</h1><h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock" target="_blank" rel="external">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
+<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。</p>
+<h2 id="multiprocessing使用">multiprocessing使用</h2><p>在multiprocessing模块中，我们使用multiprocessing.Process()来创建一个新的进程对象。</p>
+<p>一般情况下，我们需要在创建Process对象时指定进程执行的函数，以及该函数的参数：<br><code>process = multiprocessing.Process(target=worker, args=(param1, param2)</code><br>该对象的主要方法有：<br><strong>start()</strong>：启动进程；每个进程最多只能调用一次；<br><strong>run()</strong>：进程的执行逻辑在run()里。如果Process对象没有指定target，就会默认执行Process的run()方法；<br><strong>join([timeout])</strong>：阻塞当前进程，直到调用join方法的那个进程执行完，再继续执行当前进程；<br><strong>is_alive()</strong>：返回该进程是否存活；<br><strong>terminate()</strong>：终结一个进程。当调用这个函数的时候，运行逻辑中的exit和finally代码段将不会执行。而且这个进程的子进程不会被终结而是成为孤儿进程；  </p>
+<p>下面我们给出一段多进程使用的示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param):</code><br><code>print param</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>  </p>
+<p>我们可以得到如下的输出：<br><code>1</code><br><code>0</code><br><code>2</code><br><code>4</code><br><code>3</code>  </p>
+<h2 id="子进程通信">子进程通信</h2><p>multiprocessing支持两种类型的进程通信手段，分别是Queue和Pipe。  </p>
+<h3 id="Queue">Queue</h3><p>Queue是一种多线程优先队列。它允许多个进程读和写，我们通过<code>mutiprocessing.Queue(maxsize)</code>创建一个Queue，maxsize表示队列中可以存放对象的最大数量。它的一些主要方法有：<br><strong>get()</strong>：删除并返回队列中的一个元素；<br><strong>put()</strong>: 添加元素到队列；<br><strong>qsize()</strong> : 返回队列中元素的个数；<br><strong>empty()</strong>: 队列为空返回True否则返回False；<br><strong>full()</strong>: 队列已满返回True，负责返回False；  </p>
+<p>在下面的示例里，我们用Queue实现获取多进程执行时的输出：   </p>
+<p><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>result_queue = multiprocessing.Queue()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, result_queue])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>while not result_queue.empty():</code><br><code>print result_queue.get()</code><br><code>def worker(param, result_queue):</code><br><code>result_queue.put(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>   </p>
+<p>执行这段代码，输出为：<br><code>101</code><br><code>102</code><br><code>103</code><br><code>100</code><br><code>104</code>  </p>
+<h3 id="Pipe">Pipe</h3><p>Pipe可以是单向，也可以是双向。我们通过mutiprocessing.Pipe(duplex=False)创建单向管道 (默认为双向)。它主要有send()和recv()两种方法，顾名思义，分别是发送消息和接受消息。<br>我们同样来看一段示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>parent_conn, child_conn = multiprocessing.Pipe()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, child_conn])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>print parent_conn.recv()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param, child_conn):</code><br><code>child_conn.send(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code><br>执行这段代码，输出为：<br><code>100</code><br><code>101</code><br><code>102</code><br><code>103</code><br><code>104</code>  </p>
+<h2 id="Q&amp;A">Q&amp;A</h2><p>为什么要先依次调用start再调用join，而不是start完了就调用join呢？<br>答：假设我们有两个进程p1，p2，如果我们在p1执行后先join()然后再p2.start()，我们就会发现是先执行完p1，再执行主线程，最后才开始p2。这是因为join是用来阻塞当前线程的，p1.start()之后，p1就提示主线程，需要等待p1结束才向下执行，那主线程就乖乖的等着啦，自然没有执行p2.start()。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://leotse90.com/2015/09/29/Python多进程使用/" data-id="cifz2w9740005u2s6cu0lqr3g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/29/Hadoop集群部署(RedHat)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/29/Python任务调度队列Celery/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/10/20/Scala入门/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/03/Hadoop安装之你不知道的事/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/MooseFS概览/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/【译】Python中yield关键字用法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/改变FastDFS中某个机器的分组/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Leo Tse<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

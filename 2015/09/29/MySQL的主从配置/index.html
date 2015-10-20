@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Scorpio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MySQL的主从配置整理：LeoTse
+准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
+主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“ba">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scorpio">
+<meta property="og:url" content="http://leotse90.com/2015/09/29/MySQL的主从配置/index.html">
+<meta property="og:site_name" content="Scorpio">
+<meta property="og:description" content="MySQL的主从配置整理：LeoTse
+准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
+主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“ba">
+<meta property="og:updated_time" content="2015-09-29T07:52:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scorpio">
+<meta name="twitter:description" content="MySQL的主从配置整理：LeoTse
+准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
+主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“ba">
+  
+    <link rel="alternative" href="/atom.xml" title="Scorpio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Scorpio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">My name is L.T.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://leotse90.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-MySQL的主从配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/29/MySQL的主从配置/" class="article-date">
+  <time datetime="2015-09-29T07:52:37.000Z" itemprop="datePublished">2015-09-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="MySQL的主从配置">MySQL的主从配置</h1><p>整理：LeoTse</p>
+<h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
+<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br>这个账号可以说是Slave访问Master的通行证。</p>
+<p>2.Master配置    </p>
+<p>我们开始配置Master，修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 1</code><br><code>binlog-do-db    = test_db</code><br><code>expire-logs-days= 7</code><br>下面来解释一下这些字段：<br><code>log-bin         = mysql-bin</code>表示启用二进制日志，用以记录Master中数据的更新日志；<br><code>server-id       = 1</code>唯一标识Master的ID，一般建议使用IP地址的最后一段；<br><code>binlog-do-db    = test_db</code>选择需要备份的数据库，<strong>如果需要备份全部，可以不增加这行</strong>；<br><code>expire-logs-days= 7</code>指定只保存7天的二进制日志，防止占用磁盘空间；  </p>
+<p>配置好后，我们需要重启MySQL服务。<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>我们需要看看是否已经配置成功了，我们可以执行以下SQL语句：<br>SHOW MASTER STATUS\G;<br>如果你看到类似下面的信息，则说明Master基本ok，如果数据库中已经有数据，这个信息将会用到：<br><code>File: mysql-bin.000002</code><br><code>Position: 107</code><br><code>Binlog_Do_DB: test_db</code><br><code>Binlog_Ignore_DB:</code>  </p>
+<p>3.主数据库已经有数据的Master配置</p>
+<p>如果Master的数据库已经有数据了，你可以遵照下面的步骤：<br>1）进入MySQL终端，查看当前正在使用的库有哪些：<br><code>SHOW databases;</code>  </p>
+<p>2）停止当前MySQL的所有写操作，并查看当前数据库的状态：<br><code>FLUSH TABLES WITH READ LOCK;</code>  </p>
+<p>3）打开另一个终端（也可以直接exit离开当前MySQL，但是为了避免重复进入MySQL输密码，建议打开一个新的终端），将要备份的数据库导出成sql文件，并将其传到Slave机器上：<br><code>mysqldump -uroot -p****** test_db &gt; test_db.sql</code><br><code>scp test_db.sql root@10.0.0.2:/root/</code>  </p>
+<p>4）切换到MySQL终端，解锁：<br><code>UNLOCK TABLES;</code></p>
+<p>至此，Master配置结束。</p>
+<h3 id="Slave配置">Slave配置</h3><p>Slave的配置也很简单。同样修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 2</code><br><code>binlog-do-db    = test_db</code><br><code>relay-log       = mysql-relay-bin</code><br><code>log-slave-updates = 1</code><br>我们解释一下2个在Master中没有出现的字段：<br><code>relay-log       = mysql-relay-bin</code>配置中继日志（主要是在MySQL服务器的主从架构中的Slave上用到的，当Slave想要和Master进行数据的同步时，从服务器将Master的二进制日志文件拷贝到自己的主机上放在中继日志中，然后调用SQL线程按照拷中继日志文件中的二进制日志文件执行以便就可达到数据的同步。）<br><code>log-slave-updates = 1</code>表示slave将复制事件写进自己的二进制日志；  </p>
+<p>重启MySQL服务：<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>如果主数据库已经有数据，需要将新建database并将数据导入：<br><code>CREATE DATABASE test_db;</code><br>切换到终端（linux终端）：<br><code>mysql -uroot -p****** test_db &lt; test_db.sql</code>  </p>
+<p>接下来就是让Slave连接Master，在Slave上执行以下SQL语句：<br><code>CHANGE MASTER TO MASTER_HOST=&#39;10.0.0.1&#39;,MASTER_USER=&#39;backup&#39;, MASTER_PASSWORD=&#39;backup_mysql&#39;, MASTER_LOG_FILE=&#39;mysql-bin.000001&#39;,MASTER_LOG_POS=0;</code><br>(如果主数据库有数据，需要将MASTER_LOG_FILE和MASTER_LOG_POS按照SHOW MASTER STATUS\G;的结果修改，如MASTER_LOG_FILE=’mysql-bin.000002’,MASTER_LOG_POS=107)<br><code>START SLAVE\G;</code>   </p>
+<p>最后，我们通过执行<code>SHOW SLAVE STATUS\G;</code>来查看是否配置成功，如果出现：<br><code>*************************** 1. row ***************************</code><br><code>Slave_IO_State:</code><br><code>Master_Host: 10.0.0.1</code><br><code>Master_User: backup</code><br><code>Master_Port: 3306</code><br><code>Connect_Retry: 60</code><br><code>Master_Log_File: mysql-bin.000001</code><br><code>Read_Master_Log_Pos: 4</code><br><code>Relay_Log_File: mysqld-relay-bin.000001</code><br><code>Relay_Log_Pos: 4</code><br><code>Relay_Master_Log_File: mysql-bin.000001</code><br><code>Slave_IO_Running: No</code><br><code>Slave_SQL_Running: No</code><br><code>Replicate_Do_DB:</code><br><code>Replicate_Ignore_DB:</code><br><code>Replicate_Do_Table:</code><br><code>Replicate_Ignore_Table:</code><br><code>Replicate_Wild_Do_Table:</code><br><code>Replicate_Wild_Ignore_Table:</code><br><code>Last_Errno: 0</code><br><code>Last_Error:</code><br><code>Skip_Counter: 0</code><br><code>Exec_Master_Log_Pos: 4</code><br><code>Relay_Log_Space: 107</code><br><code>Until_Condition: None</code><br><code>Until_Log_File:</code><br><code>Until_Log_Pos: 0</code><br><code>Master_SSL_Allowed: No</code><br><code>Master_SSL_CA_File:</code><br><code>Master_SSL_CA_Path:</code><br><code>Master_SSL_Cert:</code><br><code>Master_SSL_Cipher:</code><br><code>Master_SSL_Key:</code><br><code>Seconds_Behind_Master: NULL</code><br><code>Master_SSL_Verify_Server_Cert: No</code><br><code>Last_IO_Errno: 0</code><br><code>Last_IO_Error:</code><br><code>Last_SQL_Errno: 0</code><br><code>Last_SQL_Error:</code><br><code>Replicate_Ignore_Server_Ids:</code><br><code>Master_Server_Id: 0</code>  </p>
+<p>那么恭喜你，配置成功。</p>
+<p>至此，整个MySQL主从集群已经搭建好了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://leotse90.com/2015/09/29/MySQL的主从配置/" data-id="cifz2w9780007u2s63444t2ui" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/29/SSH免密码登录设置/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/29/FastDFS 安装使用说明/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/10/20/Scala入门/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/03/Hadoop安装之你不知道的事/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/MooseFS概览/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/【译】Python中yield关键字用法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/29/改变FastDFS中某个机器的分组/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Leo Tse<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
