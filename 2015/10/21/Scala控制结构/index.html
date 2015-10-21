@@ -21,7 +21,7 @@ scala&amp;gt; val v1 = {va">
 scala&amp;gt; var v = {var a = 2; var b = 4; a + b;}
 v: Int = 6
 scala&amp;gt; val v1 = {va">
-<meta property="og:updated_time" content="2015-10-21T10:07:18.000Z">
+<meta property="og:updated_time" content="2015-10-21T10:10:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala控制结构">
 <meta name="twitter:description" content="by:leotse
@@ -290,22 +290,12 @@ scala> while (x > 0) {
 1
 </code></pre>
 
-<p>Scala中的for循环却和Java中的不太一样，在形式上有较大的改变，有一种观点认为：“Scala 的for实际上是一条管道，它在将元素传递给循环主体之前处理元素组成的集合，每次一个。此管道其中的一部分负责将更多的元素添加到管道中（生成器），一部分负责编辑管道中的元素（过滤器），还有一些负责处理中间的操作（比如记录）。”：  </p>
-<pre><code>
-scala> for (i <- 1="" 2="" 3="" 4="" to="" 4)="" print(i="" +="" "="" ")="" <="" code=""></-></code></pre>  
-这段代码等同于：  
-<pre><code>
-scala> for (i <- 1="" 2="" 3="" 4="" to="" 4)="" {="" |="" print(i="" +="" "="" ")="" }="" <="" code=""></-></code></pre>
-
+<p>Scala中的for循环却和Java中的不太一样，在形式上有较大的改变，有一种观点认为：“Scala 的for实际上是一条管道，它在将元素传递给循环主体之前处理元素组成的集合，每次一个。此管道其中的一部分负责将更多的元素添加到管道中（生成器），一部分负责编辑管道中的元素（过滤器），还有一些负责处理中间的操作（比如记录）。”：<br><code>scala&gt; for (i &lt;- 1 to 4) print(i + &quot; &quot;)</code><br><code>1 2 3 4</code><br>这段代码等同于：<br><code>scala&gt; for (i &lt;- 1 to 4) {</code><br><code>|     print(i + &quot; &quot;)</code><br><code>| }</code><br><code>1 2 3 4</code>  </p>
 <p>这里我们看到<code>for (i &lt;- 1 to 4)</code>这种形式的表达式，这条表达式的意思是我们从1到4进行一个遍历，然后将这些值依次赋予变量i。更普遍的for定义是<code>for (v &lt;- expression)</code>，也就是将expression每次生成的值赋给变量v。我们看到<strong>在for循环的变量v之前并没有var或者val，此时，v的类型是集合的元素类型。</strong></p>
-<p>这种循环便利非常方便，比如我们要遍历一个字符串：  </p>
-<pre><code>
-scala> for (c <- "hello,="" scala")="" print(c="" +="" "-")="" h-e-l-l-o-,-="" -s-c-a-l-a-="" <="" code=""></-></code></pre>
-
+<p>这种循环便利非常方便，比如我们要遍历一个字符串：<br><code>scala&gt; for (c &lt;- &quot;hello, scala&quot;) print(c + &quot;-&quot;)</code><br><code>h-e-l-l-o-,- -s-c-a-l-a-</code></p>
 <p>我们还可以这样遍历其他诸如数组、集合之类。</p>
 <p>for循环表达式还有更加先进的使用方法，我们称之为<em>for推导式</em>。还是先看一段代码：  </p>
-<p><pre><code><br>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3) println((i, j))<br>(1,1)<br>(1,2)<br>(2,1)<br>(2,2)</code></pre></p>
-<p>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3 if i != j) println((i, j))<br>(1,2)<br>(2,1)<br><br>我们需要解释一下这段代码，首先额外解释一下to和until的区别，x to y表示从x到y的所有整数，包含y；而x until y表示从x到y的所有整数不包含y（y &gt; x）。我们在这段代码看到，for循环的循环控制语句中有多条表达式，并且以分号分割，每个表达式我们称之为<strong>生成器</strong>，生成器的作用是在每一次循环的时候生成变量的值，控制变量j的赋值语句后跟着<code>if i != j</code>，这是一个<strong>守卫</strong>，守卫用以过滤符合条件的控制变量。</p>
+<p><pre><code><br>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3) println((i, j))<br>(1,1)<br>(1,2)<br>(2,1)<br>(2,2)<br>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3 if i != j) println((i, j))<br>(1,2)<br>(2,1)<br></code></pre><br>我们需要解释一下这段代码，首先额外解释一下to和until的区别，x to y表示从x到y的所有整数，包含y；而x until y表示从x到y的所有整数不包含y（y &gt; x）。我们在这段代码看到，for循环的循环控制语句中有多条表达式，并且以分号分割，每个表达式我们称之为<strong>生成器</strong>，生成器的作用是在每一次循环的时候生成变量的值，控制变量j的赋值语句后跟着<code>if i != j</code>，这是一个<strong>守卫</strong>，守卫用以过滤符合条件的控制变量。</p>
 <p>到这里为止，我们已经对Scala的控制结构有一个大致的了解。在实际编码中，我们会看到更灵活、更强大的控制结构使用方法，但是万变不离其宗，它们都是基于这些基本的控制结构形式。</p>
 
       
