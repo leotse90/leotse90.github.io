@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hive浮点数比较与计算 | LeoTse&#39;s Blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="by:leotse
+Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：hive&amp;gt; select * from float_compare where weight&amp;gt;120.9;OKxiefeng 128.2yolovon 121.8leotse 120.9我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive浮点数比较与计算">
+<meta property="og:url" content="http://leotse90.com/2015/10/12/Hive浮点数比较与计算/index.html">
+<meta property="og:site_name" content="LeoTse's Blogs">
+<meta property="og:description" content="by:leotse
+Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：hive&amp;gt; select * from float_compare where weight&amp;gt;120.9;OKxiefeng 128.2yolovon 121.8leotse 120.9我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一">
+<meta property="og:updated_time" content="2015-10-21T03:10:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive浮点数比较与计算">
+<meta name="twitter:description" content="by:leotse
+Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：hive&amp;gt; select * from float_compare where weight&amp;gt;120.9;OKxiefeng 128.2yolovon 121.8leotse 120.9我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一">
+  
+    <link rel="alternative" href="/atom.xml" title="LeoTse&#39;s Blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leo Tse</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">My name is L.T.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leo Tse</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="null" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leo Tse</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">My name is L.T.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Hive浮点数比较与计算" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/12/Hive浮点数比较与计算/" class="article-date">
+  	<time datetime="2015-10-12T02:55:15.000Z" itemprop="datePublished">2015-10-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hive浮点数比较与计算
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。</p>
+<p>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>
+<p>虽然这个问题已经解决，但是仍然给我们一些启示，当我们在进行浮点数比较的时候，需要警惕float和double的自动转型，特别需要避免从窄类型数值向宽类型数值的转型。</p>
+<h3 id="Hive浮点数计算">Hive浮点数计算</h3><p>相比上面的问题，浮点数的计算也是一个BUG，而且现在还没有解决，<a href="https://issues.apache.org/jira/browse/HIVE-3715" target="_blank" rel="external">float and double calculation is inaccurate in Hive</a>。</p>
+<p>为了方便对比，我们先展示出表float_compare中的全部数据：<br><code>hive&gt; select * from float_compare;</code><br><code>OK</code><br><code>dooley 110.0</code><br><code>xiefeng 128.2</code><br><code>leotse    120.9</code><br><code>februus 119.0</code><br><code>yolovon 121.8</code>  </p>
+<p>接下来我们将表中的weight的字段除以10，得到如下结果：<br><code>hive&gt; select weight/10 from float_compare;</code><br><code>OK</code><br><code>11.0</code><br><code>12.819999694824219</code><br><code>12.09000015258789</code><br><code>11.9</code><br><code>12.180000305175781</code>  </p>
+<p>我们可以看到，除了110.0和120.0这种小数点后为0的，其他浮点数计算的结果都是不符合我们预期的。实际上，这个问题在Hive和Java中都存在（Hive用Java实现），而且所有使用IEEE标准进行浮点数编码的系统都存在这个问题。目前这个没有被解决，在这里摆出来是希望以后在遇到类似的浮点数计算的时候，我们能够长一个心眼，以免出现了谬误还不知道为什么。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/10/13/MySQL的主从配置/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          MySQL的主从配置
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/11/Hive本地模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hive 本地模式</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Hive浮点数比较与计算" data-title="Hive浮点数比较与计算" data-url="http://leotse90.com/2015/10/12/Hive浮点数比较与计算/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Leo Tse
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

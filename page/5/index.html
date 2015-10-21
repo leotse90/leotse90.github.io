@@ -114,7 +114,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -196,11 +196,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-Python任务调度队列Celery" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-你真的懂单链表吗" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/29/Python任务调度队列Celery/" class="article-date">
-  	<time datetime="2015-09-29T07:50:40.000Z" itemprop="datePublished">2015-09-29</time>
+      <a href="/2015/09/21/你真的懂单链表吗/" class="article-date">
+  	<time datetime="2015-09-21T02:55:15.000Z" itemprop="datePublished">2015-09-21</time>
 </a>
     </div>
   
@@ -209,26 +209,34 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/21/你真的懂单链表吗/">你真的懂单链表吗</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Python任务调度队列Celery">Python任务调度队列Celery</h1><p><em>BY:leotse</em></p>
-<h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
-<p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
-<p>一般推荐使用RabbitMQ，但是我们这里用到Redis，因为Redis安装的时候依赖少，而且性能稳定，但是Redis也有缺点，那就是断电的时候会丢失数据。我们在这里，就以Redis作为Celery的第三方中间层。</p>
-<h2 id="Installation">Installation</h2><p>我们这里使用Celery+redis套餐进行任务的调度。  </p>
-<p>Celery的安装非常简单，在linux系统下直接执行：<br><code>sudo pip install Celery</code><br><code>sudo pip install celery-with-redis</code><br>如果上述安装失败，可以尝试：<br><code>sudo easy_install Celery</code>   </p>
-<p>我们来验证一下Celery是否安装成功，进入python shell，输入：<br><code>from celery import Celery</code><br>如果没有报错，则说明安装成功。</p>
-<p>接着我们安装redis：<br><code>sudo apt-get install redis-server</code><br>安装完成后，redis会自动启动，我们也来验证一下redis是否安装成功：<br><code>ps -aux|grep redis</code><br>如果看到以下输出，则说明安装ok：<br><code>redis      942  0.2  0.0  73852  1832 ?        Ssl  Apr13 302:26 /usr/bin/redis-server /etc/redis/redis.conf</code></p>
-<p>它们的安装都比较简单。接下来我们看如何使用Celery进行任务调度。</p>
-<h2 id="Usage">Usage</h2><p>我们应该都知道生产者-消费者模型，在使用Celery的时候，我们也需要一个生产者和一个消费者，生产者负责往队列里写入待处理的数据，消费者负责将数据从队列中取出并进行处理。我们在这里将redis作为存储这种“数据”的地方。</p>
-<p>我们来看这样一个示例，我们假设要下载一批视频v1，v2，v3….，这批视频列表存在另一个文件系统中，我们假设通过get_video_list方法来获取这批视频列表，另一方面，我们可以通过download_video_worker(video)来下载视频。</p>
-<p>那么，生产者的伪代码如下：</p>
-<p><pre><code><br>import download_video_worker<br>video_list = get_video_list()<br>for video in video_list:<br>    download_video_worker.apply_async([video])<br></code></pre></p>
-<p>消费者的伪代码如下： </p>
-<p><pre><code><br>download_app=Celery(“download_videos”, broker=”redis://localhost:6379/0”)<br>@download_app.task`<br>def download_video_worker(video):<br>    download_video_to_local(video)<br></code></pre></p>
-<p>接着我们运行Celery：<br><code>celery -A download_video_worker worker --loglevel=info</code>  </p>
-<p>这样，当我们每次往队列中放入video信息时，celery就会执行download_video_woker中的逻辑处理video的下载过程。</p>
-<h3 id="推荐阅读">推荐阅读</h3><p><a href="http://www.celeryproject.org/" target="_blank" rel="external">Homepage - Celery: Distributed Task Queue</a><br><a href="https://denibertovic.com/posts/celery-best-practices/" target="_blank" rel="external">CELERY - BEST PRACTICES</a></p>
+        <p><em>by:leotse</em></p>
+<h2 id="引子">引子</h2><p><strong>首先，上一道开胃菜：怎么判断两个单链表是否相交？</strong>  </p>
+<p>我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  </p>
+<p>我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只能是Y形相交，而不可能是X形相交，亦即从第一个相同的结点开始，后面的结点全部一样。如果能想到这个，后面的就简单明了了：只要A链表和B链表的最后一个结点值相等，则证明A链表和B链表相交。该算法的时间复杂度也下降到O(m+n)。</p>
+<p>我们进一步来思考：<strong>怎么找到第一个相交的元素呢？</strong>  </p>
+<p>这里就当然不能像刚才那样，但是出发点还是一样，我们同样可以保证只要两次遍历。我们假设m &gt; n，那么如果我们将两个链表的末尾对齐，是不是从最后一个往前看（当然单链表不能往前遍历，我们先这样看）的时候，A链表会比B链表多m-n个元素，而A链表中的前m-n个元素可以忽略，直接从第m-n个元素开始和B链表一起向前遍历，比较A链表上第m-n+i个元素和B链表第i个元素（i&lt;n）即可。第一个相同的元素即为所求。  </p>
+<p>下面来看看其它的几个单链表相关的典型问题（贴代码太占空间，这里就只谈谈思路，大家可以动手试试）： </p>
+<h3 id="单链表的反转">单链表的反转</h3><p>如题，怎么实现一个单链表A（有m个元素）的反转呢？<br><strong>方案一</strong>：如果不能破坏原单链表，我们需要重新新建一个链表C，然后遍历原来的A链表，对C链表实行头插法建表（头插法即将新加入的结点作为链表的头结点，对应的还有尾插法，即直接在链表末尾添加元素）；<br><strong>方案二</strong>：如果可以破坏原单链表呢？暴力一点的办法是不断地交换相邻的两个元素，即首先将第一个元素通过m-1次交换使其变成链表的最后一个元素，然后又是同样的方法将现任的第一个元素通过m-2次交换使其成为链表的倒数第二个元素，以此类推。  </p>
+<h3 id="单链表的排序">单链表的排序</h3><p>就排序原理而言，个人觉得其实不用过多考虑存储结构的问题，即不管是顺序存储还是链式存储，都不影响排序的基本原理，只是不同的存储结构会影响不同排序方法的效率而已。因为我们完全可以夸张地将顺序存储也想象为不连续的存储只是它们相邻两者的间隙极端的小。即我们将货物分别存在美国和中国的仓库里和都存放在一个仓库里是一样的，只是运费问题而已。<br>明白了这一点，那么单链表的排序就和普通的数组排序没有什么太大的区别。我们现在要做的事就是针对性地选择一个时间性能相对较好的排序算法。<br>我们知道的排序方法有很多：插入排序、冒泡排序、快速排序、归并排序、堆排序以及基数排序等等，那么这其中哪些对顺序结构和链式结构不那么感冒呢？熟悉这些排序的童鞋肯定知道，是插入排序和冒泡排序。其他的几种常见排序方法就比较偏袒顺序存储结构了。所以，如果要对链表进行排序，我会选择插入排序或者冒泡排序。（不太清楚这些基本排序原理的click here：<a href="http://wlh0706-163-com.iteye.com/blog/1465570" target="_blank" rel="external">5种基本排序 娱乐版开脑解析</a>）  </p>
+<h3 id="删除单链表中的最小元素">删除单链表中的最小元素</h3><p>我能想到的办法就是遍历两次：第一次找到单链表中最小的元素，第二次遍历删除该元素。第一次遍历的时候需要借助两个变量，一个保存当前的最小元素的值，另一个保存当前最小值的位序。第二次遍历的时候当然就是删除第一次遍历得到的最小元素的位序上的元素了。 </p>
+<h3 id="删除所有重复结点">删除所有重复结点</h3><p>这个一般得借助其他的数据结构了。基本思路应该是：遍历链表，用一个数据结构保存当前已经遍历的元素，若下一个访问的链表里的元素已经存在于已经访问的元素集合中，则删除单链表中的该元素，否则继续，直至到达链表的末尾。保存已经访问过的元素可以用数组，也可以用其他的。 </p>
+<h3 id="判断一个链表是否包含另一个链表">判断一个链表是否包含另一个链表</h3><p>这个问题其实和开篇的问题一样，只是换了一种说法而已。因此只要找到第一个相同的元素就可以了。 </p>
+<h3 id="找出单链表中的倒数第K个元素">找出单链表中的倒数第K个元素</h3><p>我们首先要确保的就是单链表的元素个数大于K。<br>这里的实现思路也很巧妙：我们定义两个指针a和b，全部指向链表的头结点，然后a指针开始向后遍历，但a遍历到第K个元素的时候，b指针也开始从头开始遍历，接下来的事你应该知道了，当a指针到达链表的末尾时，b指针恰好指着链表的倒数第K个元素。这样的时间复杂度是O(n)。 </p>
+<p>那么，<strong>怎么找单链表中间的那个元素呢？</strong>  </p>
+<p>PS：这些问题肯定还有更好地解法和方案，希望您不吝赐教。</p>
 
       
     </div>
@@ -236,7 +244,15 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
 
       
       <div class="clearfix"></div>
@@ -253,11 +269,11 @@
 
 
   
-    <article id="post-Hive浮点数比较与计算" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-MooseFS概览" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/29/Hive浮点数比较与计算/" class="article-date">
-  	<time datetime="2015-09-29T07:50:05.000Z" itemprop="datePublished">2015-09-29</time>
+      <a href="/2015/09/20/MooseFS概览/" class="article-date">
+  	<time datetime="2015-09-20T02:55:15.000Z" itemprop="datePublished">2015-09-20</time>
 </a>
     </div>
   
@@ -266,16 +282,35 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/20/MooseFS概览/">MooseFS概览</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Hive浮点数比较与计算">Hive浮点数比较与计算</h1><p><strong>author:leotse</strong></p>
-<h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。</p>
-<p>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>
-<p>虽然这个问题已经解决，但是仍然给我们一些启示，当我们在进行浮点数比较的时候，需要警惕float和double的自动转型，特别需要避免从窄类型数值向宽类型数值的转型。</p>
-<h3 id="Hive浮点数计算">Hive浮点数计算</h3><p>相比上面的问题，浮点数的计算也是一个BUG，而且现在还没有解决，<a href="https://issues.apache.org/jira/browse/HIVE-3715" target="_blank" rel="external">float and double calculation is inaccurate in Hive</a>。</p>
-<p>为了方便对比，我们先展示出表float_compare中的全部数据：<br><code>hive&gt; select * from float_compare;</code><br><code>OK</code><br><code>dooley 110.0</code><br><code>xiefeng 128.2</code><br><code>leotse    120.9</code><br><code>februus 119.0</code><br><code>yolovon 121.8</code>  </p>
-<p>接下来我们将表中的weight的字段除以10，得到如下结果：<br><code>hive&gt; select weight/10 from float_compare;</code><br><code>OK</code><br><code>11.0</code><br><code>12.819999694824219</code><br><code>12.09000015258789</code><br><code>11.9</code><br><code>12.180000305175781</code>  </p>
-<p>我们可以看到，除了110.0和120.0这种小数点后为0的，其他浮点数计算的结果都是不符合我们预期的。实际上，这个问题在Hive和Java中都存在（Hive用Java实现），而且所有使用IEEE标准进行浮点数编码的系统都存在这个问题。目前这个没有被解决，在这里摆出来是希望以后在遇到类似的浮点数计算的时候，我们能够长一个心眼，以免出现了谬误还不知道为什么。</p>
+        <p><em>by:leotse</em></p>
+<h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/" target="_blank" rel="external">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
+<h2 id="Architecture">Architecture</h2><p>MooseFS主要由四部分组成：</p>
+<h3 id="Master_Server（元数据服务器）">Master Server（元数据服务器）</h3><p>管理整个MooseFS系统的单点，保存了MooseFS中每个文件的元数据，包括文件的大小、属性、文件位置等等；我们的元数据信息同时保存在Master的内存和磁盘里。</p>
+<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；</p>
+<h3 id="Chunk_Server（数据存储服务器）">Chunk Server（数据存储服务器）</h3><p>用于存储系统中的数据。如果我们指定数据需要备份（我们一般都会这么做），那么ChunkServer之间就会通过算法完成数据的备份工作；</p>
+<h3 id="Client（客户端）">Client（客户端）</h3><p>所有通过mfsmount进程和Master进行交互的机器，都可以叫做MooseFS的客户端。对客户端来说，所有的ChunkServer就像一台普通的NFS服务器一样在为它提供强大的数据存取服务；</p>
+<p>笔者从MooseFS的官网上kiang了两张图，分别是MooseFS读数据和写数据的，大家闭上眼睛，用心感受下：  </p>
+<p><img src="http://www.moosefs.org/tl_files/mfs_folder/read862.png" alt="MooseFS Read Process"><br><img src="http://www.moosefs.org/tl_files/mfs_folder/write862.png" alt="MooseFS Write Process"></p>
+<p>我们从图上可以很清晰地看到整个读写过程。  </p>
+<h2 id="Uses">Uses</h2><p>1.大规模高并发的数据存储与访问（大文件、小文件皆可）；<br>2.大规模的数据处理；</p>
+<h2 id="Features">Features</h2><h3 id="Advantages">Advantages</h3><p>1）简单易用。安装、部署以及配置都相对简单容易；<br>2）高可靠性：MooseFS采用数据备份的方式确保我们的数据安全可靠；<br>3）可伸缩性：我们可以在不停服务的情况下，新增或者删除MooseFS中的服务器；<br>4）支持POSIX访问，支持FUSE；<br>5）可移植性：适用于任何实现FUSE的系统，包括但不限于Linux、FreeBSD、OpenSolaris以及MacOS X；<br>6）MooseFS提供了快照功能，可以对整个文件甚至在正在写入的文件创建文件的快照；<br>7）提供类似JVM的GC机制；<br>8）提供web GUI监控接口；<br>9）随机读写的效率较高，海量小文件读写效率高；<br>10）发展比较成熟，文档全面；  </p>
+<h3 id="Disadvantages">Disadvantages</h3><p>1）MooseFS客户端程序使用FUSE编写加载MooseFS磁盘的命令；因此我们需要确保我们系统内置或者安装了FUSE；<br>2）存在单点故障。MooseFS只有一个Metadata Server，因此MDS的性能就会成为MooseFS性能的瓶颈；<br>3）故障恢复需手动恢复;<br>4）MooseFS的Master是单线程的程序，并不能发挥多核CPU的优势，由于大部分的处理逻辑都是内存操作，因此并不会存在太大的问题，但一旦涉及到磁盘I/O就有可能导致阻塞，严重的话整个集群会瘫痪掉，因此不建议把Master放在虚拟机中。<a href="http://tech.uc.cn/?tag=moosefs" target="_blank" rel="external">MooseFS之虚拟机惹的祸</a></p>
+<h2 id="Conclusion">Conclusion</h2><p>当前，MooseFS在国际国内都拥有了大量的用户，正是由于这些用户基础，也推动了MooseFS继续发展。<br>虽然MooseFS仍然存在单点故障这样的瓶颈，但是它的简单易用以及高可靠性，仍然让它成为我们DFS方案的不错的选择。</p>
+<h2 id="Others">Others</h2><p>MooseFS官网解答了我们一些常见的问题：<a href="http://www.moosefs.org/moosefs-faq.html" target="_blank" rel="external">FAQ</a></p>
+<p><strong>NFS</strong>：Network File System。一种用于分散式系统的协议。通过网络让不同的机器、不同的操作系统分享彼此个别的数据，让应用程序在客户端通过网络访问位于服务器磁盘中的数据，是在Unix系统间实现磁盘文件共享的一种方法。</p>
 
       
     </div>
@@ -283,7 +318,15 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MooseFS/">MooseFS</a></li></ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
 
       
       <div class="clearfix"></div>
@@ -300,11 +343,11 @@
 
 
   
-    <article id="post-Hive之JOIN操作" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-SSH免密码登录设置" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/29/Hive之JOIN操作/" class="article-date">
-  	<time datetime="2015-09-29T07:49:41.000Z" itemprop="datePublished">2015-09-29</time>
+      <a href="/2015/09/20/SSH免密码登录设置/" class="article-date">
+  	<time datetime="2015-09-20T02:55:15.000Z" itemprop="datePublished">2015-09-20</time>
 </a>
     </div>
   
@@ -313,20 +356,27 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/20/SSH免密码登录设置/">SSH免密码登录设置</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Hive之JOIN操作">Hive之JOIN操作</h1><p><em>整理：leotse</em></p>
-<h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
-<p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
-<p>接下来，我们将分析和介绍Hive中主要的JOIN操作。</p>
-<p>我们假定我们有两张表：human和assets。它们分别记录了人口以及资产信息，它们的字段如下：<br><code>hive&gt; describe human;</code><br><code>OK</code><br><code>name                    string</code><br><code>age                     int</code><br><code>job                     string</code><br><code>addr                    string</code>  </p>
-<p><code>hive&gt; describe assets;</code><br><code>OK</code><br><code>name                    string</code><br><code>bank                    string</code><br><code>fund                    int</code>  </p>
-<p>在下面的例子中，将会用到这两张表。</p>
-<h3 id="INNER_JOIN">INNER JOIN</h3><p>INNER JOIN，又称内连接。是较为常见的一种JOIN操作：<br><strong>Input</strong>: 表A、表B<br><strong>Condition</strong>: A.col = B.col<br><strong>Output</strong>: 表A和表B中满足Condition的所有数据记录<br><strong>Example</strong>:<br><code>SELECT a.col1, a.col2, b.col2, b.col3</code><br><code>FROM A a JOIN B b</code><br><code>ON a.col1 = b.col1</code><br><code>WHERE a.col3 = &#39;CONDITION&#39;;</code>  </p>
-<p>我们来看一个具体的例子，我们想知道human表中每一个人在不同银行的存款记录，我们可以用以下SQL语句进行查询：<br><code>SELECT h.name, h.age, h.job, a.bank, a.fund FROM human h JOIN assets a ON h.name=a.name;</code><br>ON关键字指定了两种表联接的条件，<br>我们对输出结果进行了截取，只选取最终的数据查询记录，如下：<br><code>xiefeng    24    big data    CMB    15000000</code><br><code>leotse    25    programmer    CMB    200000000</code><br><code>leotse    25    programmer    CAB    10000000</code><br><code>yolovon    26    CEO    HB    5000000</code><br><code>yolovon    26    CEO    CCB    3200000</code>  </p>
-<p>另外，我们需要注意的是，在Hive中，ON子句中尚不支持谓词OR。</p>
-<p>如果我们对多表进行INNER JOIN操作，如:<br><code>SELECT a.col1, a.col2, b.col4, c.col5 FROM a</code><br><code>JOIN b ON a.col1 = b.col2</code><br><code>JOIN c ON a.col2 = c.col3</code><br><code>WHERE CLAUSE;</code><br>大多数情况下，Hive会对每次JOIN操作启动一个MR Job，（在Hive中，SQL的执行是从左至右的）这上面这个SQL语句的执行过程中，首先启动一个MR Job对表a和表b进行一次JOIN操作，然后再启动另一个新的MR Job对表a和表c进行一次JOIN操作。<br>上面说到是大多数情况下，那种小部分的情况是指只要我们使用的ON后的条件（即连接键）一致的话，那就只会产生一个MR Job。</p>
-<p>Hive还假定最后一张JOIN的表最大，从而先将前面的表先缓存起来，直到最后一张表才进行计算，因此为了防止内存消耗过大，我们应该尽量保证JOIN操作的表从左到右表大小递增。</p>
+        <p><em>by:leotse</em></p>
+<h2 id="SSH免密码登录设置">SSH免密码登录设置</h2><p>准备工作：<br>两台机器S1，S2。IP分别为IP1，IP2，用户名为user。<br>我们想从S1免密码登录S2机器。以下为SSH设置的步骤：</p>
+<p>Step1：生产key。在S1上输入：<br><code>ssh-keygen -t rsa</code><br>然后一直enter，直到结束。</p>
+<p>Step2: 我们进入到~/.ssh目录，然后将生成的key通过scp复制到S2的.ssh目录（我们首先要确保目录存在）：<br><code>cd ~/.ssh</code><br><code>scp ~/.ssh/id_rsa.pub user@IP2:/home/user/.ssh/IP2</code><br>截至目前，S1上的配置已经完成。</p>
+<p>Step3：接下来我们登录S2机器。进入.ssh目录，确保authorized_keys文件存在：<br><code>cd ~/.ssh</code><br><code>cat IP2 &gt;&gt; authorized_keys</code><br>SSH免登录已经设置完毕，如果是普通用户，继续往下看。</p>
+<h2 id="普通用户">普通用户</h2><p>对于普通用户authorized_keys的权限必须限定为600，否则普通用户无法实现无密钥访问，而ROOT用户按照默认即可实现无密码访问：<br><code>sudo chmod 600 authorized_keys</code>  </p>
+<h2 id="免密码登录验证">免密码登录验证</h2><p>我们在S1上直接ssh连接S2机器，看能否免密码登录：<br><code>ssh IP2</code><br>如果可以直接登录上去，则说明已经设置成功。</p>
+<p>另，如果要设置S1和S2互相免密码登录，以上步骤在S1和S2都执行一次就好了！</p>
 
       
     </div>
@@ -334,7 +384,15 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
 
       
       <div class="clearfix"></div>

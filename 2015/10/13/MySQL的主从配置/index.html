@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MySQL的主从配置 | LeoTse&#39;s Blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="by:leotse
+准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
+主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL的主从配置">
+<meta property="og:url" content="http://leotse90.com/2015/10/13/MySQL的主从配置/index.html">
+<meta property="og:site_name" content="LeoTse's Blogs">
+<meta property="og:description" content="by:leotse
+准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
+主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql">
+<meta property="og:updated_time" content="2015-10-21T03:12:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL的主从配置">
+<meta name="twitter:description" content="by:leotse
+准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
+主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql">
+  
+    <link rel="alternative" href="/atom.xml" title="LeoTse&#39;s Blogs" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leo Tse</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">My name is L.T.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leo Tse</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="null" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leo Tse</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">My name is L.T.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-MySQL的主从配置" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/13/MySQL的主从配置/" class="article-date">
+  	<time datetime="2015-10-13T02:55:15.000Z" itemprop="datePublished">2015-10-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL的主从配置
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
+<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br>这个账号可以说是Slave访问Master的通行证。</p>
+<p>2.Master配置    </p>
+<p>我们开始配置Master，修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 1</code><br><code>binlog-do-db    = test_db</code><br><code>expire-logs-days= 7</code><br>下面来解释一下这些字段：<br><code>log-bin         = mysql-bin</code>表示启用二进制日志，用以记录Master中数据的更新日志；<br><code>server-id       = 1</code>唯一标识Master的ID，一般建议使用IP地址的最后一段；<br><code>binlog-do-db    = test_db</code>选择需要备份的数据库，<strong>如果需要备份全部，可以不增加这行</strong>；<br><code>expire-logs-days= 7</code>指定只保存7天的二进制日志，防止占用磁盘空间；  </p>
+<p>配置好后，我们需要重启MySQL服务。<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>我们需要看看是否已经配置成功了，我们可以执行以下SQL语句：<br>SHOW MASTER STATUS\G;<br>如果你看到类似下面的信息，则说明Master基本ok，如果数据库中已经有数据，这个信息将会用到：<br><code>File: mysql-bin.000002</code><br><code>Position: 107</code><br><code>Binlog_Do_DB: test_db</code><br><code>Binlog_Ignore_DB:</code>  </p>
+<p>3.主数据库已经有数据的Master配置</p>
+<p>如果Master的数据库已经有数据了，你可以遵照下面的步骤：<br>1）进入MySQL终端，查看当前正在使用的库有哪些：<br><code>SHOW databases;</code>  </p>
+<p>2）停止当前MySQL的所有写操作，并查看当前数据库的状态：<br><code>FLUSH TABLES WITH READ LOCK;</code>  </p>
+<p>3）打开另一个终端（也可以直接exit离开当前MySQL，但是为了避免重复进入MySQL输密码，建议打开一个新的终端），将要备份的数据库导出成sql文件，并将其传到Slave机器上：<br><code>mysqldump -uroot -p****** test_db &gt; test_db.sql</code><br><code>scp test_db.sql root@10.0.0.2:/root/</code>  </p>
+<p>4）切换到MySQL终端，解锁：<br><code>UNLOCK TABLES;</code></p>
+<p>至此，Master配置结束。</p>
+<h3 id="Slave配置">Slave配置</h3><p>Slave的配置也很简单。同样修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 2</code><br><code>binlog-do-db    = test_db</code><br><code>relay-log       = mysql-relay-bin</code><br><code>log-slave-updates = 1</code><br>我们解释一下2个在Master中没有出现的字段：<br><code>relay-log       = mysql-relay-bin</code>配置中继日志（主要是在MySQL服务器的主从架构中的Slave上用到的，当Slave想要和Master进行数据的同步时，从服务器将Master的二进制日志文件拷贝到自己的主机上放在中继日志中，然后调用SQL线程按照拷中继日志文件中的二进制日志文件执行以便就可达到数据的同步。）<br><code>log-slave-updates = 1</code>表示slave将复制事件写进自己的二进制日志；  </p>
+<p>重启MySQL服务：<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>如果主数据库已经有数据，需要将新建database并将数据导入：<br><code>CREATE DATABASE test_db;</code><br>切换到终端（linux终端）：<br><code>mysql -uroot -p****** test_db &lt; test_db.sql</code>  </p>
+<p>接下来就是让Slave连接Master，在Slave上执行以下SQL语句：<br><code>CHANGE MASTER TO MASTER_HOST=&#39;10.0.0.1&#39;,MASTER_USER=&#39;backup&#39;, MASTER_PASSWORD=&#39;backup_mysql&#39;, MASTER_LOG_FILE=&#39;mysql-bin.000001&#39;,MASTER_LOG_POS=0;</code><br>(如果主数据库有数据，需要将MASTER_LOG_FILE和MASTER_LOG_POS按照SHOW MASTER STATUS\G;的结果修改，如MASTER_LOG_FILE=’mysql-bin.000002’,MASTER_LOG_POS=107)<br><code>START SLAVE\G;</code>   </p>
+<p>最后，我们通过执行<code>SHOW SLAVE STATUS\G;</code>来查看是否配置成功，如果出现：<br><code>*************************** 1. row ***************************</code><br><code>Slave_IO_State:</code><br><code>Master_Host: 10.0.0.1</code><br><code>Master_User: backup</code><br><code>Master_Port: 3306</code><br><code>Connect_Retry: 60</code><br><code>Master_Log_File: mysql-bin.000001</code><br><code>Read_Master_Log_Pos: 4</code><br><code>Relay_Log_File: mysqld-relay-bin.000001</code><br><code>Relay_Log_Pos: 4</code><br><code>Relay_Master_Log_File: mysql-bin.000001</code><br><code>Slave_IO_Running: No</code><br><code>Slave_SQL_Running: No</code><br><code>Replicate_Do_DB:</code><br><code>Replicate_Ignore_DB:</code><br><code>Replicate_Do_Table:</code><br><code>Replicate_Ignore_Table:</code><br><code>Replicate_Wild_Do_Table:</code><br><code>Replicate_Wild_Ignore_Table:</code><br><code>Last_Errno: 0</code><br><code>Last_Error:</code><br><code>Skip_Counter: 0</code><br><code>Exec_Master_Log_Pos: 4</code><br><code>Relay_Log_Space: 107</code><br><code>Until_Condition: None</code><br><code>Until_Log_File:</code><br><code>Until_Log_Pos: 0</code><br><code>Master_SSL_Allowed: No</code><br><code>Master_SSL_CA_File:</code><br><code>Master_SSL_CA_Path:</code><br><code>Master_SSL_Cert:</code><br><code>Master_SSL_Cipher:</code><br><code>Master_SSL_Key:</code><br><code>Seconds_Behind_Master: NULL</code><br><code>Master_SSL_Verify_Server_Cert: No</code><br><code>Last_IO_Errno: 0</code><br><code>Last_IO_Error:</code><br><code>Last_SQL_Errno: 0</code><br><code>Last_SQL_Error:</code><br><code>Replicate_Ignore_Server_Ids:</code><br><code>Master_Server_Id: 0</code>  </p>
+<p>那么恭喜你，配置成功。</p>
+<p>至此，整个MySQL主从集群已经搭建好了。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/10/14/Python任务调度队列Celery/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Python任务调度队列Celery
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/12/Hive浮点数比较与计算/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hive浮点数比较与计算</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="MySQL的主从配置" data-title="MySQL的主从配置" data-url="http://leotse90.com/2015/10/13/MySQL的主从配置/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Leo Tse
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

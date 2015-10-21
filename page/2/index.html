@@ -114,7 +114,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -196,11 +196,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-【译】Python中yield关键字用法" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Python多进程使用" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/29/【译】Python中yield关键字用法/" class="article-date">
-  	<time datetime="2015-09-29T07:53:21.000Z" itemprop="datePublished">2015-09-29</time>
+      <a href="/2015/10/17/Python多进程使用/" class="article-date">
+  	<time datetime="2015-10-17T02:55:15.000Z" itemprop="datePublished">2015-10-17</time>
 </a>
     </div>
   
@@ -209,9 +209,92 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/Python多进程使用/">Python多进程使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="【译】Python中yield关键字用法">【译】Python中yield关键字用法</h1><p>译：LeoTse</p>
+        <p><em>by:leotse</em></p>
+<h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock" target="_blank" rel="external">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
+<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。</p>
+<h2 id="multiprocessing使用">multiprocessing使用</h2><p>在multiprocessing模块中，我们使用multiprocessing.Process()来创建一个新的进程对象。</p>
+<p>一般情况下，我们需要在创建Process对象时指定进程执行的函数，以及该函数的参数：<br><code>process = multiprocessing.Process(target=worker, args=(param1, param2)</code><br>该对象的主要方法有：<br><strong>start()</strong>：启动进程；每个进程最多只能调用一次；<br><strong>run()</strong>：进程的执行逻辑在run()里。如果Process对象没有指定target，就会默认执行Process的run()方法；<br><strong>join([timeout])</strong>：阻塞当前进程，直到调用join方法的那个进程执行完，再继续执行当前进程；<br><strong>is_alive()</strong>：返回该进程是否存活；<br><strong>terminate()</strong>：终结一个进程。当调用这个函数的时候，运行逻辑中的exit和finally代码段将不会执行。而且这个进程的子进程不会被终结而是成为孤儿进程；  </p>
+<p>下面我们给出一段多进程使用的示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param):</code><br><code>print param</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>  </p>
+<p>我们可以得到如下的输出：<br><code>1</code><br><code>0</code><br><code>2</code><br><code>4</code><br><code>3</code>  </p>
+<h2 id="子进程通信">子进程通信</h2><p>multiprocessing支持两种类型的进程通信手段，分别是Queue和Pipe。  </p>
+<h3 id="Queue">Queue</h3><p>Queue是一种多线程优先队列。它允许多个进程读和写，我们通过<code>mutiprocessing.Queue(maxsize)</code>创建一个Queue，maxsize表示队列中可以存放对象的最大数量。它的一些主要方法有：<br><strong>get()</strong>：删除并返回队列中的一个元素；<br><strong>put()</strong>: 添加元素到队列；<br><strong>qsize()</strong> : 返回队列中元素的个数；<br><strong>empty()</strong>: 队列为空返回True否则返回False；<br><strong>full()</strong>: 队列已满返回True，负责返回False；  </p>
+<p>在下面的示例里，我们用Queue实现获取多进程执行时的输出：   </p>
+<p><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>result_queue = multiprocessing.Queue()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, result_queue])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>while not result_queue.empty():</code><br><code>print result_queue.get()</code><br><code>def worker(param, result_queue):</code><br><code>result_queue.put(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>   </p>
+<p>执行这段代码，输出为：<br><code>101</code><br><code>102</code><br><code>103</code><br><code>100</code><br><code>104</code>  </p>
+<h3 id="Pipe">Pipe</h3><p>Pipe可以是单向，也可以是双向。我们通过mutiprocessing.Pipe(duplex=False)创建单向管道 (默认为双向)。它主要有send()和recv()两种方法，顾名思义，分别是发送消息和接受消息。<br>我们同样来看一段示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>parent_conn, child_conn = multiprocessing.Pipe()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, child_conn])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>print parent_conn.recv()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param, child_conn):</code><br><code>child_conn.send(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code><br>执行这段代码，输出为：<br><code>100</code><br><code>101</code><br><code>102</code><br><code>103</code><br><code>104</code>  </p>
+<h2 id="Q&amp;A">Q&amp;A</h2><p>为什么要先依次调用start再调用join，而不是start完了就调用join呢？<br>答：假设我们有两个进程p1，p2，如果我们在p1执行后先join()然后再p2.start()，我们就会发现是先执行完p1，再执行主线程，最后才开始p2。这是因为join是用来阻塞当前线程的，p1.start()之后，p1就提示主线程，需要等待p1结束才向下执行，那主线程就乖乖的等着啦，自然没有执行p2.start()。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-【译】Python中yield关键字用法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/15/【译】Python中yield关键字用法/" class="article-date">
+  	<time datetime="2015-10-15T02:52:15.000Z" itemprop="datePublished">2015-10-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/15/【译】Python中yield关键字用法/">【译】Python中yield关键字用法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
 <p>本文译自stackoverflow <a href="http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python" target="_blank" rel="external">What does the yield keyword do in Python?</a></p>
 <h2 id="引子">引子</h2><p>这一切始于一位童鞋在Stack Overflow上问的问题：</p>
 <p>Python中的yield关键字是用来干嘛的？它都干了些什么？</p>
@@ -270,59 +353,15 @@
     <div class="article-info article-info-index">
       
       
-      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+	</div>
 
       
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
 
-
-
-
-
-
-
-  
-    <article id="post-改变FastDFS中某个机器的分组" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/29/改变FastDFS中某个机器的分组/" class="article-date">
-  	<time datetime="2015-09-29T07:53:05.000Z" itemprop="datePublished">2015-09-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="改变FastDFS中某个机器的分组">改变FastDFS中某个机器的分组</h1><p><em>By：LeoTse</em></p>
-<p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
-<p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>
-<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code></p>
-<p><em>step3：修改C机器的storage.conf配置</em><br><code># the name of the group this storage server belongs to</code><br><code>#</code><br><code># comment or remove this item for fetching from tracker server,</code><br><code># in this case, use_storage_id must set to true in tracker.conf,</code><br><code># and storage_ids.conf must be configed correctly.</code><br><code>group_name=group2</code>  </p>
-<p>将group_name改为group2。</p>
-<p>注意：如果Tracker为指定store_lookup方式，即tracker.conf配置中：<br><code># the method of selecting group to upload files</code><br><code># 0: round robin</code><br><code># 1: specify group</code><br><code># 2: load balance, select the max free space group to upload file</code><br><code>store_lookup=2</code>    </p>
-<p><code># which group to upload file</code><br><code># when store_lookup set to 1, must set store_group to the group name</code><br><code>store_group=group1</code>    </p>
-<p>如果store_lookup=1，则需要将其修改为0或者2，酌情选择。如果store_lookup不是1，则store_group会忽略。</p>
-<p><em>step4：删除base_path下的data目录</em><br>这个时候要看我们是否需要删除C机器已经存储的文件。如果我们不再需要C机器上保存的文件，则可以删除base_path下data目录，重新启动FastDFS服务时会新建data目录；如果我们不想删除C机器上现有的文件，则可以删除除了存储目录以外的其他目录和文件：fdfs_storaged.pid文件、storage_stat.dat文件、.data_init_flag文件以及sync目录。</p>
-<p><em>step5：重启C机器的FastDFS服务</em><br><code>/usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code>  </p>
-<p>（如果我们想要卸载FastDFS，直接删除base_path下的data目录即可。）</p>
-<p>至此，我们对集群重新分组完成。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
 
       
       <div class="clearfix"></div>
@@ -339,11 +378,11 @@
 
 
   
-    <article id="post-SSH免密码登录设置" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Python任务调度队列Celery" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/29/SSH免密码登录设置/" class="article-date">
-  	<time datetime="2015-09-29T07:52:54.000Z" itemprop="datePublished">2015-09-29</time>
+      <a href="/2015/10/14/Python任务调度队列Celery/" class="article-date">
+  	<time datetime="2015-10-14T02:55:15.000Z" itemprop="datePublished">2015-10-14</time>
 </a>
     </div>
   
@@ -352,16 +391,37 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/14/Python任务调度队列Celery/">Python任务调度队列Celery</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="SSH免密码登录设置">SSH免密码登录设置</h1><p><strong>整理：LeoTse</strong></p>
-<h2 id="SSH免密码登录设置-1">SSH免密码登录设置</h2><p>准备工作：<br>两台机器S1，S2。IP分别为IP1，IP2，用户名为user。<br>我们想从S1免密码登录S2机器。以下为SSH设置的步骤：</p>
-<p>Step1：生产key。在S1上输入：<br><code>ssh-keygen -t rsa</code><br>然后一直enter，直到结束。</p>
-<p>Step2: 我们进入到~/.ssh目录，然后将生成的key通过scp复制到S2的.ssh目录（我们首先要确保目录存在）：<br><code>cd ~/.ssh</code><br><code>scp ~/.ssh/id_rsa.pub user@IP2:/home/user/.ssh/IP2</code><br>截至目前，S1上的配置已经完成。</p>
-<p>Step3：接下来我们登录S2机器。进入.ssh目录，确保authorized_keys文件存在：<br><code>cd ~/.ssh</code><br><code>cat IP2 &gt;&gt; authorized_keys</code><br>SSH免登录已经设置完毕，如果是普通用户，继续往下看。</p>
-<h2 id="普通用户">普通用户</h2><p>对于普通用户authorized_keys的权限必须限定为600，否则普通用户无法实现无密钥访问，而ROOT用户按照默认即可实现无密码访问：<br><code>sudo chmod 600 authorized_keys</code>  </p>
-<h2 id="免密码登录验证">免密码登录验证</h2><p>我们在S1上直接ssh连接S2机器，看能否免密码登录：<br><code>ssh IP2</code><br>如果可以直接登录上去，则说明已经设置成功。</p>
-<p>另，如果要设置S1和S2互相免密码登录，以上步骤在S1和S2都执行一次就好了！</p>
+        <p><em>by:leotse</em></p>
+<h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
+<p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
+<p>一般推荐使用RabbitMQ，但是我们这里用到Redis，因为Redis安装的时候依赖少，而且性能稳定，但是Redis也有缺点，那就是断电的时候会丢失数据。我们在这里，就以Redis作为Celery的第三方中间层。</p>
+<h2 id="Installation">Installation</h2><p>我们这里使用Celery+redis套餐进行任务的调度。  </p>
+<p>Celery的安装非常简单，在linux系统下直接执行：<br><code>sudo pip install Celery</code><br><code>sudo pip install celery-with-redis</code><br>如果上述安装失败，可以尝试：<br><code>sudo easy_install Celery</code>   </p>
+<p>我们来验证一下Celery是否安装成功，进入python shell，输入：<br><code>from celery import Celery</code><br>如果没有报错，则说明安装成功。</p>
+<p>接着我们安装redis：<br><code>sudo apt-get install redis-server</code><br>安装完成后，redis会自动启动，我们也来验证一下redis是否安装成功：<br><code>ps -aux|grep redis</code><br>如果看到以下输出，则说明安装ok：<br><code>redis      942  0.2  0.0  73852  1832 ?        Ssl  Apr13 302:26 /usr/bin/redis-server /etc/redis/redis.conf</code></p>
+<p>它们的安装都比较简单。接下来我们看如何使用Celery进行任务调度。</p>
+<h2 id="Usage">Usage</h2><p>我们应该都知道生产者-消费者模型，在使用Celery的时候，我们也需要一个生产者和一个消费者，生产者负责往队列里写入待处理的数据，消费者负责将数据从队列中取出并进行处理。我们在这里将redis作为存储这种“数据”的地方。</p>
+<p>我们来看这样一个示例，我们假设要下载一批视频v1，v2，v3….，这批视频列表存在另一个文件系统中，我们假设通过get_video_list方法来获取这批视频列表，另一方面，我们可以通过download_video_worker(video)来下载视频。</p>
+<p>那么，生产者的伪代码如下：</p>
+<p><pre><code><br>import download_video_worker<br>video_list = get_video_list()<br>for video in video_list:<br>    download_video_worker.apply_async([video])<br></code></pre></p>
+<p>消费者的伪代码如下： </p>
+<p><pre><code><br>download_app=Celery(“download_videos”, broker=”redis://localhost:6379/0”)<br>@download_app.task`<br>def download_video_worker(video):<br>    download_video_to_local(video)<br></code></pre></p>
+<p>接着我们运行Celery：<br><code>celery -A download_video_worker worker --loglevel=info</code>  </p>
+<p>这样，当我们每次往队列中放入video信息时，celery就会执行download_video_woker中的逻辑处理video的下载过程。</p>
+<h3 id="推荐阅读">推荐阅读</h3><p><a href="http://www.celeryproject.org/" target="_blank" rel="external">Homepage - Celery: Distributed Task Queue</a><br><a href="https://denibertovic.com/posts/celery-best-practices/" target="_blank" rel="external">CELERY - BEST PRACTICES</a></p>
 
       
     </div>
@@ -369,7 +429,15 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Celery/">Celery</a></li></ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
 
       
       <div class="clearfix"></div>
