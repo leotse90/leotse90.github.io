@@ -3,29 +3,33 @@
 <head>
   <meta charset="utf-8">
   
-  <title>MooseFS概览 | 一条狗的风花雪月</title>
+  <title>Scala控制结构 | 一条狗的风花雪月</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="by:leotse
-IntroMooseFS，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。
-ArchitectureMooseFS主要由四部分组成：
-Master Server（元数据服务器）管理整个MooseFS系统的单点，保存了MooseFS">
+块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  
+
+scala&amp;gt; var v = {var a = 2; var b = 4; a + b;}
+v: Int = 6
+scala&amp;gt; val v1 = {va">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MooseFS概览">
-<meta property="og:url" content="http://leotse90.com/2015/09/20/MooseFS概览/index.html">
+<meta property="og:title" content="Scala控制结构">
+<meta property="og:url" content="http://leotse90.com/2015/10/21/Scala控制结构/index.html">
 <meta property="og:site_name" content="一条狗的风花雪月">
 <meta property="og:description" content="by:leotse
-IntroMooseFS，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。
-ArchitectureMooseFS主要由四部分组成：
-Master Server（元数据服务器）管理整个MooseFS系统的单点，保存了MooseFS">
-<meta property="og:image" content="http://www.moosefs.org/tl_files/mfs_folder/read862.png">
-<meta property="og:image" content="http://www.moosefs.org/tl_files/mfs_folder/write862.png">
-<meta property="og:updated_time" content="2015-10-21T06:42:53.000Z">
+块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  
+
+scala&amp;gt; var v = {var a = 2; var b = 4; a + b;}
+v: Int = 6
+scala&amp;gt; val v1 = {va">
+<meta property="og:updated_time" content="2015-10-21T09:49:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MooseFS概览">
+<meta name="twitter:title" content="Scala控制结构">
 <meta name="twitter:description" content="by:leotse
-IntroMooseFS，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。
-ArchitectureMooseFS主要由四部分组成：
-Master Server（元数据服务器）管理整个MooseFS系统的单点，保存了MooseFS">
+块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  
+
+scala&amp;gt; var v = {var a = 2; var b = 4; a + b;}
+v: Int = 6
+scala&amp;gt; val v1 = {va">
   
     <link rel="alternative" href="/atom.xml" title="一条狗的风花雪月" type="application/atom+xml">
   
@@ -196,11 +200,11 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-MooseFS概览" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Scala控制结构" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/20/MooseFS概览/" class="article-date">
-  	<time datetime="2015-09-20T02:55:15.000Z" itemprop="datePublished">2015-09-20</time>
+      <a href="/2015/10/21/Scala控制结构/" class="article-date">
+  	<time datetime="2015-10-21T09:48:25.000Z" itemprop="datePublished">2015-10-21</time>
 </a>
     </div>
   
@@ -213,7 +217,7 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
         
   
     <h1 class="article-title" itemprop="name">
-      MooseFS概览
+      Scala控制结构
     </h1>
   
 
@@ -222,7 +226,7 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MooseFS/">MooseFS</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li></ul>
 	</div>
 
         
@@ -238,21 +242,71 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/" target="_blank" rel="external">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
-<h2 id="Architecture">Architecture</h2><p>MooseFS主要由四部分组成：</p>
-<h3 id="Master_Server（元数据服务器）">Master Server（元数据服务器）</h3><p>管理整个MooseFS系统的单点，保存了MooseFS中每个文件的元数据，包括文件的大小、属性、文件位置等等；我们的元数据信息同时保存在Master的内存和磁盘里。</p>
-<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；<br><a id="more"></a></p>
-<h3 id="Chunk_Server（数据存储服务器）">Chunk Server（数据存储服务器）</h3><p>用于存储系统中的数据。如果我们指定数据需要备份（我们一般都会这么做），那么ChunkServer之间就会通过算法完成数据的备份工作；</p>
-<h3 id="Client（客户端）">Client（客户端）</h3><p>所有通过mfsmount进程和Master进行交互的机器，都可以叫做MooseFS的客户端。对客户端来说，所有的ChunkServer就像一台普通的NFS服务器一样在为它提供强大的数据存取服务；</p>
-<p>笔者从MooseFS的官网上kiang了两张图，分别是MooseFS读数据和写数据的，大家闭上眼睛，用心感受下：  </p>
-<p><img src="http://www.moosefs.org/tl_files/mfs_folder/read862.png" alt="MooseFS Read Process"><br><img src="http://www.moosefs.org/tl_files/mfs_folder/write862.png" alt="MooseFS Write Process"></p>
-<p>我们从图上可以很清晰地看到整个读写过程。  </p>
-<h2 id="Uses">Uses</h2><p>1.大规模高并发的数据存储与访问（大文件、小文件皆可）；<br>2.大规模的数据处理；</p>
-<h2 id="Features">Features</h2><h3 id="Advantages">Advantages</h3><p>1）简单易用。安装、部署以及配置都相对简单容易；<br>2）高可靠性：MooseFS采用数据备份的方式确保我们的数据安全可靠；<br>3）可伸缩性：我们可以在不停服务的情况下，新增或者删除MooseFS中的服务器；<br>4）支持POSIX访问，支持FUSE；<br>5）可移植性：适用于任何实现FUSE的系统，包括但不限于Linux、FreeBSD、OpenSolaris以及MacOS X；<br>6）MooseFS提供了快照功能，可以对整个文件甚至在正在写入的文件创建文件的快照；<br>7）提供类似JVM的GC机制；<br>8）提供web GUI监控接口；<br>9）随机读写的效率较高，海量小文件读写效率高；<br>10）发展比较成熟，文档全面；  </p>
-<h3 id="Disadvantages">Disadvantages</h3><p>1）MooseFS客户端程序使用FUSE编写加载MooseFS磁盘的命令；因此我们需要确保我们系统内置或者安装了FUSE；<br>2）存在单点故障。MooseFS只有一个Metadata Server，因此MDS的性能就会成为MooseFS性能的瓶颈；<br>3）故障恢复需手动恢复;<br>4）MooseFS的Master是单线程的程序，并不能发挥多核CPU的优势，由于大部分的处理逻辑都是内存操作，因此并不会存在太大的问题，但一旦涉及到磁盘I/O就有可能导致阻塞，严重的话整个集群会瘫痪掉，因此不建议把Master放在虚拟机中。<a href="http://tech.uc.cn/?tag=moosefs" target="_blank" rel="external">MooseFS之虚拟机惹的祸</a></p>
-<h2 id="Conclusion">Conclusion</h2><p>当前，MooseFS在国际国内都拥有了大量的用户，正是由于这些用户基础，也推动了MooseFS继续发展。<br>虽然MooseFS仍然存在单点故障这样的瓶颈，但是它的简单易用以及高可靠性，仍然让它成为我们DFS方案的不错的选择。</p>
-<h2 id="Others">Others</h2><p>MooseFS官网解答了我们一些常见的问题：<a href="http://www.moosefs.org/moosefs-faq.html" target="_blank" rel="external">FAQ</a></p>
-<p><strong>NFS</strong>：Network File System。一种用于分散式系统的协议。通过网络让不同的机器、不同的操作系统分享彼此个别的数据，让应用程序在客户端通过网络访问位于服务器磁盘中的数据，是在Unix系统间实现磁盘文件共享的一种方法。</p>
+<h3 id="块表达式">块表达式</h3><p>首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  </p>
+<pre><code>
+scala> var v = {var a = 2; var b = 4; a + b;}
+v: Int = 6
+scala> val v1 = {var s1 = "hello"; var i = 20;}
+v1: Unit = ()
+</code></pre>
+
+<p>在这里，我们可以总结以下两点：1.块表达式的值由{…}中的最后一条语句的值决定，那么当我们在定义一个函数的时候，一般不需要定义返回值，因为最后一条语句的值就是这个块表达式的值；2.侧面反映了Scala中赋值语句的值为Unit类型（注：Scala中的Unit类型相当于Java中的void，其只有一个值()）。<br><a id="more"></a></p>
+<h3 id="条件表达式">条件表达式</h3><p>条件表达式的作用就不赘述，我们直接来介绍Scala中的条件表达式。它的一般形式如下：<br><code>if (expression) block1 else block2</code><br>值得注意的是，Scala虽然和Java一样，判断条件expression需要为Boolean类型，但是和其他一些语言不一样的是，在Scala中，只有真正的Boolean类型：true或者false能作为判断的依据，而正整数、非空字符串等不能表示true，同理，整数0、空字符串等亦不能表示false。看下面的代码：  </p>
+<pre><code>
+scala> if (1) 1 else -1
+<console>:11: error: type mismatch;
+ found   : Int(1)
+ required: Boolean
+       if (1) 1 else -1
+           ^
+
+scala> if ("") 1 else -1
+<console>:11: error: type mismatch;
+ found   : String("")
+ required: Boolean
+       if ("") 1 else -1
+           ^
+</console></console></code></pre>
+
+<p>在Scala中，我们可以将条件表达式的值直接赋给一个变量：  </p>
+<pre><code>
+scala> val r = if ("hello" > "world") "hello" else "world"
+r: String = world
+</code></pre>
+
+<p>这种用法熟悉Python的coder可能会比较容易接受，Scala这种设计可能会使得代码在阅读起来并没有那么友善，但是确实可以使得我们的代码更简洁。</p>
+<p>另外，Scala并不支持switch语句，因此如果我们有模式匹配上的需求，我们需要用到Scala提供的更强大的模式匹配机制，感兴趣的朋友可以先行了解一下。</p>
+<h3 id="循环表达式">循环表达式</h3><p>和Java一样，Scala提供了两种循环表达式：while以及for。<br>通常，函数式语言会避开while循环，因为while实现的大多数操作都可以使用递归来完成。Scala中while循环和Java类似：  </p>
+<pre><code>
+scala> var x = 3
+x: Int = 3
+
+scala> while (x > 0) {
+     |     println(x)
+     |     x -= 1
+     | }
+3
+2
+1
+</code></pre>
+
+<p>Scala中的for循环却和Java中的不太一样，在形式上有较大的改变，有一种观点认为：“Scala 的for实际上是一条管道，它在将元素传递给循环主体之前处理元素组成的集合，每次一个。此管道其中的一部分负责将更多的元素添加到管道中（生成器），一部分负责编辑管道中的元素（过滤器），还有一些负责处理中间的操作（比如记录）。”：  </p>
+<pre><code>
+scala> for (i <- 1="" 2="" 3="" 4="" to="" 4)="" print(i="" +="" "="" ")="" <="" code=""></-></code></pre>  
+这段代码等同于：  
+<pre><code>
+scala> for (i <- 1="" 2="" 3="" 4="" to="" 4)="" {="" |="" print(i="" +="" "="" ")="" }="" <="" code=""></-></code></pre>
+
+<p>这里我们看到<code>for (i &lt;- 1 to 4)</code>这种形式的表达式，这条表达式的意思是我们从1到4进行一个遍历，然后将这些值依次赋予变量i。更普遍的for定义是<code>for (v &lt;- expression)</code>，也就是将expression每次生成的值赋给变量v。我们看到<strong>在for循环的变量v之前并没有var或者val，此时，v的类型是集合的元素类型。</strong></p>
+<p>这种循环便利非常方便，比如我们要遍历一个字符串：  </p>
+<pre><code>
+scala> for (c <- "hello,="" scala")="" print(c="" +="" "-")="" h-e-l-l-o-,-="" -s-c-a-l-a-="" <="" code=""></-></code></pre>
+
+<p>我们还可以这样遍历其他诸如数组、集合之类。</p>
+<p>for循环表达式还有更加先进的使用方法，我们称之为<em>for推导式</em>。还是先看一段代码：  </p>
+<p><pre><code><br>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3) println((i, j))<br>(1,1)<br>(1,2)<br>(2,1)<br>(2,2)</code></pre></p>
+<p>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3 if i != j) println((i, j))<br>(1,2)<br>(2,1)<br><br>我们需要解释一下这段代码，首先额外解释一下to和until的区别，x to y表示从x到y的所有整数，包含y；而x until y表示从x到y的所有整数不包含y（y &gt; x）。我们在这段代码看到，for循环的循环控制语句中有多条表达式，并且以分号分割，每个表达式我们称之为<strong>生成器</strong>，生成器的作用是在每一次循环的时候生成变量的值，控制变量j的赋值语句后跟着<code>if i != j</code>，这是一个<strong>守卫</strong>，守卫用以过滤符合条件的控制变量。</p>
+<p>到这里为止，我们已经对Scala的控制结构有一个大致的了解。在实际编码中，我们会看到更灵活、更强大的控制结构使用方法，但是万变不离其宗，它们都是基于这些基本的控制结构形式。</p>
 
       
     </div>
@@ -262,18 +316,9 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
     
 <nav id="article-nav">
   
-    <a href="/2015/09/20/SSH免密码登录设置/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          SSH免密码登录设置
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/13/MySQL的主从配置/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MySQL的主从配置</div>
+    <a href="/2015/10/20/Scala入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Scala入门</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -302,7 +347,7 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="MooseFS概览" data-title="MooseFS概览" data-url="http://leotse90.com/2015/09/20/MooseFS概览/"></div>
+	<div class="ds-thread" data-thread-key="Scala控制结构" data-title="Scala控制结构" data-url="http://leotse90.com/2015/10/21/Scala控制结构/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

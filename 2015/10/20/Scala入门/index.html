@@ -15,7 +15,7 @@ During a meeting in the Community Corner (java.net booth) with James Gosling,a p
 <meta property="og:description" content="by:leotse
 为什么是Scala有人问Java之父James Gosling“除了Java语言以外，您现在还使用JVM平台上的哪种编程语言？”，他毫不犹豫的回答“Scala”。
 During a meeting in the Community Corner (java.net booth) with James Gosling,a participant asked an interest">
-<meta property="og:updated_time" content="2015-10-21T06:37:36.000Z">
+<meta property="og:updated_time" content="2015-10-21T09:51:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala入门">
 <meta name="twitter:description" content="by:leotse
@@ -119,7 +119,7 @@ During a meeting in the Community Corner (java.net booth) with James Gosling,a p
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -244,6 +244,7 @@ During a meeting in the Community Corner (java.net booth) with James Gosling,a p
 <p>－val：这里说变量其实不太准确，因为val声明的是不可变的常量。使用方法和var类似，只是不能修改它的值。在实际开发中，除非我们可以预知需要改变一个值的内容，否则我们一般用val声明。示例如下：  </p>
 <p><code>scala&gt; val z = 3</code><br><code>z: Int = 3</code><br><code>scala&gt; z = 2  // 不可以修改一个常量的值</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
 <p>一般的，我们不需要声明类型，除非必须。而且我们注意到Scala和Java等语言不一样，变量的类型声明在变量名后面。</p>
+<p>我这里引用一段前辈说过的话，里面说明了建议使用val以及原因：<br>“Scala 编程人员通常应该首选 val 结构，并在明确需要可变性的时候选择 var。原因很简单：除了使编程更容易之外，val 还能确保程序的线程安全性，Scala 中的一个内在主题是：几乎每次认为需要可变状态时，其实都不需要可变状态。 让我们从不可变字段和本地变量（val）开始，这是展示上述情况的一种方法，甚至对最坚定的 Java 怀疑论者也是如此。从 Java 中的 final 开始介绍可能不是很合理，或许是因为 Java 的非函数特性，尽管此原因不可取。一些好奇的 Java 开发人员可能想尝试一下。”</p>
 <p>另外，我们在REPL中的示例中可以看到，解释器为我们没有命名的变量定义res0这个名字，凡是解释器定义的变量，如res0、res1等等，都是常量，不可修改:<br><code>scala&gt; res0</code><br><code>res1: String = Hello, Scala</code><br><code>scala&gt; res0 = 1990</code><br><code>&lt;console&gt;:11: error: reassignment to val</code></p>
 <p>在Scala中，有8种类型，它们分别为Boolean、Byte、Char、Short、Int、Long、Float以及Double。在这里，我们和Java那样称它们为八大基本类型，因为Scala中并不会刻意去区分基本类型和引用类型，因为他们都是类。</p>
 <h3 id="参考资料">参考资料</h3><p>《快学Scala》Cay S. Horstmann 电子工业出版社<br>《深入理解Scala》 Joshua D. Suereth 人民邮电出版社<br><a href="http://www.scala-lang.org/api/current/#package" target="_blank" rel="external">Scala官方API</a><br><a href="http://docs.scala-lang.org/tutorials/?_ga=1.213857492.1110750532.1444722905" target="_blank" rel="external">Scala官方Tutorials</a><br><a href="http://www.scalachina.com" target="_blank" rel="external">Scala中文社区</a><br>网上前辈们学习交流的技术博客与论坛</p>
@@ -255,6 +256,15 @@ During a meeting in the Community Corner (java.net booth) with James Gosling,a p
   
     
 <nav id="article-nav">
+  
+    <a href="/2015/10/21/Scala控制结构/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Scala控制结构
+        
+      </div>
+    </a>
   
   
     <a href="/2015/10/18/Hive之JOIN操作/" id="article-nav-older" class="article-nav-link-wrap">
