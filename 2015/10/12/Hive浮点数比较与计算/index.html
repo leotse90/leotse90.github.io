@@ -13,7 +13,7 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
 <meta property="og:site_name" content="LeoTse's Blogs">
 <meta property="og:description" content="by:leotse
 Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：hive&amp;gt; select * from float_compare where weight&amp;gt;120.9;OKxiefeng 128.2yolovon 121.8leotse 120.9我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一">
-<meta property="og:updated_time" content="2015-10-21T03:10:36.000Z">
+<meta property="og:updated_time" content="2015-10-21T06:42:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive浮点数比较与计算">
 <meta name="twitter:description" content="by:leotse
@@ -34,7 +34,7 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -116,7 +116,7 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -156,7 +156,7 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -230,8 +230,7 @@ Hive浮点数比较Hive的较早前版本（0.9.0）在比较浮点数时会出�
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。</p>
-<p>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>
+<h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。<br><a id="more"></a><br>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>
 <p>虽然这个问题已经解决，但是仍然给我们一些启示，当我们在进行浮点数比较的时候，需要警惕float和double的自动转型，特别需要避免从窄类型数值向宽类型数值的转型。</p>
 <h3 id="Hive浮点数计算">Hive浮点数计算</h3><p>相比上面的问题，浮点数的计算也是一个BUG，而且现在还没有解决，<a href="https://issues.apache.org/jira/browse/HIVE-3715" target="_blank" rel="external">float and double calculation is inaccurate in Hive</a>。</p>
 <p>为了方便对比，我们先展示出表float_compare中的全部数据：<br><code>hive&gt; select * from float_compare;</code><br><code>OK</code><br><code>dooley 110.0</code><br><code>xiefeng 128.2</code><br><code>leotse    120.9</code><br><code>februus 119.0</code><br><code>yolovon 121.8</code>  </p>

@@ -15,7 +15,7 @@ multiprocessing模块和thre">
 <meta property="og:description" content="by:leotse
 Intro我们知道，由于GIL的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  
 multiprocessing模块和thre">
-<meta property="og:updated_time" content="2015-10-21T03:12:55.000Z">
+<meta property="og:updated_time" content="2015-10-21T06:43:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python多进程使用">
 <meta name="twitter:description" content="by:leotse
@@ -37,7 +37,7 @@ multiprocessing模块和thre">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -119,7 +119,7 @@ multiprocessing模块和thre">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -159,7 +159,7 @@ multiprocessing模块和thre">
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -234,7 +234,7 @@ multiprocessing模块和thre">
       
         <p><em>by:leotse</em></p>
 <h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock" target="_blank" rel="external">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
-<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。</p>
+<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。<br><a id="more"></a></p>
 <h2 id="multiprocessing使用">multiprocessing使用</h2><p>在multiprocessing模块中，我们使用multiprocessing.Process()来创建一个新的进程对象。</p>
 <p>一般情况下，我们需要在创建Process对象时指定进程执行的函数，以及该函数的参数：<br><code>process = multiprocessing.Process(target=worker, args=(param1, param2)</code><br>该对象的主要方法有：<br><strong>start()</strong>：启动进程；每个进程最多只能调用一次；<br><strong>run()</strong>：进程的执行逻辑在run()里。如果Process对象没有指定target，就会默认执行Process的run()方法；<br><strong>join([timeout])</strong>：阻塞当前进程，直到调用join方法的那个进程执行完，再继续执行当前进程；<br><strong>is_alive()</strong>：返回该进程是否存活；<br><strong>terminate()</strong>：终结一个进程。当调用这个函数的时候，运行逻辑中的exit和finally代码段将不会执行。而且这个进程的子进程不会被终结而是成为孤儿进程；  </p>
 <p>下面我们给出一段多进程使用的示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param):</code><br><code>print param</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>  </p>

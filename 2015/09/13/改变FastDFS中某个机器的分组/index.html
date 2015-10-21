@@ -17,7 +17,7 @@ step2：将C从Fas">
 我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  
 step1：停止C机器上的FastDFS服务/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf
 step2：将C从Fas">
-<meta property="og:updated_time" content="2015-10-21T03:15:12.000Z">
+<meta property="og:updated_time" content="2015-10-21T06:44:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改变FastDFS中某个机器的分组">
 <meta name="twitter:description" content="by:leotse
@@ -40,7 +40,7 @@ step2：将C从Fas">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -122,7 +122,7 @@ step2：将C从Fas">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -162,7 +162,7 @@ step2：将C从Fas">
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -238,8 +238,7 @@ step2：将C从Fas">
         <p><em>by:leotse</em></p>
 <p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
 <p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>
-<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code></p>
-<p><em>step3：修改C机器的storage.conf配置</em><br><code># the name of the group this storage server belongs to</code><br><code>#</code><br><code># comment or remove this item for fetching from tracker server,</code><br><code># in this case, use_storage_id must set to true in tracker.conf,</code><br><code># and storage_ids.conf must be configed correctly.</code><br><code>group_name=group2</code>  </p>
+<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code><br><a id="more"></a><br><em>step3：修改C机器的storage.conf配置</em><br><code># the name of the group this storage server belongs to</code><br><code>#</code><br><code># comment or remove this item for fetching from tracker server,</code><br><code># in this case, use_storage_id must set to true in tracker.conf,</code><br><code># and storage_ids.conf must be configed correctly.</code><br><code>group_name=group2</code>  </p>
 <p>将group_name改为group2。</p>
 <p>注意：如果Tracker为指定store_lookup方式，即tracker.conf配置中：<br><code># the method of selecting group to upload files</code><br><code># 0: round robin</code><br><code># 1: specify group</code><br><code># 2: load balance, select the max free space group to upload file</code><br><code>store_lookup=2</code>    </p>
 <p><code># which group to upload file</code><br><code># when store_lookup set to 1, must set store_group to the group name</code><br><code>store_group=group1</code>    </p>

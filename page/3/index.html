@@ -30,7 +30,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -112,7 +112,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -152,7 +152,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -186,136 +186,6 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-HDFS文件系统命名空间" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/01/HDFS文件系统命名空间/" class="article-date">
-  	<time datetime="2015-10-01T02:55:15.000Z" itemprop="datePublished">2015-10-01</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/HDFS文件系统命名空间/">HDFS文件系统命名空间</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h3 id="HDFS_Namespace">HDFS Namespace</h3><p>在HDFS中，我们知道NameNode负责管理文件系统的命名空间，那么NameNode到底怎么管理HDFS的命名空间，又有哪些内容需要管理呢？我们接下来将讨论到这两个问题。</p>
-<p>作为HDFS的Master，NameNode掌握着整个HDFS的文件目录树及其目录与文件，这些信息会以文件的形式永久地存储在本地磁盘。我们可以在$HADOOP_HOME/tmp/dfs/name/current下找到这些文件：fsimage以及edits。</p>
-<p><strong>fsimage</strong>：保存了最新的元数据检查点；<br><strong>edits</strong>：保存了HDFS中自最新的元数据检查点后的命名空间变化记录；</p>
-<p>为了防止edits中保存的最新变更记录过大，HDFS会定期合并fsimage和edits文件形成新的fsimage文件，然后重新记录edits文件。由于NameNode存在单点问题（Hadoop2.0以前版本），因此为了减少NameNode的压力，HDFS把fsimage和edits的合并的工作放到SecondaryNameNode上，然后将合并后的文件返回给NameNode。但是，这也会造成一个新的问题，当NameNode宕机，那么NameNode中edits的记录就会丢失。也就是说，NameNode中的命名空间信息有可能发生丢失。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/01/HDFS文件系统命名空间/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-FastDFS 安装使用说明" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/29/FastDFS 安装使用说明/" class="article-date">
-  	<time datetime="2015-09-29T02:55:15.000Z" itemprop="datePublished">2015-09-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/29/FastDFS 安装使用说明/">FastDFS安装使用说明</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by：leotse</em></p>
-<h2 id="一、概述">一、概述</h2><p>FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。<br>更多内容见论坛：<a href="http://bbs.chinaunix.net/forum-240-1.html">http://bbs.chinaunix.net/forum-240-1.html</a></p>
-<p>本文档内容包括：FastDFS安装、Python API安装及调用、通过Nginx访问文件。FastDFS安装又包括Tracker、Storage以及Nginx的安装。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastDFS/">FastDFS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/09/29/FastDFS 安装使用说明/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
     <article id="post-你真的懂单链表吗" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -346,18 +216,7 @@
 <h2 id="引子">引子</h2><p><strong>首先，上一道开胃菜：怎么判断两个单链表是否相交？</strong>  </p>
 <p>我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  </p>
 <p>我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只能是Y形相交，而不可能是X形相交，亦即从第一个相同的结点开始，后面的结点全部一样。如果能想到这个，后面的就简单明了了：只要A链表和B链表的最后一个结点值相等，则证明A链表和B链表相交。该算法的时间复杂度也下降到O(m+n)。</p>
-<p>我们进一步来思考：<strong>怎么找到第一个相交的元素呢？</strong>  </p>
-<p>这里就当然不能像刚才那样，但是出发点还是一样，我们同样可以保证只要两次遍历。我们假设m &gt; n，那么如果我们将两个链表的末尾对齐，是不是从最后一个往前看（当然单链表不能往前遍历，我们先这样看）的时候，A链表会比B链表多m-n个元素，而A链表中的前m-n个元素可以忽略，直接从第m-n个元素开始和B链表一起向前遍历，比较A链表上第m-n+i个元素和B链表第i个元素（i&lt;n）即可。第一个相同的元素即为所求。  </p>
-<p>下面来看看其它的几个单链表相关的典型问题（贴代码太占空间，这里就只谈谈思路，大家可以动手试试）： </p>
-<h3 id="单链表的反转">单链表的反转</h3><p>如题，怎么实现一个单链表A（有m个元素）的反转呢？<br><strong>方案一</strong>：如果不能破坏原单链表，我们需要重新新建一个链表C，然后遍历原来的A链表，对C链表实行头插法建表（头插法即将新加入的结点作为链表的头结点，对应的还有尾插法，即直接在链表末尾添加元素）；<br><strong>方案二</strong>：如果可以破坏原单链表呢？暴力一点的办法是不断地交换相邻的两个元素，即首先将第一个元素通过m-1次交换使其变成链表的最后一个元素，然后又是同样的方法将现任的第一个元素通过m-2次交换使其成为链表的倒数第二个元素，以此类推。  </p>
-<h3 id="单链表的排序">单链表的排序</h3><p>就排序原理而言，个人觉得其实不用过多考虑存储结构的问题，即不管是顺序存储还是链式存储，都不影响排序的基本原理，只是不同的存储结构会影响不同排序方法的效率而已。因为我们完全可以夸张地将顺序存储也想象为不连续的存储只是它们相邻两者的间隙极端的小。即我们将货物分别存在美国和中国的仓库里和都存放在一个仓库里是一样的，只是运费问题而已。<br>明白了这一点，那么单链表的排序就和普通的数组排序没有什么太大的区别。我们现在要做的事就是针对性地选择一个时间性能相对较好的排序算法。<br>我们知道的排序方法有很多：插入排序、冒泡排序、快速排序、归并排序、堆排序以及基数排序等等，那么这其中哪些对顺序结构和链式结构不那么感冒呢？熟悉这些排序的童鞋肯定知道，是插入排序和冒泡排序。其他的几种常见排序方法就比较偏袒顺序存储结构了。所以，如果要对链表进行排序，我会选择插入排序或者冒泡排序。（不太清楚这些基本排序原理的click here：<a href="http://wlh0706-163-com.iteye.com/blog/1465570" target="_blank" rel="external">5种基本排序 娱乐版开脑解析</a>）  </p>
-<h3 id="删除单链表中的最小元素">删除单链表中的最小元素</h3><p>我能想到的办法就是遍历两次：第一次找到单链表中最小的元素，第二次遍历删除该元素。第一次遍历的时候需要借助两个变量，一个保存当前的最小元素的值，另一个保存当前最小值的位序。第二次遍历的时候当然就是删除第一次遍历得到的最小元素的位序上的元素了。 </p>
-<h3 id="删除所有重复结点">删除所有重复结点</h3><p>这个一般得借助其他的数据结构了。基本思路应该是：遍历链表，用一个数据结构保存当前已经遍历的元素，若下一个访问的链表里的元素已经存在于已经访问的元素集合中，则删除单链表中的该元素，否则继续，直至到达链表的末尾。保存已经访问过的元素可以用数组，也可以用其他的。 </p>
-<h3 id="判断一个链表是否包含另一个链表">判断一个链表是否包含另一个链表</h3><p>这个问题其实和开篇的问题一样，只是换了一种说法而已。因此只要找到第一个相同的元素就可以了。 </p>
-<h3 id="找出单链表中的倒数第K个元素">找出单链表中的倒数第K个元素</h3><p>我们首先要确保的就是单链表的元素个数大于K。<br>这里的实现思路也很巧妙：我们定义两个指针a和b，全部指向链表的头结点，然后a指针开始向后遍历，但a遍历到第K个元素的时候，b指针也开始从头开始遍历，接下来的事你应该知道了，当a指针到达链表的末尾时，b指针恰好指着链表的倒数第K个元素。这样的时间复杂度是O(n)。 </p>
-<p>那么，<strong>怎么找单链表中间的那个元素呢？</strong>  </p>
-<p>PS：这些问题肯定还有更好地解法和方案，希望您不吝赐教。</p>
-
+<p>我们进一步来思考：<strong>怎么找到第一个相交的元素呢？</strong><br>
       
     </div>
     
@@ -374,6 +233,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/21/你真的懂单链表吗/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -416,22 +279,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/" target="_blank" rel="external">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
+<h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
 <h2 id="Architecture">Architecture</h2><p>MooseFS主要由四部分组成：</p>
 <h3 id="Master_Server（元数据服务器）">Master Server（元数据服务器）</h3><p>管理整个MooseFS系统的单点，保存了MooseFS中每个文件的元数据，包括文件的大小、属性、文件位置等等；我们的元数据信息同时保存在Master的内存和磁盘里。</p>
-<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；</p>
-<h3 id="Chunk_Server（数据存储服务器）">Chunk Server（数据存储服务器）</h3><p>用于存储系统中的数据。如果我们指定数据需要备份（我们一般都会这么做），那么ChunkServer之间就会通过算法完成数据的备份工作；</p>
-<h3 id="Client（客户端）">Client（客户端）</h3><p>所有通过mfsmount进程和Master进行交互的机器，都可以叫做MooseFS的客户端。对客户端来说，所有的ChunkServer就像一台普通的NFS服务器一样在为它提供强大的数据存取服务；</p>
-<p>笔者从MooseFS的官网上kiang了两张图，分别是MooseFS读数据和写数据的，大家闭上眼睛，用心感受下：  </p>
-<p><img src="http://www.moosefs.org/tl_files/mfs_folder/read862.png" alt="MooseFS Read Process"><br><img src="http://www.moosefs.org/tl_files/mfs_folder/write862.png" alt="MooseFS Write Process"></p>
-<p>我们从图上可以很清晰地看到整个读写过程。  </p>
-<h2 id="Uses">Uses</h2><p>1.大规模高并发的数据存储与访问（大文件、小文件皆可）；<br>2.大规模的数据处理；</p>
-<h2 id="Features">Features</h2><h3 id="Advantages">Advantages</h3><p>1）简单易用。安装、部署以及配置都相对简单容易；<br>2）高可靠性：MooseFS采用数据备份的方式确保我们的数据安全可靠；<br>3）可伸缩性：我们可以在不停服务的情况下，新增或者删除MooseFS中的服务器；<br>4）支持POSIX访问，支持FUSE；<br>5）可移植性：适用于任何实现FUSE的系统，包括但不限于Linux、FreeBSD、OpenSolaris以及MacOS X；<br>6）MooseFS提供了快照功能，可以对整个文件甚至在正在写入的文件创建文件的快照；<br>7）提供类似JVM的GC机制；<br>8）提供web GUI监控接口；<br>9）随机读写的效率较高，海量小文件读写效率高；<br>10）发展比较成熟，文档全面；  </p>
-<h3 id="Disadvantages">Disadvantages</h3><p>1）MooseFS客户端程序使用FUSE编写加载MooseFS磁盘的命令；因此我们需要确保我们系统内置或者安装了FUSE；<br>2）存在单点故障。MooseFS只有一个Metadata Server，因此MDS的性能就会成为MooseFS性能的瓶颈；<br>3）故障恢复需手动恢复;<br>4）MooseFS的Master是单线程的程序，并不能发挥多核CPU的优势，由于大部分的处理逻辑都是内存操作，因此并不会存在太大的问题，但一旦涉及到磁盘I/O就有可能导致阻塞，严重的话整个集群会瘫痪掉，因此不建议把Master放在虚拟机中。<a href="http://tech.uc.cn/?tag=moosefs" target="_blank" rel="external">MooseFS之虚拟机惹的祸</a></p>
-<h2 id="Conclusion">Conclusion</h2><p>当前，MooseFS在国际国内都拥有了大量的用户，正是由于这些用户基础，也推动了MooseFS继续发展。<br>虽然MooseFS仍然存在单点故障这样的瓶颈，但是它的简单易用以及高可靠性，仍然让它成为我们DFS方案的不错的选择。</p>
-<h2 id="Others">Others</h2><p>MooseFS官网解答了我们一些常见的问题：<a href="http://www.moosefs.org/moosefs-faq.html" target="_blank" rel="external">FAQ</a></p>
-<p><strong>NFS</strong>：Network File System。一种用于分散式系统的协议。通过网络让不同的机器、不同的操作系统分享彼此个别的数据，让应用程序在客户端通过网络访问位于服务器磁盘中的数据，是在Unix系统间实现磁盘文件共享的一种方法。</p>
-
+<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；<br>
       
     </div>
     
@@ -448,6 +299,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/20/MooseFS概览/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -492,12 +347,7 @@
         <p><em>by:leotse</em></p>
 <h2 id="SSH免密码登录设置">SSH免密码登录设置</h2><p>准备工作：<br>两台机器S1，S2。IP分别为IP1，IP2，用户名为user。<br>我们想从S1免密码登录S2机器。以下为SSH设置的步骤：</p>
 <p>Step1：生产key。在S1上输入：<br><code>ssh-keygen -t rsa</code><br>然后一直enter，直到结束。</p>
-<p>Step2: 我们进入到~/.ssh目录，然后将生成的key通过scp复制到S2的.ssh目录（我们首先要确保目录存在）：<br><code>cd ~/.ssh</code><br><code>scp ~/.ssh/id_rsa.pub user@IP2:/home/user/.ssh/IP2</code><br>截至目前，S1上的配置已经完成。</p>
-<p>Step3：接下来我们登录S2机器。进入.ssh目录，确保authorized_keys文件存在：<br><code>cd ~/.ssh</code><br><code>cat IP2 &gt;&gt; authorized_keys</code><br>SSH免登录已经设置完毕，如果是普通用户，继续往下看。</p>
-<h2 id="普通用户">普通用户</h2><p>对于普通用户authorized_keys的权限必须限定为600，否则普通用户无法实现无密钥访问，而ROOT用户按照默认即可实现无密码访问：<br><code>sudo chmod 600 authorized_keys</code>  </p>
-<h2 id="免密码登录验证">免密码登录验证</h2><p>我们在S1上直接ssh连接S2机器，看能否免密码登录：<br><code>ssh IP2</code><br>如果可以直接登录上去，则说明已经设置成功。</p>
-<p>另，如果要设置S1和S2互相免密码登录，以上步骤在S1和S2都执行一次就好了！</p>
-
+<p>Step2: 我们进入到~/.ssh目录，然后将生成的key通过scp复制到S2的.ssh目录（我们首先要确保目录存在）：<br><code>cd ~/.ssh</code><br><code>scp ~/.ssh/id_rsa.pub user@IP2:/home/user/.ssh/IP2</code><br>截至目前，S1上的配置已经完成。<br>
       
     </div>
     
@@ -505,7 +355,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
 	</div>
 
       
@@ -514,6 +364,140 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/20/SSH免密码登录设置/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-改变FastDFS中某个机器的分组" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/13/改变FastDFS中某个机器的分组/" class="article-date">
+  	<time datetime="2015-09-13T02:55:15.000Z" itemprop="datePublished">2015-09-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/13/改变FastDFS中某个机器的分组/">改变FastDFS中某个机器的分组</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
+<p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>
+<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code><br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastDFS/">FastDFS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/13/改变FastDFS中某个机器的分组/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-Hadoop安装之你不知道的事" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/10/Hadoop安装之你不知道的事/" class="article-date">
+  	<time datetime="2015-09-10T02:55:15.000Z" itemprop="datePublished">2015-09-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/10/Hadoop安装之你不知道的事/">Hadoop安装之你不知道的事</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="概述">概述</h2><p>这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到<a href="https://github.com/leotse90/blogs/blob/master/Hadoop集群部署\(RedHat\">这里</a>.md)。</p>
+<p>那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。</p>
+<p>我们先简单总结一下Hadoop集群的安装过程：<br>1.准备工作：SSH免密码登录设置以及HostName配置；<br>2.NameNode安装与配置：解压Hadoop安装包到NameNode服务器上，并修改配置文件；<br>3.DataNode安装与配置：将NameNode的Hadoop文件分发到各DataNode服务器；<br>4.集群启动：格式化NameNode，然后先后启动Hadoop集群的dfs以及yarn；<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/10/Hadoop安装之你不知道的事/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -531,7 +515,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
     </nav>
   
 </div>

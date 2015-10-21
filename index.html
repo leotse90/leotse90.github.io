@@ -30,7 +30,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -112,7 +112,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -152,7 +152,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -280,32 +280,7 @@
         <p><em>by:leotse</em></p>
 <h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
 <p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
-<p>接下来我们对每一步进行详细介绍。</p>
-<h2 id="SSH免密码登录设置">SSH免密码登录设置</h2><p>进行SSH免密码登录设置是为了避免在集群内部机器交互的时候频繁输入登录密码，我们在这里为集群内的每个机器都执行SSH免密码登录设置。在这里不具体介绍SSH免密码登录的具体步骤，可以参见<a href="https://github.com/leotse90/blogs/blob/master/SSH免密码登录设置.md" target="_blank" rel="external">SSH免密码登录设置</a></p>
-<h2 id="环境变量设置">环境变量设置</h2><p>修改hosts文件：<br><code>vi /etc/hosts</code><br>新增：<br><code>172.16.10.136   Master</code><br><code>172.16.10.137   Slave1</code>  </p>
-<p>一般，Java都已经安装好。如果没有，需要先行安装Java并配置JAVA_HOME。然后修改~/.bashrc文件，在文件的末尾增加JAVA和HADOOP的配置：  </p>
-<p><code>### set java home</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
-<p><code>### set hadoop env</code><br><code>export HADOOP_HOME=/home/xiefeng/dependecies/hadoop-2.6.0</code><br><code>export HADOOP_COMMON_HOME=$HADOOP_HOME</code><br><code>export HADOOP_HDFS_HOME=$HADOOP_HOME</code><br><code>export HADOOP_MAPRED_HOME=$HADOOP_HOME</code><br><code>export HADOOP_YARN_HOME=$HADOOP_HOME</code><br><code>export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop</code><br><code>export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/lib</code><br><code>export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native</code><br><code>export HADOOP_OPTS=&quot;-Djava.library.path=$HADOOP_HOME/lib&quot;</code>  </p>
-<p>然后：<br><code>source ~/.bashrc</code>  </p>
-<p>检查是否配置成功，可以<code>echo $HADOOP_HOME</code>看是否是配置中的路径。  </p>
-<h2 id="Master部署">Master部署</h2><p>1.解压Hadoop 2.6安装包到安装目录，在这个示例里是/home/xiefeng/dependecies/目录：<br><code>tar xvf hadoop-2.6.0.tar</code>  </p>
-<p>2.进入Hadoop目录，修改slaves文件，增加Slave1到slaves文件中：<br><code>cd hadoop-2.6.0</code><br><code>vi etc/hadoop/slaves</code><br>添加：<br><code>Slave1</code>  </p>
-<p>3.修改core-site.xml配置文件：<br><code>vi etc/hadoop/core-site.xml</code><br>修改为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;fs.defaultFS&lt;/name&gt;</code><br><code>&lt;value&gt;hdfs://Master:9000&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp&lt;/value&gt;</code><br><code>&lt;description&gt;Abase for other temporary directories.&lt;/description&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>4.修改hdfs-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</code><br><code>&lt;value&gt;Master:50090&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/name&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/data&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.replication&lt;/name&gt;</code><br><code>&lt;value&gt;1&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>5.复制mapred-site.xml.template得到mapred-site.xml文件：<br><code>cp mapred-site.xml.template mapred-site.xml</code><br>修改mapred-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</code><br><code>&lt;value&gt;yarn&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>6.修改yarn-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;!-- Site specific YARN configuration properties --&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</code><br><code>&lt;value&gt;Master&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</code><br><code>&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>7.一般的，我们还需要修改一下hadoop-env.sh，将其JAVA_HOME修改为当前机器的JAVA_HOME：<br><code># The java implementation to use.</code><br><code># export JAVA_HOME=${JAVA_HOME}</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
-<h2 id="Slave部署">Slave部署</h2><p>1.将 Master 上的 Hadoop 文件先打包然后复制到各个节点上：<br><code>sudo tar -zcf hadoop－2.6.0.tar.gz hadoop－2.6.0/</code><br><code>scp hadoop－2.6.0.tar.gz Slave1:/home/xiefeng/dependecies</code>  </p>
-<p>2.解压到Slave1的安装目录：<br><code>sudo tar -zxf hadoop－2.6.0.tar.gz</code><br><code>sudo chown -R xiefeng:xiefeng /home/xiefeng/dependecies/hadoop-2.6.0</code>  </p>
-<h2 id="集群启动">集群启动</h2><p>我们回到Master，进入hadoop安装目录：<br><code>cd /home/xiefeng/dependecies/hadoop-2.6.0</code><br>第一次执行，初始化：<br><code>bin/hdfs namenode -format</code>  </p>
-<p>启动dfs：<br><code>sbin/start-dfs.sh</code><br>启动yarn：<br><code>sbin/start-yarn.sh</code>  </p>
-<p>分别在Master和Slave1输入jps，看看是否有以下输出，有则表明安装ok：<br><code>[xiefeng@Master hadoop-2.6.0]$ jps</code><br><code>8498 NameNode</code><br><code>8837 ResourceManager</code><br><code>8680 SecondaryNameNode</code><br><code>9817 Jps</code>  </p>
-<p><code>[xiefeng@Slave1 logs]$ jps</code><br><code>20208 NodeManager</code><br><code>20344 Jps</code><br><code>20107 DataNode</code>  </p>
-<p>在浏览器输入：<a href="http://master：8088就可以查看集群All" target="_blank" rel="external">http://master：8088就可以查看集群All</a> Applications信息；输入<a href="http://master:50070可以查看namenode信息。" target="_blank" rel="external">http://master:50070可以查看namenode信息。</a></p>
-<p>停止dfs：<br><code>sbin/stop-dfs.sh</code><br>停止yarn：<br><code>sbin/stop-yarn.sh</code>  </p>
-<p>另外，还可以使用以下脚本进行集群的启动和停止：<br><code>sbin/start-all.sh</code><br><code>sbin/stop-all.sh</code></p>
-<p>至此，Hadoop集群搭建完毕！！！</p>
-
+<p>接下来我们对每一步进行详细介绍。<br>
       
     </div>
     
@@ -322,6 +297,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/10/20/Hadoop集群部署(RedHat)/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -366,16 +345,7 @@
         <p><em>by:leotse</em></p>
 <h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
 <p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
-<p>接下来，我们将分析和介绍Hive中主要的JOIN操作。</p>
-<p>我们假定我们有两张表：human和assets。它们分别记录了人口以及资产信息，它们的字段如下：<br><code>hive&gt; describe human;</code><br><code>OK</code><br><code>name                    string</code><br><code>age                     int</code><br><code>job                     string</code><br><code>addr                    string</code>  </p>
-<p><code>hive&gt; describe assets;</code><br><code>OK</code><br><code>name                    string</code><br><code>bank                    string</code><br><code>fund                    int</code>  </p>
-<p>在下面的例子中，将会用到这两张表。</p>
-<h3 id="INNER_JOIN">INNER JOIN</h3><p>INNER JOIN，又称内连接。是较为常见的一种JOIN操作：<br><strong>Input</strong>: 表A、表B<br><strong>Condition</strong>: A.col = B.col<br><strong>Output</strong>: 表A和表B中满足Condition的所有数据记录<br><strong>Example</strong>:<br><code>SELECT a.col1, a.col2, b.col2, b.col3</code><br><code>FROM A a JOIN B b</code><br><code>ON a.col1 = b.col1</code><br><code>WHERE a.col3 = &#39;CONDITION&#39;;</code>  </p>
-<p>我们来看一个具体的例子，我们想知道human表中每一个人在不同银行的存款记录，我们可以用以下SQL语句进行查询：<br><code>SELECT h.name, h.age, h.job, a.bank, a.fund FROM human h JOIN assets a ON h.name=a.name;</code><br>ON关键字指定了两种表联接的条件，<br>我们对输出结果进行了截取，只选取最终的数据查询记录，如下：<br><code>xiefeng    24    big data    CMB    15000000</code><br><code>leotse    25    programmer    CMB    200000000</code><br><code>leotse    25    programmer    CAB    10000000</code><br><code>yolovon    26    CEO    HB    5000000</code><br><code>yolovon    26    CEO    CCB    3200000</code>  </p>
-<p>另外，我们需要注意的是，在Hive中，ON子句中尚不支持谓词OR。</p>
-<p>如果我们对多表进行INNER JOIN操作，如:<br><code>SELECT a.col1, a.col2, b.col4, c.col5 FROM a</code><br><code>JOIN b ON a.col1 = b.col2</code><br><code>JOIN c ON a.col2 = c.col3</code><br><code>WHERE CLAUSE;</code><br>大多数情况下，Hive会对每次JOIN操作启动一个MR Job，（在Hive中，SQL的执行是从左至右的）这上面这个SQL语句的执行过程中，首先启动一个MR Job对表a和表b进行一次JOIN操作，然后再启动另一个新的MR Job对表a和表c进行一次JOIN操作。<br>上面说到是大多数情况下，那种小部分的情况是指只要我们使用的ON后的条件（即连接键）一致的话，那就只会产生一个MR Job。</p>
-<p>Hive还假定最后一张JOIN的表最大，从而先将前面的表先缓存起来，直到最后一张表才进行计算，因此为了防止内存消耗过大，我们应该尽量保证JOIN操作的表从左到右表大小递增。</p>
-
+<p>接下来，我们将分析和介绍Hive中主要的JOIN操作。<br>
       
     </div>
     
@@ -392,6 +362,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/10/18/Hive之JOIN操作/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -434,20 +408,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock" target="_blank" rel="external">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
-<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。</p>
-<h2 id="multiprocessing使用">multiprocessing使用</h2><p>在multiprocessing模块中，我们使用multiprocessing.Process()来创建一个新的进程对象。</p>
-<p>一般情况下，我们需要在创建Process对象时指定进程执行的函数，以及该函数的参数：<br><code>process = multiprocessing.Process(target=worker, args=(param1, param2)</code><br>该对象的主要方法有：<br><strong>start()</strong>：启动进程；每个进程最多只能调用一次；<br><strong>run()</strong>：进程的执行逻辑在run()里。如果Process对象没有指定target，就会默认执行Process的run()方法；<br><strong>join([timeout])</strong>：阻塞当前进程，直到调用join方法的那个进程执行完，再继续执行当前进程；<br><strong>is_alive()</strong>：返回该进程是否存活；<br><strong>terminate()</strong>：终结一个进程。当调用这个函数的时候，运行逻辑中的exit和finally代码段将不会执行。而且这个进程的子进程不会被终结而是成为孤儿进程；  </p>
-<p>下面我们给出一段多进程使用的示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param):</code><br><code>print param</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>  </p>
-<p>我们可以得到如下的输出：<br><code>1</code><br><code>0</code><br><code>2</code><br><code>4</code><br><code>3</code>  </p>
-<h2 id="子进程通信">子进程通信</h2><p>multiprocessing支持两种类型的进程通信手段，分别是Queue和Pipe。  </p>
-<h3 id="Queue">Queue</h3><p>Queue是一种多线程优先队列。它允许多个进程读和写，我们通过<code>mutiprocessing.Queue(maxsize)</code>创建一个Queue，maxsize表示队列中可以存放对象的最大数量。它的一些主要方法有：<br><strong>get()</strong>：删除并返回队列中的一个元素；<br><strong>put()</strong>: 添加元素到队列；<br><strong>qsize()</strong> : 返回队列中元素的个数；<br><strong>empty()</strong>: 队列为空返回True否则返回False；<br><strong>full()</strong>: 队列已满返回True，负责返回False；  </p>
-<p>在下面的示例里，我们用Queue实现获取多进程执行时的输出：   </p>
-<p><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>result_queue = multiprocessing.Queue()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, result_queue])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>while not result_queue.empty():</code><br><code>print result_queue.get()</code><br><code>def worker(param, result_queue):</code><br><code>result_queue.put(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code>   </p>
-<p>执行这段代码，输出为：<br><code>101</code><br><code>102</code><br><code>103</code><br><code>100</code><br><code>104</code>  </p>
-<h3 id="Pipe">Pipe</h3><p>Pipe可以是单向，也可以是双向。我们通过mutiprocessing.Pipe(duplex=False)创建单向管道 (默认为双向)。它主要有send()和recv()两种方法，顾名思义，分别是发送消息和接受消息。<br>我们同样来看一段示例代码：<br><code>import multiprocessing</code><br><code>def controller():</code><br><code>processes = []</code><br><code>parent_conn, child_conn = multiprocessing.Pipe()</code><br><code>for i in range(5):</code><br><code>process = multiprocessing.Process(target=worker, args=[i, child_conn])</code><br><code>processes.append(process)</code><br><code>for process in processes:</code><br><code>process.start()</code><br><code>print parent_conn.recv()</code><br><code>for process in processes:</code><br><code>process.join()</code><br><code>def worker(param, child_conn):</code><br><code>child_conn.send(param + 100)</code><br><code>if __name__ == &#39;__main__&#39;:</code><br><code>controller()</code><br>执行这段代码，输出为：<br><code>100</code><br><code>101</code><br><code>102</code><br><code>103</code><br><code>104</code>  </p>
-<h2 id="Q&amp;A">Q&amp;A</h2><p>为什么要先依次调用start再调用join，而不是start完了就调用join呢？<br>答：假设我们有两个进程p1，p2，如果我们在p1执行后先join()然后再p2.start()，我们就会发现是先执行完p1，再执行主线程，最后才开始p2。这是因为join是用来阻塞当前线程的，p1.start()之后，p1就提示主线程，需要等待p1结束才向下执行，那主线程就乖乖的等着啦，自然没有执行p2.start()。</p>
-
+<h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
+<p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。<br>
       
     </div>
     
@@ -464,6 +426,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/10/17/Python多进程使用/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -506,58 +472,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<p>本文译自stackoverflow <a href="http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python" target="_blank" rel="external">What does the yield keyword do in Python?</a></p>
+<p>本文译自stackoverflow <a href="http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python">What does the yield keyword do in Python?</a></p>
 <h2 id="引子">引子</h2><p>这一切始于一位童鞋在Stack Overflow上问的问题：</p>
-<p>Python中的yield关键字是用来干嘛的？它都干了些什么？</p>
-<p>例如，我试图理解下面这段代码：</p>
-<p><code>def node._get_child_candidates(self, distance, min_dist, max_dist):</code><br><code>if self._leftchild and distance - max_dist &lt; self._median:</code><br><code>yield self._leftchild</code><br><code>if self._rightchild and distance + max_dist &gt;= self._median:</code><br><code>yield self._rightchild</code>  </p>
-<p>下面是调用代码：</p>
-<p><code>result, candidates = list(), [self]</code><br><code>while candidates:</code><br><code>node = candidates.pop()</code><br><code>distance = node._get_dist(obj)</code><br><code>if distance &lt;= max_dist and distance &gt;= min_dist:</code><br><code>result.extend(node._values)</code><br><code>candidates.extend(node._get_child_candidates(distance, min_dist, max_dist))</code><br><code>return result</code>  </p>
-<p>当_get_child_candidates函数被调用时发生了什么？返回了一个list？返回了单个元素？还是它再次被调用了？后面的调用什么时候停止呢？</p>
-<p>下面是这个问题的精华回复：</p>
-<h2 id="yield关键字用法">yield关键字用法</h2><p>要想理解yield关键字，首先你得理解什么是<strong>生成器</strong>。而在这之前我们先得了解迭代。  </p>
-<h3 id="迭代">迭代</h3><p>当你创建了一个list，你就可以逐个元素去读取这个list，这就叫做迭代：</p>
-<p><code>&gt;&gt;&gt; mylist = [1, 2, 3]</code><br><code>&gt;&gt;&gt; for i in mylist:</code><br><code>...    print(i)</code><br><code>1</code><br><code>2</code><br><code>3</code>  </p>
-<p>mylist就是可迭代的。当你使用list表达式，你就创建了一个list，亦即创建了一个迭代器：  </p>
-<p><code>&gt;&gt;&gt; mylist = [x*x for x in range(3)]</code><br><code>&gt;&gt;&gt; for i in mylist:</code><br><code>...    print(i)</code><br><code>0</code><br><code>1</code><br><code>4</code>  </p>
-<p>Python中所有你可以用到”for…in…”表达式的地方都是可迭代的：list，string，files等等。迭代器的优点是你可以读你所需，但是你需要在内存中存储（这些迭代器中的）所有的值，而当我们拥有大量数据时我们并不希望这样做。</p>
-<h3 id="生成器">生成器</h3><p>生成器亦即迭代器，但是生成器只能迭代一次。因为它并不会将所有的数据存在内存中，而是实时生成我们所需的数据：</p>
-<p><code>&gt;&gt;&gt; mygenerator = (x*x for x in range(3))</code><br><code>&gt;&gt;&gt; for i in mygenerator:</code><br><code>...    print(i)</code><br><code>0</code><br><code>1</code><br><code>4</code>  </p>
-<p>这个和你用元组()取代列表[]道理一样。但是，你不能指望<code>for i in mygenerator</code>运行第二次，因为生成器只能被使用一次：它（首先）计算得到0，然后会遗忘0并计算得出1，最终得到4（并遗忘1），以此类推。</p>
-<h3 id="yield关键字">yield关键字</h3><p>Yield关键字和return的用法一样，只是（用到yield的）函数将会返回一个生成器。</p>
-<p><code>&gt;&gt;&gt; def createGenerator():</code><br><code>...    mylist = range(3)</code><br><code>...    for i in mylist:</code><br><code>...        yield i*i</code><br><code>...</code><br><code>&gt;&gt;&gt; mygenerator = createGenerator() # create a generator</code><br><code>&gt;&gt;&gt; print(mygenerator) # mygenerator is an object!</code><br><code>&lt;generator object createGenerator at 0xb7555c34&gt;</code><br><code>&gt;&gt;&gt; for i in mygenerator:</code><br><code>...     print(i)</code><br><code>0</code><br><code>1</code><br><code>4</code>  </p>
-<p>这个例子不是太好。但是当你发现你的函数要返回大量只需读一次的数据时你会体会到它（yield）的好处。</p>
-<p>要想掌握yield关键字，你必须知道：当你调用这个函数时，函数体里的代码并没有执行，它只是<strong>返回一个生成器对象</strong>，这看起来有点难以理解。</p>
-<p>接着，每次你用到这个生成器的时候你的代码都会运行一次。</p>
-<p>现在最难的部分来了：</p>
-<p>当你第一次调用函数返回的生成器时，它将会运行函数中的代码直到执行到yield，然后它将返回这个循环产生的第一个值。接下来，每一次调用都将执行函数中的这个循环一次，并返回下一个值，直到没有值可以返回为止。</p>
-<p>生成器会在函数执行但是没有遇到yield的情况下置空，这可能是因为循环结束了，或者是不再满足”if/else”条件。</p>
-<h3 id="问题中的代码解释">问题中的代码解释</h3><p><strong>生成器</strong>：</p>
-<p><code># 在这里你创建了node对象的一个返回生成器的函数</code><br><code>def node._get_child_candidates(self, distance, min_dist, max_dist):</code><br><code>`  # 下面这段代码将会在每次你使用这个生成器时被调用：` </code><br><code># 如果node对象仍然有一个左child</code><br><code># 而且distance满足条件，则返回下一个左child</code><br><code>if self._leftchild and distance - max_dist &lt; self._median:</code><br><code>yield self._leftchild</code><br><code>`  # 如果node对象仍然有一个右child`  
-`  # 而且distance满足条件，则返回下一个右child`  
-`  if self._rightchild and distance + max_dist &gt;= self._median:`  
-`      yield self._rightchild` </code><br><code># 如果这个函数运行到这里了，意味着这个生成器可以看成空的了。</code><br><code># 亦即：再也没有符合条件的左右child了</code>  </p>
-<p><strong>调用方</strong>：</p>
-<p><code># 创建一个空的list和一个包含当前对象引用的list</code><br><code>result, candidates = list(), [self]</code><br><code>`# 循环处理candidates (最初只有一个元素)`  
-`while candidates:` </code><br><code># 获取最后一个candidate将其移除</code><br><code>node = candidates.pop()</code><br><code>`    # 获取obj和candidate之间的距离`  
-`    distance = node._get_dist(obj)` </code><br><code># 如果距离合适，保存结果在result中</code><br><code>if distance &lt;= max_dist and distance &gt;= min_dist:</code><br><code>result.extend(node._values)</code><br><code>`    # 将candidate的子节点保存在candidates中`  
-`    # 该循环会一直循环直到遍历了所有的子节点。`  
-`    candidates.extend(node._get_child_candidates(distance, min_dist, max_dist))` </code><br><code>return result</code>  </p>
-<p>这段代码包含了以下几个很有意思的地方：</p>
-<p>1）这个循环在遍历一个list，而这个list会在遍历的过程中增大。虽然存在变成无限循环的风险，但是这仍不失为遍历嵌套数据的好方法。在这里，candidates.extend(node._get_child_candidates(distance, min_dist, max_dist))方法获取了这个生成器的所有元素，但是<code>while</code>在产生新的生成器，它们就会继续生产新的元素，直到换了一个节点。</p>
-<p>2）extend()方法是list的一个用于将迭代器的元素追加在list中。<br>一般地，我们传一个list给它：</p>
-<p><code>&gt;&gt;&gt; a = [1, 2]</code><br><code>&gt;&gt;&gt; b = [3, 4]</code><br><code>&gt;&gt;&gt; a.extend(b)</code><br><code>&gt;&gt;&gt; print(a)</code><br><code>[1, 2, 3, 4]</code>  </p>
-<p>但是在你给出的代码里，它获取了一个生成器，它有如下几个好处：<br>a.你不需要两次读取这些元素；<br>b.如果你有很多子节点，你不需要把它们都保存在内存中；<br>这个方法很管用，因为Python不关心你传入的参数是不是一个list。Python只关心参数是否是可迭代的如字符串、list、元组以及生成器。这叫做<a href="http://zh.wikipedia.org/zh-cn/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B" target="_blank" rel="external">鸭子类型</a>，这也是Python为何如此赞的一个原因。但是这些都不在我们的讨论范围内。</p>
-<p>你可以到此结束，也可以接着看下面生成器的一些高级用法：</p>
-<h3 id="控制生成器">控制生成器</h3><p><code>&gt;&gt;&gt; class Bank(): # let&#39;s create a bank, building ATMs</code><br><code>...    crisis = False</code><br><code>...    def create_atm(self):</code><br><code>...        while not self.crisis:</code><br><code>...            yield &quot;$100&quot;</code><br><code>&gt;&gt;&gt; hsbc = Bank() # when everything&#39;s ok the ATM gives you as much as you want</code><br><code>&gt;&gt;&gt; corner_street_atm = hsbc.create_atm()</code><br><code>&gt;&gt;&gt; print(corner_street_atm.next())</code><br><code>$100</code><br><code>&gt;&gt;&gt; print(corner_street_atm.next())</code><br><code>$100</code><br><code>&gt;&gt;&gt; print([corner_street_atm.next() for cash in range(5)])</code><br><code>[&#39;$100&#39;, &#39;$100&#39;, &#39;$100&#39;, &#39;$100&#39;, &#39;$100&#39;]</code><br><code>&gt;&gt;&gt; hsbc.crisis = True # crisis is coming, no more money!</code><br><code>&gt;&gt;&gt; print(corner_street_atm.next())</code><br><code>&lt;type &#39;exceptions.StopIteration&#39;&gt;</code><br><code>&gt;&gt;&gt; wall_street_atm = hsbc.create_atm() # it&#39;s even true for new ATMs</code><br><code>&gt;&gt;&gt; print(wall_street_atm.next())</code><br><code>&lt;type &#39;exceptions.StopIteration&#39;&gt;</code><br><code>&gt;&gt;&gt; hsbc.crisis = False # trouble is, even post-crisis the ATM remains empty</code><br><code>&gt;&gt;&gt; print(corner_street_atm.next())</code><br><code>&lt;type &#39;exceptions.StopIteration&#39;&gt;</code><br><code>&gt;&gt;&gt; brand_new_atm = hsbc.create_atm() # build a new one to get back in business</code><br><code>&gt;&gt;&gt; for cash in brand_new_atm:</code><br><code>...    print cash</code><br><code>$100</code><br><code>$100</code><br><code>$100</code><br><code>$100</code><br><code>$100</code><br><code>$100</code><br><code>$100</code><br><code>$100</code><br><code>$100</code><br><code>...</code>  </p>
-<p>如果想要控制对资源的访问，这将非常受用。</p>
-<h3 id="itertools，你上佳的朋友">itertools，你上佳的朋友</h3><p>itertools模块包含了操纵迭代的一些特殊的函数。你是不是曾经想过复制一个生产器？串联两个生成器？抑或在线性时间内将嵌套list中的元素分组？或者不依赖创建新list的情况下map/zip？</p>
-<p>那么，你只要导入itertools模块就行了。</p>
-<p>想要看个例子？让我们看看四匹马到达终点的可能顺序：</p>
-<p><code>&gt;&gt;&gt; horses = [1, 2, 3, 4]</code><br><code>&gt;&gt;&gt; races = itertools.permutations(horses)</code><br><code>&gt;&gt;&gt; print(races)</code><br><code>&lt;itertools.permutations object at 0xb754f1dc&gt;</code><br><code>&gt;&gt;&gt; print(list(itertools.permutations(horses)))</code><br><code>[(1, 2, 3, 4),</code><br><code>(1, 2, 4, 3),</code><br><code>(1, 3, 2, 4),</code><br><code>(1, 3, 4, 2),</code><br><code>(1, 4, 2, 3),</code><br><code>(1, 4, 3, 2),</code><br><code>(2, 1, 3, 4),</code><br><code>(2, 1, 4, 3),</code><br><code>(2, 3, 1, 4),</code><br><code>(2, 3, 4, 1),</code><br><code>(2, 4, 1, 3),</code><br><code>(2, 4, 3, 1),</code><br><code>(3, 1, 2, 4),</code><br><code>(3, 1, 4, 2),</code><br><code>(3, 2, 1, 4),</code><br><code>(3, 2, 4, 1),</code><br><code>(3, 4, 1, 2),</code><br><code>(3, 4, 2, 1),</code><br><code>(4, 1, 2, 3),</code><br><code>(4, 1, 3, 2),</code><br><code>(4, 2, 1, 3),</code><br><code>(4, 2, 3, 1),</code><br><code>(4, 3, 1, 2),</code><br><code>(4, 3, 2, 1)]</code>  </p>
-<h3 id="理解迭代的内部机制">理解迭代的内部机制</h3><p>迭代是实现迭代（实现了__iter__()函数）和迭代器（实现了__next__()函数）的过程。你可以从可迭代对象上获取一个迭代器，而迭代器是你可以迭代的对象。</p>
-<p>想要了解更多，你可以看看这篇<a href="http://effbot.org/zone/python-for-statement.htm" target="_blank" rel="external">文章</a>。</p>
-
+<p>Python中的yield关键字是用来干嘛的？它都干了些什么？<br>
       
     </div>
     
@@ -575,6 +492,75 @@
 
 
       
+        <p class="article-more-link">
+          <a  href="/2015/10/15/【译】Python中yield关键字用法/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-Python任务调度队列Celery" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/14/Python任务调度队列Celery/" class="article-date">
+  	<time datetime="2015-10-14T02:55:15.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/14/Python任务调度队列Celery/">Python任务调度队列Celery</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
+<p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
+<p>一般推荐使用RabbitMQ，但是我们这里用到Redis，因为Redis安装的时候依赖少，而且性能稳定，但是Redis也有缺点，那就是断电的时候会丢失数据。我们在这里，就以Redis作为Celery的第三方中间层。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Celery-Python/">Celery,Python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/10/14/Python任务调度队列Celery/#more">more >></a>
+        </p>
+      
       <div class="clearfix"></div>
     </div>
     
@@ -591,7 +577,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>

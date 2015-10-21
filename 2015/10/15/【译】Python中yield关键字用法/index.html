@@ -8,9 +8,7 @@
   <meta name="description" content="by:leotse
 本文译自stackoverflow What does the yield keyword do in Python?
 引子这一切始于一位童鞋在Stack Overflow上问的问题：
-Python中的yield关键字是用来干嘛的？它都干了些什么？
-例如，我试图理解下面这段代码：
-def node._get_child_candidates(self, distance, mi">
+Python中的yield关键字是用来干嘛的？它都干了些什么？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【译】Python中yield关键字用法">
 <meta property="og:url" content="http://leotse90.com/2015/10/15/【译】Python中yield关键字用法/index.html">
@@ -18,18 +16,14 @@ def node._get_child_candidates(self, distance, mi">
 <meta property="og:description" content="by:leotse
 本文译自stackoverflow What does the yield keyword do in Python?
 引子这一切始于一位童鞋在Stack Overflow上问的问题：
-Python中的yield关键字是用来干嘛的？它都干了些什么？
-例如，我试图理解下面这段代码：
-def node._get_child_candidates(self, distance, mi">
-<meta property="og:updated_time" content="2015-10-21T03:16:06.000Z">
+Python中的yield关键字是用来干嘛的？它都干了些什么？">
+<meta property="og:updated_time" content="2015-10-21T06:44:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】Python中yield关键字用法">
 <meta name="twitter:description" content="by:leotse
 本文译自stackoverflow What does the yield keyword do in Python?
 引子这一切始于一位童鞋在Stack Overflow上问的问题：
-Python中的yield关键字是用来干嘛的？它都干了些什么？
-例如，我试图理解下面这段代码：
-def node._get_child_candidates(self, distance, mi">
+Python中的yield关键字是用来干嘛的？它都干了些什么？">
   
     <link rel="alternative" href="/atom.xml" title="LeoTse&#39;s Blogs" type="application/atom+xml">
   
@@ -46,7 +40,7 @@ def node._get_child_candidates(self, distance, mi">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -128,7 +122,7 @@ def node._get_child_candidates(self, distance, mi">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -168,7 +162,7 @@ def node._get_child_candidates(self, distance, mi">
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -244,8 +238,7 @@ def node._get_child_candidates(self, distance, mi">
         <p><em>by:leotse</em></p>
 <p>本文译自stackoverflow <a href="http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python" target="_blank" rel="external">What does the yield keyword do in Python?</a></p>
 <h2 id="引子">引子</h2><p>这一切始于一位童鞋在Stack Overflow上问的问题：</p>
-<p>Python中的yield关键字是用来干嘛的？它都干了些什么？</p>
-<p>例如，我试图理解下面这段代码：</p>
+<p>Python中的yield关键字是用来干嘛的？它都干了些什么？<br><a id="more"></a><br>例如，我试图理解下面这段代码：</p>
 <p><code>def node._get_child_candidates(self, distance, min_dist, max_dist):</code><br><code>if self._leftchild and distance - max_dist &lt; self._median:</code><br><code>yield self._leftchild</code><br><code>if self._rightchild and distance + max_dist &gt;= self._median:</code><br><code>yield self._rightchild</code>  </p>
 <p>下面是调用代码：</p>
 <p><code>result, candidates = list(), [self]</code><br><code>while candidates:</code><br><code>node = candidates.pop()</code><br><code>distance = node._get_dist(obj)</code><br><code>if distance &lt;= max_dist and distance &gt;= min_dist:</code><br><code>result.extend(node._values)</code><br><code>candidates.extend(node._get_child_candidates(distance, min_dist, max_dist))</code><br><code>return result</code>  </p>

@@ -19,7 +19,7 @@ ArchitectureMooseFS主要由四部分组成：
 Master Server（元数据服务器）管理整个MooseFS系统的单点，保存了MooseFS">
 <meta property="og:image" content="http://www.moosefs.org/tl_files/mfs_folder/read862.png">
 <meta property="og:image" content="http://www.moosefs.org/tl_files/mfs_folder/write862.png">
-<meta property="og:updated_time" content="2015-10-21T03:11:29.000Z">
+<meta property="og:updated_time" content="2015-10-21T06:42:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MooseFS概览">
 <meta name="twitter:description" content="by:leotse
@@ -42,7 +42,7 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -124,7 +124,7 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -164,7 +164,7 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -241,7 +241,7 @@ Master Server（元数据服务器）管理整个MooseFS系统的单点，保存
 <h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/" target="_blank" rel="external">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
 <h2 id="Architecture">Architecture</h2><p>MooseFS主要由四部分组成：</p>
 <h3 id="Master_Server（元数据服务器）">Master Server（元数据服务器）</h3><p>管理整个MooseFS系统的单点，保存了MooseFS中每个文件的元数据，包括文件的大小、属性、文件位置等等；我们的元数据信息同时保存在Master的内存和磁盘里。</p>
-<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；</p>
+<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；<br><a id="more"></a></p>
 <h3 id="Chunk_Server（数据存储服务器）">Chunk Server（数据存储服务器）</h3><p>用于存储系统中的数据。如果我们指定数据需要备份（我们一般都会这么做），那么ChunkServer之间就会通过算法完成数据的备份工作；</p>
 <h3 id="Client（客户端）">Client（客户端）</h3><p>所有通过mfsmount进程和Master进行交互的机器，都可以叫做MooseFS的客户端。对客户端来说，所有的ChunkServer就像一台普通的NFS服务器一样在为它提供强大的数据存取服务；</p>
 <p>笔者从MooseFS的官网上kiang了两张图，分别是MooseFS读数据和写数据的，大家闭上眼睛，用心感受下：  </p>

@@ -15,7 +15,7 @@
 <meta property="og:description" content="by:leotse
 准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
 主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql">
-<meta property="og:updated_time" content="2015-10-21T03:12:14.000Z">
+<meta property="og:updated_time" content="2015-10-21T06:43:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL的主从配置">
 <meta name="twitter:description" content="by:leotse
@@ -37,7 +37,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+			<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			
 		</a>
 
@@ -119,7 +119,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery-Python/" style="font-size: 10px;">Celery,Python</a> <a href="/tags/FastDFS/" style="font-size: 20px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 20px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -159,7 +159,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="https://github.com/leotse90/blogs/blob/master/images/leotse.jpg" class="js-avatar">
+				<img lazy-src="http://f.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e3c1a1324828ba61ea9d345c9.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">Leo Tse</h1>
@@ -234,7 +234,7 @@
       
         <p><em>by:leotse</em></p>
 <h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
-<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br>这个账号可以说是Slave访问Master的通行证。</p>
+<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br><a id="more"></a><br>这个账号可以说是Slave访问Master的通行证。</p>
 <p>2.Master配置    </p>
 <p>我们开始配置Master，修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 1</code><br><code>binlog-do-db    = test_db</code><br><code>expire-logs-days= 7</code><br>下面来解释一下这些字段：<br><code>log-bin         = mysql-bin</code>表示启用二进制日志，用以记录Master中数据的更新日志；<br><code>server-id       = 1</code>唯一标识Master的ID，一般建议使用IP地址的最后一段；<br><code>binlog-do-db    = test_db</code>选择需要备份的数据库，<strong>如果需要备份全部，可以不增加这行</strong>；<br><code>expire-logs-days= 7</code>指定只保存7天的二进制日志，防止占用磁盘空间；  </p>
 <p>配置好后，我们需要重启MySQL服务。<br><code>/etc/init.d/mysql restart</code>  </p>
