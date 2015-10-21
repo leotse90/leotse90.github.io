@@ -99,6 +99,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hadoop集群部署（RedHat）"><span class="toc-number">1.</span> <span class="toc-text">Hadoop集群部署（RedHat）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH免密码登录设置"><span class="toc-number">1.2.</span> <span class="toc-text">SSH免密码登录设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境变量设置"><span class="toc-number">1.3.</span> <span class="toc-text">环境变量设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Master部署"><span class="toc-number">1.4.</span> <span class="toc-text">Master部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slave部署"><span class="toc-number">1.5.</span> <span class="toc-text">Slave部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群启动"><span class="toc-number">1.6.</span> <span class="toc-text">集群启动</span></a></li></ol></li></ol>
+		
+		</div>
+		
 		<h1 id="Hadoop集群部署（RedHat）">Hadoop集群部署（RedHat）</h1><p><strong>整理：LeoTse</strong></p>
 <h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
 <p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>

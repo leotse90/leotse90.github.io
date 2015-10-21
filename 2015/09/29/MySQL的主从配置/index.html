@@ -99,6 +99,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL的主从配置"><span class="toc-number">1.</span> <span class="toc-text">MySQL的主从配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">1.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主从配置"><span class="toc-number">1.2.</span> <span class="toc-text">主从配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Master配置"><span class="toc-number">1.2.1.</span> <span class="toc-text">Master配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Slave配置"><span class="toc-number">1.2.2.</span> <span class="toc-text">Slave配置</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
 		<h1 id="MySQL的主从配置">MySQL的主从配置</h1><p>整理：LeoTse</p>
 <h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
 <h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br>这个账号可以说是Slave访问Master的通行证。</p>

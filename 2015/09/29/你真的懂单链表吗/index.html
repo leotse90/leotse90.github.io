@@ -99,6 +99,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#你真的懂单链表吗"><span class="toc-number">1.</span> <span class="toc-text">你真的懂单链表吗</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引子"><span class="toc-number">1.1.</span> <span class="toc-text">引子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单链表的反转"><span class="toc-number">1.1.1.</span> <span class="toc-text">单链表的反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单链表的排序"><span class="toc-number">1.1.2.</span> <span class="toc-text">单链表的排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除单链表中的最小元素"><span class="toc-number">1.1.3.</span> <span class="toc-text">删除单链表中的最小元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除所有重复结点"><span class="toc-number">1.1.4.</span> <span class="toc-text">删除所有重复结点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断一个链表是否包含另一个链表"><span class="toc-number">1.1.5.</span> <span class="toc-text">判断一个链表是否包含另一个链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#找出单链表中的倒数第K个元素"><span class="toc-number">1.1.6.</span> <span class="toc-text">找出单链表中的倒数第K个元素</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
 		<h1 id="你真的懂单链表吗">你真的懂单链表吗</h1><h2 id="引子">引子</h2><p><strong>首先，上一道开胃菜：怎么判断两个单链表是否相交？</strong>  </p>
 <p>我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  </p>
 <p>我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只能是Y形相交，而不可能是X形相交，亦即从第一个相同的结点开始，后面的结点全部一样。如果能想到这个，后面的就简单明了了：只要A链表和B链表的最后一个结点值相等，则证明A链表和B链表相交。该算法的时间复杂度也下降到O(m+n)。</p>

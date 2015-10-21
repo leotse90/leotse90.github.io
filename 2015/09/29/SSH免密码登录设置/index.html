@@ -102,6 +102,13 @@ Step2: 我们进入到~/.ssh目录，然后将生成的key通过scp复制到S2�
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH免密码登录设置"><span class="toc-number">1.</span> <span class="toc-text">SSH免密码登录设置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH免密码登录设置-1"><span class="toc-number">1.1.</span> <span class="toc-text">SSH免密码登录设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#普通用户"><span class="toc-number">1.2.</span> <span class="toc-text">普通用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#免密码登录验证"><span class="toc-number">1.3.</span> <span class="toc-text">免密码登录验证</span></a></li></ol></li></ol>
+		
+		</div>
+		
 		<h1 id="SSH免密码登录设置">SSH免密码登录设置</h1><p><strong>整理：LeoTse</strong></p>
 <h2 id="SSH免密码登录设置-1">SSH免密码登录设置</h2><p>准备工作：<br>两台机器S1，S2。IP分别为IP1，IP2，用户名为user。<br>我们想从S1免密码登录S2机器。以下为SSH设置的步骤：</p>
 <p>Step1：生产key。在S1上输入：<br><code>ssh-keygen -t rsa</code><br>然后一直enter，直到结束。</p>

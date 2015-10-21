@@ -96,6 +96,13 @@ multiprocessing模块和thr">
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python多进程使用"><span class="toc-number">1.</span> <span class="toc-text">Python多进程使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.1.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multiprocessing使用"><span class="toc-number">1.2.</span> <span class="toc-text">multiprocessing使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子进程通信"><span class="toc-number">1.3.</span> <span class="toc-text">子进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Queue"><span class="toc-number">1.3.1.</span> <span class="toc-text">Queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipe"><span class="toc-number">1.3.2.</span> <span class="toc-text">Pipe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q&A"><span class="toc-number">1.4.</span> <span class="toc-text">Q&A</span></a></li></ol></li></ol>
+		
+		</div>
+		
 		<h1 id="Python多进程使用">Python多进程使用</h1><h2 id="Intro">Intro</h2><p>我们知道，由于<a href="https://wiki.python.org/moin/GlobalInterpreterLock" target="_blank" rel="external">GIL</a>的关系，Python中多线程并不被看好。因此，Python我们常常使用模块subprocess模块和多进程multiprocessing模块来实现并发。而subprocess因为是调用外部程序而且只是通过管道进行文本交流，因此我们建议在Python并发编程中，尽量使用multiprocessing。  </p>
 <p>multiprocessing模块和threading模块很像，该模块同时提供了本地和远程并发，你也不用担心GIL产生的副作用。并且multiprocessing可以在Unix和Windows下使用（区别于为shell而生的subprocess）。</p>
 <h2 id="multiprocessing使用">multiprocessing使用</h2><p>在multiprocessing模块中，我们使用multiprocessing.Process()来创建一个新的进程对象。</p>

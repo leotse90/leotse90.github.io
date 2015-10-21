@@ -98,6 +98,13 @@
 </header>
 	<div class="article-content">
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive_本地模式"><span class="toc-number">1.</span> <span class="toc-text">Hive 本地模式</span></a></li></ol>
+		
+		</div>
+		
 		<h1 id="Hive_本地模式">Hive 本地模式</h1><p><strong>by:leotse</strong></p>
 <p>我们都知道，Hive是通过将HiveQL转化为MR job进行数据查询和处理。当然，不是全部的HQL语句都需要转为MR，比如我们常见的：<br><code>SELECT * FROM access_log;</code><br>这时候，Hive Shell能很快地返回给我们结果，这是因为这里用到的是Hive的<strong>本地模式</strong>。<br>Hive查询耗时太长，一直都是大家吐槽的对象，在数据量大的情况下，当然微不足道，但是当我们的查询量很小亦即查询数据很少的时候，Hive启动的耗时将会显得非常刺眼，因此在0.7版本以后，Hive开始支持本地模式。</p>
 <p>除了上面的示例使用到了本地模式，如果WHERE语句中只是分区字段这种情况，也是无需使用MR job的：<br><code>SELECT * FROM access_log</code><br><code>WHERE dt=&#39;20150916&#39;</code><br><code>LIMIT 10;</code><br>这是因为分区字段在HDFS中保存实际上是目录结构，这些都是不用通过计算获取的（包含LIMIT）。</p>

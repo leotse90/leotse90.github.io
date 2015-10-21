@@ -75,65 +75,252 @@
     <div id="container">
       <div id="main">
 
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2015/09/29/MySQL的主从配置/" title="" itemprop="url">
-  
-    <h1 itemprop="name"></h1>
+   
     
-     
-           <p itemprop="description" >MySQL的主从配置整理：LeoTse
-准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
-主从配置Master配置1.创建备份账</p>
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/MySQL的主从配置/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:52:37.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
         
-    
-    <time datetime="2015-09-29T07:52:37.000Z" itemprop="datePublished">2015-09-29</time>
-  </a>
-</section>
+        <h1 id="MySQL的主从配置">MySQL的主从配置</h1><p>整理：LeoTse</p>
+<h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
+<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br>这个账号可以说是Slave访问Master的通行证。</p>
+<p>2.Master配置    </p>
+<p>我们开始配置Master，修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 1</code><br><code>binlog-do-db    = test_db</code><br><code>expire-logs-days= 7</code><br>下面来解释一下这些字段：<br><code>log-bin         = mysql-bin</code>表示启用二进制日志，用以记录Master中数据的更新日志；<br><code>server-id       = 1</code>唯一标识Master的ID，一般建议使用IP地址的最后一段；<br><code>binlog-do-db    = test_db</code>选择需要备份的数据库，<strong>如果需要备份全部，可以不增加这行</strong>；<br><code>expire-logs-days= 7</code>指定只保存7天的二进制日志，防止占用磁盘空间；  </p>
+<p>配置好后，我们需要重启MySQL服务。<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>我们需要看看是否已经配置成功了，我们可以执行以下SQL语句：<br>SHOW MASTER STATUS\G;<br>如果你看到类似下面的信息，则说明Master基本ok，如果数据库中已经有数据，这个信息将会用到：<br><code>File: mysql-bin.000002</code><br><code>Position: 107</code><br><code>Binlog_Do_DB: test_db</code><br><code>Binlog_Ignore_DB:</code>  </p>
+<p>3.主数据库已经有数据的Master配置</p>
+<p>如果Master的数据库已经有数据了，你可以遵照下面的步骤：<br>1）进入MySQL终端，查看当前正在使用的库有哪些：<br><code>SHOW databases;</code>  </p>
+<p>2）停止当前MySQL的所有写操作，并查看当前数据库的状态：<br><code>FLUSH TABLES WITH READ LOCK;</code>  </p>
+<p>3）打开另一个终端（也可以直接exit离开当前MySQL，但是为了避免重复进入MySQL输密码，建议打开一个新的终端），将要备份的数据库导出成sql文件，并将其传到Slave机器上：<br><code>mysqldump -uroot -p****** test_db &gt; test_db.sql</code><br><code>scp test_db.sql root@10.0.0.2:/root/</code>  </p>
+<p>4）切换到MySQL终端，解锁：<br><code>UNLOCK TABLES;</code></p>
+<p>至此，Master配置结束。</p>
+<h3 id="Slave配置">Slave配置</h3><p>Slave的配置也很简单。同样修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 2</code><br><code>binlog-do-db    = test_db</code><br><code>relay-log       = mysql-relay-bin</code><br><code>log-slave-updates = 1</code><br>我们解释一下2个在Master中没有出现的字段：<br><code>relay-log       = mysql-relay-bin</code>配置中继日志（主要是在MySQL服务器的主从架构中的Slave上用到的，当Slave想要和Master进行数据的同步时，从服务器将Master的二进制日志文件拷贝到自己的主机上放在中继日志中，然后调用SQL线程按照拷中继日志文件中的二进制日志文件执行以便就可达到数据的同步。）<br><code>log-slave-updates = 1</code>表示slave将复制事件写进自己的二进制日志；  </p>
+<p>重启MySQL服务：<br><code>/etc/init.d/mysql restart</code>  </p>
+<p>如果主数据库已经有数据，需要将新建database并将数据导入：<br><code>CREATE DATABASE test_db;</code><br>切换到终端（linux终端）：<br><code>mysql -uroot -p****** test_db &lt; test_db.sql</code>  </p>
+<p>接下来就是让Slave连接Master，在Slave上执行以下SQL语句：<br><code>CHANGE MASTER TO MASTER_HOST=&#39;10.0.0.1&#39;,MASTER_USER=&#39;backup&#39;, MASTER_PASSWORD=&#39;backup_mysql&#39;, MASTER_LOG_FILE=&#39;mysql-bin.000001&#39;,MASTER_LOG_POS=0;</code><br>(如果主数据库有数据，需要将MASTER_LOG_FILE和MASTER_LOG_POS按照SHOW MASTER STATUS\G;的结果修改，如MASTER_LOG_FILE=’mysql-bin.000002’,MASTER_LOG_POS=107)<br><code>START SLAVE\G;</code>   </p>
+<p>最后，我们通过执行<code>SHOW SLAVE STATUS\G;</code>来查看是否配置成功，如果出现：<br><code>*************************** 1. row ***************************</code><br><code>Slave_IO_State:</code><br><code>Master_Host: 10.0.0.1</code><br><code>Master_User: backup</code><br><code>Master_Port: 3306</code><br><code>Connect_Retry: 60</code><br><code>Master_Log_File: mysql-bin.000001</code><br><code>Read_Master_Log_Pos: 4</code><br><code>Relay_Log_File: mysqld-relay-bin.000001</code><br><code>Relay_Log_Pos: 4</code><br><code>Relay_Master_Log_File: mysql-bin.000001</code><br><code>Slave_IO_Running: No</code><br><code>Slave_SQL_Running: No</code><br><code>Replicate_Do_DB:</code><br><code>Replicate_Ignore_DB:</code><br><code>Replicate_Do_Table:</code><br><code>Replicate_Ignore_Table:</code><br><code>Replicate_Wild_Do_Table:</code><br><code>Replicate_Wild_Ignore_Table:</code><br><code>Last_Errno: 0</code><br><code>Last_Error:</code><br><code>Skip_Counter: 0</code><br><code>Exec_Master_Log_Pos: 4</code><br><code>Relay_Log_Space: 107</code><br><code>Until_Condition: None</code><br><code>Until_Log_File:</code><br><code>Until_Log_Pos: 0</code><br><code>Master_SSL_Allowed: No</code><br><code>Master_SSL_CA_File:</code><br><code>Master_SSL_CA_Path:</code><br><code>Master_SSL_Cert:</code><br><code>Master_SSL_Cipher:</code><br><code>Master_SSL_Key:</code><br><code>Seconds_Behind_Master: NULL</code><br><code>Master_SSL_Verify_Server_Cert: No</code><br><code>Last_IO_Errno: 0</code><br><code>Last_IO_Error:</code><br><code>Last_SQL_Errno: 0</code><br><code>Last_SQL_Error:</code><br><code>Replicate_Ignore_Server_Ids:</code><br><code>Master_Server_Id: 0</code>  </p>
+<p>那么恭喜你，配置成功。</p>
+<p>至此，整个MySQL主从集群已经搭建好了。</p>
 
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2015/09/29/FastDFS 安装使用说明/" title="" itemprop="url">
-  
-    <h1 itemprop="name"></h1>
-    
-     
-           <p itemprop="description" >FastDFS安装使用说明整理：LeoTse
-一、概述FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。更多内容见论坛：http://bbs.ch</p>
         
-    
-    <time datetime="2015-09-29T07:52:10.000Z" itemprop="datePublished">2015-09-29</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2015/09/29/FastDFS概览/" title="" itemprop="url">
-  
-    <h1 itemprop="name"></h1>
-    
-     
-           <p itemprop="description" >FastDFS概览整理：LeoTse
-DefinitionFastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。
-ArchitectureFastDF</p>
         
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
     
-    <time datetime="2015-09-29T07:51:49.000Z" itemprop="datePublished">2015-09-29</time>
-  </a>
-</section>
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/FastDFS 安装使用说明/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:52:10.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="FastDFS安装使用说明">FastDFS安装使用说明</h1><p>整理：LeoTse</p>
+<h2 id="一、概述">一、概述</h2><p>FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。<br>更多内容见论坛：<a href="http://bbs.chinaunix.net/forum-240-1.html" target="_blank" rel="external">http://bbs.chinaunix.net/forum-240-1.html</a></p>
+<p>本文档内容包括：FastDFS安装、Python API安装及调用、通过Nginx访问文件。FastDFS安装又包括Tracker、Storage以及Nginx的安装。  </p>
+<h2 id="二、准备工作">二、准备工作</h2><p>1.建议先了解一下FastDFS；  </p>
+<p>2.所用到的环境或软件有如下一些：<br>1）Ubuntu 12.04<br>2）libfastcommon-master.zip<br>3）fastdfs-5.05.tar.gz<br>4）fastdfs-nginx-module_v1.16.tar.gz<br>5）nginx-1.9.0.tar.gz<br>6）pcre-8.33.tar.gz<br>7）zlib-1.2.8.tar.gz<br>8）fdfs_client-py-master.zip<br>虽然看起来用到的软件比较多，但是安装配置过程比较简单。（注：相关软件都可以在本压缩文件中找到。）  </p>
+<p>3.我们假设我们用到的机器有：<br><strong>Tracker</strong>：192.168.9.229<br><strong>Storage</strong>：192.168.9.230， 192.168.9.231  </p>
+<h2 id="三、安装步骤">三、安装步骤</h2><h3 id="1-安装libfastcommon（Tracker和Storage都需要）：">1.安装libfastcommon（Tracker和Storage都需要）：</h3><p>相较于旧版的FastDFS，新版的FastDFS已经不需要依赖libevent，我们需要先安装它的依赖包libfastcommon。<br>a)解压libfastcommon-master.zip：<br>unzip libfastcommon-master.zip  </p>
+<p>b)进入libfastcommon-master目录，执行：<br>./make.sh<br>./make.sh install   </p>
+<p>我们可以看到libfastcommon.so安装到了/usr/lib64/libfastcommon.  so。但是FastDFS主程序设置的目录lib的目录是/usr/local/lib，所以需要创建软连接：<br>ln -s /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so<br>ln -s /usr/lib64/libfastcommon.so /usr/lib/libfastcommon.so<br>ln -s /usr/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so<br>ln -s /usr/lib64/libfdfsclient.so /usr/lib/libfdfsclient.so   </p>
+<h3 id="2-安装FastDFS（Tracker和Storage都需要）：">2.安装FastDFS（Tracker和Storage都需要）：</h3><p>a）解压fastdfs-5.05.tar.gz；<br>tar -xzvf fastdfs-5.05.tar.gz<br>b）进入fastdfs-5.05目录，依次执行：<br>cd fastdfs-5.05<br>./make.sh<br>./make.sh install<br>到此我们的安装暂时结束，相应的配置等会会介绍到。我们下一步来安装Nginx依赖。</p>
+<h3 id="3-安装Nginx依赖模块（只需要在Storage上安装，如果需要Tracker直接提供文件访问服务，Tracker也需安装）：">3.安装Nginx依赖模块（只需要在Storage上安装，如果需要Tracker直接提供文件访问服务，Tracker也需安装）：</h3><p>FastDFS通过HTTP服务器来去提供HTTP服务。我们采用Nginx作为HTTP服务器，因为Nginx能支持高并发的访问并提供负载均衡等高性能的服务。<br>我们约定，所有的这些包都在/home/leotse/fastdfs/下。<br>a）fastdfs-nginx-module安装:<br>我们知道FastDFS通过Tracker将用户上传的文件保存在Storage服务器上，但是同一个Group上的机器进行文件复制会有一定的延时。假设我们有A、B两台Storage服务器，一开始c文件保存在A，在c文件复制到B服务器之前用户到B服务器访问c文件，势必会报错，fastdfs-nginx-module的作用就是重定向到源服务器（即示例中的A）读文件，避免了复制延迟的问题。<br>tar -xzvf fastdfs-nginx-module_v1.16.tar.gz<br>我们需要根据fastdfs以及fastcommon的文件位置判断是不是需要修改config文件。<br>CORE_INCS=”$CORE_INCS /usr/local/include/fastdfs /usr/local/include/fastcommon/“<br>改成：<br>CORE_INCS=”$CORE_INCS /usr/include/fastdfs /usr/include/fastcommon/“  </p>
+<p>b）zlib库安装：<br>tar -xzvf zlib-1.2.8.tar.gz<br>cd zlib-1.2.8<br>设置安装路径并安装：<br>./configure –prefix=/usr/local/zlib<br>make<br>make install  </p>
+<p>c）pcre库安装：<br>tar -xzvf pcre-8.33.tar.gz<br>cd pcre-8.33<br>./configure –prefix=/usr/local/pcre –libdir=/usr/local/lib/pcre –includedir=/usr/local/include/pcre<br>make<br>make install  </p>
+<h3 id="4-安装Nginx：">4.安装Nginx：</h3><p>a）解压Nginx安装包：<br>tar -xzvf nginx-1.9.0.tar.gz  </p>
+<p>b）进入Nginx目录并设置安装路径以及指定依赖库：<br>cd nginx-1.9.0<br>./configure –prefix=/usr/local/nginx \<br>–with-zlib=/home/leotse/fastdfs/zlib-1.2.8\<br>–with-pcre=/home/leotse/fastdfs/pcre-8.33\<br>–sbin-path=/usr/local/nginx\<br>–add-module=/home/leotse/fastdfs/fastdfs-nginx-module/src  </p>
+<p>c）make安装：<br>make<br>make install  </p>
+<h3 id="5-Tracker配置与启动：">5.Tracker配置与启动：</h3><p>在配置之前，非常郑重地推荐这个：<a href="http://bbs.chinaunix.net/thread-1941456-1-1.html" target="_blank" rel="external">FastDFS 配置文件详解(修订版1) </a>，里面非常详尽地介绍了FastDFS的配置文件具体参数。  </p>
+<p>a）修改tracker.conf文件，该文件的位置在fastdfs-5.05/conf下。在此之前，我们需要创建一个目录存放Tracker的data和log，我们在这里假定这个路径为：/home/leotse/fastdfs/tracker/，我们需要确保该路径存在。我们只需要修改：<br>base_path=/home/leotse/fastdfs/tracker/  </p>
+<p>b）复制tracker.conf文件到/etc/fdfs/目录下：<br>cp tracker.conf /etc/fdfs/  </p>
+<p>c）运行Tracker：<br>fdfs_tracker /etc/fdfs/tracker.conf<br>停止Tracker：/usr/local/bin/stop.sh fdfs_tracker /etc/fdfs/tracker.conf<br>重启Tracker：/usr/local/bin/restart.sh fdfs_tracker /etc/fdfs/tracker.conf </p>
+<h3 id="6-Storage配置与运行：">6.Storage配置与运行：</h3><p>在这里，同样我们需要创建一个目录保存Storage的data和log，我们假定Storage上该目录为/home/leotse/fastdfs/storage/。<br>a）修改Nginx端口（可选）：<br>Nginx默认的端口号为80，为了防止引起冲突，我们建议修改Nginx的端口：<br>vi /usr/local/nginx/conf/nginx.conf<br>修改<br>    server {<br>        listen       80;<br>        server_name  localhost;<br>在这个示例里，我们将80改为9096（可以更改）。  </p>
+<p>b）在Nginx中支持FastDFS模块：<br>vi /usr/local/nginx/conf/nginx.conf<br>我们在server模块中增加：<br>location /group1/M00{<br>    root /home/leotse/fastdfs/storage/data;<br>    ngx_fastdfs_module;<br>}    </p>
+<p>c）给Storage的存储目录做一个软连接：<br> ln -s /home/leotse/ fastdfs /storage/data  /home/leotse/ fastdfs /storage /data /M00  </p>
+<p>d）修改Storage配置。我们将注意力从Nginx转到FastDFS上来，<br>修改storage.conf文件，该文件的位置在fastdfs-5.  05/conf下，我们需要创建目录/home/leotse/fastdfs/storage/用以保存Storage的data和logs。我们需要做以下修改：<br>修改group_name，根据实际配置确定：<br>group_name=group1<br>接下来修改存储data和logs的目录：<br>base_path=/home/leotse/fastdfs/storage/<br>然后就是放置文件的目录，需要和nginx中的server中的设置保持一样。建议与上面的目录保持一致：<br>store_path0=/home/leotse/fastdfs/storage/<br>接着就是修改Tracker的host，如果有多个Tracker可以分行写：<br>tracker_server=192.169.9.229:22122<br>然后就是配置web server的端口，需要和Nginx的端口保持一致：<br>http.server_port=9096<br>修改storage.conf文件后，将其copy到/etc/fdfs/目录下：<br>cp storage.conf /etc/fdfs/  </p>
+<p>e）修改fastdfs-nginx-module配置：<br>将mod_fastdfs.conf复制到/etc/fdfs/目录下：<br>cp mod_fastdfs.conf /etc/fdfs/<br>修改mod_fastdfs.conf文件：<br>vi /etc/fdfs/mod_fastdfs.conf<br>修改base_path以及store_path0，使其和storage.conf中保持一致：<br>base_path=/home/leotse/fastdfs/storage/<br>store_path0=/ home/leotse/fastdfs/storage/<br>修改tracker server以及group_name：<br>tracker_server=192.168.9.229:22122<br>group_name=group1<br>修改group count，注意，如果只有单个group，设置为0，如果有多个group，根据实际情况配置：<br>group_count = 0<br>在url中包含group name，一定要设置为true：<br>url_have_group_name = true<br>修改完毕。  </p>
+<p>conf目录下的http.conf和mime.types两个文件也需要copy到/etc/fdfs目录下。</p>
+<p>运行nginx：<br>/usr/local/nginx/sbin/nginx<br>运行Storage：<br>fdfs_storaged /etc/fdfs/storage.conf<br>停止Storage：<br>/usr/local/bin/stop.sh fdfs_storaged /etc/fdfs/storage.conf<br>重启Storage：<br>/usr/local/bin/restart.sh fdfs_storaged /etc/fdfs/storage.conf</p>
+<h3 id="7-运行：">7.运行：</h3><p>我们已经成功配置了Tracker和Storage以及Nginx，接下来就是上传和下载文件。<br>我们这里要用到client.conf文件来获取FastDFS的相关信息，该文件在fastdfs中的conf目录下：<br>修改如下地方：<br>base_path=/home/leotse/fastdfs/tracker<br>tracker_server=192.168.9.229:22122<br>http.tracker_server_port=9096    </p>
+<p>我们可以直接使用直接调用或者调用API（我们这里介绍的是Python API）。<br>首先是直接调用，我们假设/home/leotse/test/下有文件test_fdfs.txt<br>fdfs_test /etc/fdfs/client.conf upload /home/leotse/test/test_fdfs.txt<br>我们可以看到这样的返回：<br>example file url: <a href="http://192.168.9.230:9096/group1/M00/00/08/wKgJ5lVPFzCAJVXwAAApRhJa9hc052_big.txt" target="_blank" rel="external">http://192.168.9.230:9096/group1/M00/00/08/wKgJ5lVPFzCAJVXwAAApRhJa9hc052_big.txt</a><br>我们可以通过这个url获取这个文件。</p>
+<p>同样，我们来测试FastDFS的下载文件，以上面的文件为例：<br>fdfs_download_file /etc/fdfs/client.conf group1/M00/00/08/wKgJ5lVPFzCAJVXwAAApRhJa9hc052_big.txt download_test.txt<br>我们可以看到我们将这个文件下载下来并且文件名为download_test.txt。</p>
+<p>接下来介绍Python API调用。我们首先要获取最新的python api包，我们这里用到的是fdfs_client-py-master.  zip。我们将其在机器上解压，然后调用：<br>python setup.py install<br>安装完毕后即可调用。<br>我们主要用到的方法有：<br>上传文件：upload_by_filename<br>下载文件：download_to_file<br>删除文件：delete_file<br>我们在这里也上传了两个脚本（与该blog在同一级目录），fdfs_test.py演示了Python API的使用方法，fdfs_nginx_test.py演示了如何以nginx的方式下载文件。  </p>
+<h2 id="四、FastDFS性能测试">四、FastDFS性能测试</h2><p>我们测试了FastDFS的性能，主要是Python API的上传文件以及下载文件， Nginx下的下载文件性能，下面为测试结果：  </p>
+<p>a）FastDFS Python API Test Results:<br>==============================result============================<br>file size: 8.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 0.317473113537 s<br>download average duration: 0.165269041061 s  </p>
+<p>==============================result============================<br>file size: 39.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 1.21865663528 s<br>download average duration: 0.707462477684 s  </p>
+<p>==============================result============================<br>file size: 128.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 3.0637313962 s<br>download average duration: 1.59568111897 s  </p>
+<p>=============================result=============================<br>file size: 336.00MB<br>upload files 20 times<br>failed upload 0 times<br>rate of failed upload: 0.0 %<br>upload average duration: 5.62887555361 s<br>download average duration: 4.49918934107 s  </p>
+<p>b）FastDFS Nginx Download Test Results:<br>==============================result============================<br>file size: 8.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 0.0893847703934 s  </p>
+<p>==============================result============================<br>file size: 39.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 0.36199669838 s  </p>
+<p>==============================result============================<br>file size: 128.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 1.27810112 s  </p>
+<p>==============================result============================<br>file size: 336.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 3.0081551671 s  </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/09/29/FastDFS概览/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Leo Tse" target="_blank" itemprop="author">Leo Tse</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-29T07:51:49.000Z" itemprop="datePublished"> 发表于 2015-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="FastDFS概览">FastDFS概览</h1><p><em>整理：LeoTse</em></p>
+<h2 id="Definition">Definition</h2><p>FastDFS是C语言实现的、开源的、轻量级的<strong>应用级分布式文件系统</strong>，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。</p>
+<h2 id="Architecture">Architecture</h2><p>FastDFS一共由三部分组成：<br><strong>TrackerServer</strong>：负责负载均衡和调度。是整个FastDFS的中心，它将StorageServer的分组信息以及状态信息保存在内存中；<br><strong>StorageServer</strong>：存储文件和文件meta信息。直接使用操作系统的文件系统管理DFS上的文件；<br><strong>Client</strong>：使用者与请求发起方。通过专有接口，使用TCP/IP协议与跟踪器服务器或存储节点进行数据交互；  </p>
+<p><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs01.gif" alt="FastDFS架构"></p>
+<p><strong>上传文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs02.gif" alt="FastDFS上传文件"></p>
+<p><strong>下载文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs03.gif" alt="FastDFS下载文件"></p>
+<h2 id="Applies">Applies</h2><p>适合大中型网站使用，用于视频、图片、音频等中小资源文件的存储。（建议范围：4KB&lt;file_size&lt;500MB）</p>
+<h2 id="Features">Features</h2><h3 id="1-Advantages">1.Advantages</h3><p>1）支持Linux、FreeBSD、AIX等Unix系统；<br>2）支持Java、Python、PHP API；<br>3）轻量级：相比GFS简化了master角色，不再管理meta数据信息；代码量较小，总代码行数不到5.2w行；<br>4）对等结构：FastDFS集群中的TrackerServer也可以有多台，TrackerServer和StorageServer均<strong>不存在单点问题</strong>。TrackerServer之间是对等关系，组内的StoragServer之间也是对等关系。和MasterSlave结构相比，对等结构中所有结点的地位是相同的，每个结点都是Master，不存在单点问题；<br>5）分组：FastDFS采用了分组存储方式。集群由一个或多个组构成，集群存储总容量为集群中所有组的存储容量之和。一个组由一台或多台存储服务器组成，同组内的多台StorageServer之间是互备关系，同组存储服务器上的文件是完全一致的。文件上传、下载、删除等操作可以在组内任意一台StorageServer上进行。所有的存储服务器均是同时在线服务，极大的提高的服务器的使用率，分担了数据访问压力；<br>6）可以使用Apache、Nginx等WebServer访问和下载文件；<br>7）FastDFS不对文件进行分块存储，与支持文件分块存储的DFS相比，更加简洁高效，并且完全能满足绝大多数互联网应用的实际需要。<br>8）FastDFS的设计目标就是支持大容量和高访问量，因此对于大量的小文件，可以支持得很好；<br>9）FastDFS自v1.14开始支持相同文件内容只存储一份，但是需要安装FastDHT，如果已经存在上传的文件，则建立一个符号链接以节省磁盘空间；</p>
+<h3 id="2-Disadvantages">2.Disadvantages</h3><p>1）FastDFS不支持POSIX接口方式，不是通用的文件系统，不支持FUSE，不能<a href="http://en.wikipedia.org/wiki/Mount_(Unix" target="_blank" rel="external">mount使用</a>)；<br>2）不适用于分布式计算环境；<br>3）Group容量受单机存储容量限制，同时，当Group内有机器坏掉，数据恢复只能从Group内其他机器复制，使得恢复时间较长；<br>4）FastDFS适合存储用户上传的文件，比如用户照片。如果只是存储网站的静态文件（如装饰图片、css、js等），那没有必要使用FastDFS；<br>5）文档不够完善。相较于GlusterFS等DFS，FastDFS的相关文档资料相对欠缺。当前比较活跃的是ChinaUnix上的<a href="http://bbs.chinaunix.net/forum-240-1.html" target="_blank" rel="external">FastDFS论坛</a>。  </p>
+<h2 id="others">others</h2><p>来源于论坛原作者的话：<br>1.单台tracker的性能特别高。因为tracker处理查询时，直接访问内存中的索引数据，不存在任何性能瓶颈。单台服务器支持的QPS超过5000没有任何问题。  </p>
+<p>2.出于性能等考虑，必须通过FastDFS的API来对文件进行存取，不能mount使用。 </p>
+<p>3.上传文件成功后，文件ID由storage server返回给客户端。文件ID中包括了分组、文件路径和文件名等信息，需要由客户端来保存文件ID。因此FastDFS 服务器端是不需要保存文件ID或索引等信息的。不再使用的文件（比如用户删除了自己的照片文件），应该由client调用delete file接口删除该文件。  </p>
+<p>4.FastDFS存储文件采用的是256 * 256的两级目录；  </p>
+<p>5.tracker不耗内存，有1GB内存足矣；   </p>
+<p>6.FastDFS如何做整体迁移？如换机房更换IP?  </p>
+<pre><code>如果新旧<span class="type">IP</span>地址一一对应，而且是一样的，那非常简单，直接将<span class="typedef"><span class="keyword">data</span>目录拷贝过去即可。</span>
+
+<span class="type">IP</span>不一样的话，会比较麻烦一些。
+如果使用了<span class="type">V4</span>的自定义server <span class="type">ID</span>特性，那么比较容易，直接将tracker上的<span class="type">IP</span>和<span class="type">ID</span>映射文件storage_ids.conf修改好即可。
+
+如果是用<span class="type">IP</span>地址作为服务器标识，那么需要修改tracker和storage的<span class="typedef"><span class="keyword">data</span>目录下的几个数据文件，将旧<span class="type">IP</span>调整为新<span class="type">IP</span>。</span>
+注意storage的<span class="typedef"><span class="keyword">data</span>目录下有一个.打头的隐藏文件也需要修改。</span>
+另外，需要将后缀为mark的<span class="type">IP</span>地址和端口命名的同步位置记录文件名改名。
+文件全部调整完成后才能启动集群服务。
+
+<span class="title">tracker</span> server上需要调整的文件列表：
+<span class="typedef"><span class="keyword">data</span>/storage_groups_new.dat</span>
+<span class="typedef"><span class="keyword">data</span>/storage_servers_new.dat</span>
+<span class="typedef"><span class="keyword">data</span>/storage_sync_timestamp.dat</span>
+
+<span class="title">storage</span> server需要调整的文件列表：
+<span class="typedef"><span class="keyword">data</span>/.data_init_flag</span>
+<span class="typedef"><span class="keyword">data</span>/sync/$<span class="container">{<span class="title">ip_addr</span>}</span>_$<span class="container">{<span class="title">port</span>}</span>.mark：此类文件，需要将文件名中的<span class="type">IP</span>地址调整过来。</span>
+</code></pre><p>7./etc/fdfs/mod_fastdfs.conf中的url_have_group_name项为true,否则会使用fdfs_test上传测试文件而后进行测试时，会报400错误。</p>
+<p>8.<a href="http://bbs.chinaunix.net/thread-3772130-1-4.html" target="_blank" rel="external">FastDFS监控系统</a></p>
+<p>9.<a href="http://bbs.chinaunix.net/thread-4164253-1-5.html" target="_blank" rel="external">FastDFS原理分析系列文章</a></p>
+<p>10.部署方式和存储方式：作者推荐采用多个storage服务器(多个group)，各自分别挂载几个单盘的方式，以期提高总的磁盘IO性能。</p>
+<p>11.相同内容的文件在系统里只保存一份文件实体，每次上传同一个文件，返回给client的文件ID是不同的，返回的文件ID通过链接的方式指向该实体文件，以unix的符号链接来理解：目标文件为实体文件，每次上传产生的文件为符号链接，指向对应的实体文件。</p>
+<p>12.Storage的状态：<br>    FDFS_STORAGE_STATUS：INIT      :初始化，尚未得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：WAIT_SYNC :等待同步，已得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：SYNCING   :同步中<br>    FDFS_STORAGE_STATUS：DELETED   :已删除，该服务器从本组中摘除<br>    FDFS_STORAGE_STATUS：OFFLINE   :离线<br>    FDFS_STORAGE_STATUS：ONLINE    :在线，尚不能提供服务<br>    FDFS_STORAGE_STATUS：ACTIVE    :在线，可以提供服务  </p>
+<p>13.安装pcre时，出现<br>configure: error: You need a C++ compiler for C++ support.<br>解决方案：yum install -y gcc gcc-c++</p>
+<p>14.上传文件时：<br>errno: 113, error info: No route to host<br>解决方案：有可能是防火墙问题。iptables -F</p>
+<p>15.启动nginx，permission denied，这时一般是权限问题。<br>解决方案：修改nginx配置，将#user  nobody;修改为user  root;（注意：可能有安全隐患），重启nginx即可。</p>
+<h2 id="Conclusion">Conclusion</h2><p>FastDFS，按照作者本人的说法，它把简洁和高效做到了极致，非常节约资源，中小网站完全用得起。<br>作为国人在mogileFS的基础上进行改进的key-value型文件系统，一方面，它是我们国人的骄傲，另一方面，也希望FastDFS发展越来越好，相关的文档也越来越完善。</p>
+<p><strong>备注</strong>：<br>该文档整理自网络，用于个人备忘与学习。如有侵权，衷心表示抱歉，并请联系本人及时删除相关内容。</p>
+<p><strong>参考</strong>：<br><a href="http://tech.uc.cn/?p=221" target="_blank" rel="external">分布式文件系统FastDFS原理介绍</a><br><a href="http://www.oschina.net/question/12_13316" target="_blank" rel="external">分布式文件系统FastDFS架构剖析</a><br><a href="http://blog.irebit.com/fastdfs-%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" target="_blank" rel="external">FastDFS 配置教程</a><br><a href="http://blog.csdn.net/monkey_d_meng/article/details/6038995" target="_blank" rel="external">轻量级分布式文件系统FastDFS使用安装说明手册</a>  </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
 
 
 
@@ -141,7 +328,7 @@ ArchitectureFastDF</p>
 
 
 
-  <nav id="page-nav" class="clearfix unexpand">
+  <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
   </nav>
 
