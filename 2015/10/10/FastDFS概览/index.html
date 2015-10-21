@@ -18,7 +18,7 @@ ArchitectureFastDFS一共由三部分组成：TrackerServer：负责负载均衡
 <meta property="og:image" content="https://github.com/leotse90/blogs/blob/master/images/fdfs01.gif">
 <meta property="og:image" content="https://github.com/leotse90/blogs/blob/master/images/fdfs02.gif">
 <meta property="og:image" content="https://github.com/leotse90/blogs/blob/master/images/fdfs03.gif">
-<meta property="og:updated_time" content="2015-10-21T03:04:46.000Z">
+<meta property="og:updated_time" content="2015-10-21T06:38:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FastDFS概览">
 <meta name="twitter:description" content="by：leotse
@@ -237,8 +237,7 @@ ArchitectureFastDFS一共由三部分组成：TrackerServer：负责负载均衡
       
         <p><em>by：leotse</em></p>
 <h2 id="Definition">Definition</h2><p>FastDFS是C语言实现的、开源的、轻量级的<strong>应用级分布式文件系统</strong>，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。</p>
-<h2 id="Architecture">Architecture</h2><p>FastDFS一共由三部分组成：<br><strong>TrackerServer</strong>：负责负载均衡和调度。是整个FastDFS的中心，它将StorageServer的分组信息以及状态信息保存在内存中；<br><strong>StorageServer</strong>：存储文件和文件meta信息。直接使用操作系统的文件系统管理DFS上的文件；<br><strong>Client</strong>：使用者与请求发起方。通过专有接口，使用TCP/IP协议与跟踪器服务器或存储节点进行数据交互；  </p>
-<p><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs01.gif" alt="FastDFS架构"></p>
+<h2 id="Architecture">Architecture</h2><p>FastDFS一共由三部分组成：<br><strong>TrackerServer</strong>：负责负载均衡和调度。是整个FastDFS的中心，它将StorageServer的分组信息以及状态信息保存在内存中；<br><strong>StorageServer</strong>：存储文件和文件meta信息。直接使用操作系统的文件系统管理DFS上的文件；<br><strong>Client</strong>：使用者与请求发起方。通过专有接口，使用TCP/IP协议与跟踪器服务器或存储节点进行数据交互；<br><a id="more"></a><br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs01.gif" alt="FastDFS架构"></p>
 <p><strong>上传文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs02.gif" alt="FastDFS上传文件"></p>
 <p><strong>下载文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs03.gif" alt="FastDFS下载文件"></p>
 <h2 id="Applies">Applies</h2><p>适合大中型网站使用，用于视频、图片、音频等中小资源文件的存储。（建议范围：4KB&lt;file_size&lt;500MB）</p>

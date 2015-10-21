@@ -16,7 +16,7 @@ HDFS Namespace在HDFS中，我们知道NameNode负责管理文件系统的命名
 HDFS Namespace在HDFS中，我们知道NameNode负责管理文件系统的命名空间，那么NameNode到底怎么管理HDFS的命名空间，又有哪些内容需要管理呢？我们接下来将讨论到这两个问题。
 作为HDFS的Master，NameNode掌握着整个HDFS的文件目录树及其目录与文件，这些信息会以文件的形式永久地存储在本地磁盘。我们可以在$HADOOP_HOME/tmp/">
 <meta property="og:image" content="https://github.com/leotse90/SparkNotes/blob/master/images/fsimage.jpg">
-<meta property="og:updated_time" content="2015-10-21T03:06:05.000Z">
+<meta property="og:updated_time" content="2015-10-21T06:39:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS文件系统命名空间">
 <meta name="twitter:description" content="by:leotse
@@ -237,7 +237,7 @@ HDFS Namespace在HDFS中，我们知道NameNode负责管理文件系统的命名
 <h3 id="HDFS_Namespace">HDFS Namespace</h3><p>在HDFS中，我们知道NameNode负责管理文件系统的命名空间，那么NameNode到底怎么管理HDFS的命名空间，又有哪些内容需要管理呢？我们接下来将讨论到这两个问题。</p>
 <p>作为HDFS的Master，NameNode掌握着整个HDFS的文件目录树及其目录与文件，这些信息会以文件的形式永久地存储在本地磁盘。我们可以在$HADOOP_HOME/tmp/dfs/name/current下找到这些文件：fsimage以及edits。</p>
 <p><strong>fsimage</strong>：保存了最新的元数据检查点；<br><strong>edits</strong>：保存了HDFS中自最新的元数据检查点后的命名空间变化记录；</p>
-<p>为了防止edits中保存的最新变更记录过大，HDFS会定期合并fsimage和edits文件形成新的fsimage文件，然后重新记录edits文件。由于NameNode存在单点问题（Hadoop2.0以前版本），因此为了减少NameNode的压力，HDFS把fsimage和edits的合并的工作放到SecondaryNameNode上，然后将合并后的文件返回给NameNode。但是，这也会造成一个新的问题，当NameNode宕机，那么NameNode中edits的记录就会丢失。也就是说，NameNode中的命名空间信息有可能发生丢失。</p>
+<p>为了防止edits中保存的最新变更记录过大，HDFS会定期合并fsimage和edits文件形成新的fsimage文件，然后重新记录edits文件。由于NameNode存在单点问题（Hadoop2.0以前版本），因此为了减少NameNode的压力，HDFS把fsimage和edits的合并的工作放到SecondaryNameNode上，然后将合并后的文件返回给NameNode。但是，这也会造成一个新的问题，当NameNode宕机，那么NameNode中edits的记录就会丢失。也就是说，NameNode中的命名空间信息有可能发生丢失。<br><a id="more"></a></p>
 <h3 id="FsImage">FsImage</h3><p>Fsimage是一个二进制文件，它记录了HDFS中所有文件和目录的元数据信息。关于fsimage的内部结构我们可以参看下图：<br><img src="https://github.com/leotse90/SparkNotes/blob/master/images/fsimage.jpg" alt="fsimage"><br>乍看之下，这张图有点晦涩难懂，这张图是fsimage的内部结构，第一行是文件系统元数据，第二行是目录的元数据信息，第三行是文件的元数据信息，下面将逐个解析图中的字段：<br><strong>imgVersion</strong>：当前fsiamge文件的版本号；<br><strong>namespaceID</strong>：当前命名空间的ID，在NameNode的生命周期内保持不变，DataNode注册时，返回该ID作为其registrationID，每次和NameNode通信时都要检查，不认识的namespaceID拒绝连接；<br><strong>numFiles</strong>：文件系统中的文件数；<br><strong>genStamp</strong>：生成该fsimage文件的时间戳；<br><strong>path</strong>：文件或者目录路径；<br><strong>replicas</strong>：文件的副本数，目录的replicas为0；<br><strong>mtime</strong>：修改时间；<br><strong>atime</strong>：访问时间；<br><strong>blocksiz</strong>：文件的块size，目录的size为0；<br><strong>numBlock</strong>：文件包含的数据块数量，目录的为－1；<br><strong>nsQuota</strong>：目录的命名空间大小配额，默认为－1；<br><strong>dsQuota</strong>：目录的磁盘大小配额，默认为－1；<br><strong>username</strong>：文件或者目录所属的用户名；<br><strong>group</strong>：用户所属的组名；<br><strong>perm</strong>：即permission，访问权限；<br><strong>blockid</strong>：文件的文件块id；<br><strong>numBytes</strong>：该文件块的bytes数，即文件块的大小；<br><strong>genStamp</strong>：该文件块的时间戳。</p>
 <p>那么怎么在fsimage中保存根目录呢？path的length为0，即表示这个目录为根目录。</p>
 <p>NameNode将这些信息读入内存之后，构造一个文件目录结构树，将表示文件或目录的节点填入到结构中。</p>
