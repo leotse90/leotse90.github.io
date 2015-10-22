@@ -21,7 +21,7 @@
 
 可以传递和赋值
 嵌套">
-<meta property="og:updated_time" content="2015-10-22T10:41:23.000Z">
+<meta property="og:updated_time" content="2015-10-22T12:05:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala基础之函数">
 <meta name="twitter:description" content="by:leotse
@@ -277,9 +277,9 @@ scala> func(1, 3, 4)
 scala> func(y=2, x=6)
 res17: Int = 8
 </console></code></pre>
-我们需要注意，如果我们传入的参数数量和函数的参数数量不一致(不能多于函数的参数数量)，函数会从左到右依次将值传给参数。但是当你在传参时指定了参数名（带名参数），那么参数的顺序就不再重要。
+我们需要注意，如果我们传入的参数数量和函数的参数数量不一致(不能多于函数的参数数量)，函数会从左到右依次将值传给参数。但是当你在传参时指定了参数名（带名参数），那么参数的顺序就不再重要。  
 
-如果我们的参数长度未知，这时我们可以使用**变长参数**。变长参数实际上是一个类型为Seq的参数（Seq是一个有先后顺序的值的序列，比如数组或者列表）。但是你不能直接将值的序列当成参数传给函数（特指参数为变长参数的函数）。我们看下面的代码便能明白变长参数的使用：
+如果我们的参数长度未知，这时我们可以使用变长参数。变长参数实际上是一个类型为Seq的参数（Seq是一个有先后顺序的值的序列，比如数组或者列表）。但是你不能直接将值的序列当成参数传给函数（特指参数为变长参数的函数）。我们看下面的代码便能明白变长参数的使用：
 <pre><code>
 scala> def toStr(args: String *) = args.mkString(",")
 toStr: (args: String*)String
