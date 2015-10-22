@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>MySQL的主从配置 | 一条狗的风花雪月</title>
+  <title>Scala基础之函数 | 一条狗的风花雪月</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="by:leotse
-准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
-主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql">
+今天我们来介绍Scala中的函数的一些基本概念以及用法。  
+函数是一等公民在Scala中，函数是一等公民。首先来解释一下什么是一等公民，它指的是在程序中可无限使用的对象。那么”函数是Scala的一等公民“这句话怎么理解呢？一言蔽之，就是函数能作为实参，还能作为返回值，它能作为一个普通变量进行使用。详细一点来说，Scala中作为一等公民的主要表现有：1.可以传递和赋值2.嵌套函">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL的主从配置">
-<meta property="og:url" content="http://leotse90.com/2015/09/13/MySQL的主从配置/index.html">
+<meta property="og:title" content="Scala基础之函数">
+<meta property="og:url" content="http://leotse90.com/2015/10/22/Scala之函数/index.html">
 <meta property="og:site_name" content="一条狗的风花雪月">
 <meta property="og:description" content="by:leotse
-准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
-主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql">
-<meta property="og:updated_time" content="2015-10-21T07:22:03.000Z">
+今天我们来介绍Scala中的函数的一些基本概念以及用法。  
+函数是一等公民在Scala中，函数是一等公民。首先来解释一下什么是一等公民，它指的是在程序中可无限使用的对象。那么”函数是Scala的一等公民“这句话怎么理解呢？一言蔽之，就是函数能作为实参，还能作为返回值，它能作为一个普通变量进行使用。详细一点来说，Scala中作为一等公民的主要表现有：1.可以传递和赋值2.嵌套函">
+<meta property="og:updated_time" content="2015-10-22T10:33:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL的主从配置">
+<meta name="twitter:title" content="Scala基础之函数">
 <meta name="twitter:description" content="by:leotse
-准备工作我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：Master：10.0.0.1Slave：10.0.0.2这两台机器都已经安装了MySQL数据库。  
-主从配置Master配置1.创建备份账户首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql">
+今天我们来介绍Scala中的函数的一些基本概念以及用法。  
+函数是一等公民在Scala中，函数是一等公民。首先来解释一下什么是一等公民，它指的是在程序中可无限使用的对象。那么”函数是Scala的一等公民“这句话怎么理解呢？一言蔽之，就是函数能作为实参，还能作为返回值，它能作为一个普通变量进行使用。详细一点来说，Scala中作为一等公民的主要表现有：1.可以传递和赋值2.嵌套函">
   
     <link rel="alternative" href="/atom.xml" title="一条狗的风花雪月" type="application/atom+xml">
   
@@ -193,11 +193,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-MySQL的主从配置" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Scala之函数" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/13/MySQL的主从配置/" class="article-date">
-  	<time datetime="2015-09-13T02:55:15.000Z" itemprop="datePublished">2015-09-13</time>
+      <a href="/2015/10/22/Scala之函数/" class="article-date">
+  	<time datetime="2015-10-22T10:31:41.000Z" itemprop="datePublished">2015-10-22</time>
 </a>
     </div>
   
@@ -210,7 +210,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      MySQL的主从配置
+      Scala基础之函数
     </h1>
   
 
@@ -219,7 +219,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li></ul>
 	</div>
 
         
@@ -235,25 +235,74 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
-<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br><a id="more"></a><br>这个账号可以说是Slave访问Master的通行证。</p>
-<p>2.Master配置    </p>
-<p>我们开始配置Master，修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 1</code><br><code>binlog-do-db    = test_db</code><br><code>expire-logs-days= 7</code><br>下面来解释一下这些字段：<br><code>log-bin         = mysql-bin</code>表示启用二进制日志，用以记录Master中数据的更新日志；<br><code>server-id       = 1</code>唯一标识Master的ID，一般建议使用IP地址的最后一段；<br><code>binlog-do-db    = test_db</code>选择需要备份的数据库，<strong>如果需要备份全部，可以不增加这行</strong>；<br><code>expire-logs-days= 7</code>指定只保存7天的二进制日志，防止占用磁盘空间；  </p>
-<p>配置好后，我们需要重启MySQL服务。<br><code>/etc/init.d/mysql restart</code>  </p>
-<p>我们需要看看是否已经配置成功了，我们可以执行以下SQL语句：<br>SHOW MASTER STATUS\G;<br>如果你看到类似下面的信息，则说明Master基本ok，如果数据库中已经有数据，这个信息将会用到：<br><code>File: mysql-bin.000002</code><br><code>Position: 107</code><br><code>Binlog_Do_DB: test_db</code><br><code>Binlog_Ignore_DB:</code>  </p>
-<p>3.主数据库已经有数据的Master配置</p>
-<p>如果Master的数据库已经有数据了，你可以遵照下面的步骤：<br>1）进入MySQL终端，查看当前正在使用的库有哪些：<br><code>SHOW databases;</code>  </p>
-<p>2）停止当前MySQL的所有写操作，并查看当前数据库的状态：<br><code>FLUSH TABLES WITH READ LOCK;</code>  </p>
-<p>3）打开另一个终端（也可以直接exit离开当前MySQL，但是为了避免重复进入MySQL输密码，建议打开一个新的终端），将要备份的数据库导出成sql文件，并将其传到Slave机器上：<br><code>mysqldump -uroot -p****** test_db &gt; test_db.sql</code><br><code>scp test_db.sql root@10.0.0.2:/root/</code>  </p>
-<p>4）切换到MySQL终端，解锁：<br><code>UNLOCK TABLES;</code></p>
-<p>至此，Master配置结束。</p>
-<h3 id="Slave配置">Slave配置</h3><p>Slave的配置也很简单。同样修改/etc/mysql/my.cnf文件，找到[mysqld]段，增加以下字段：<br><code>log-bin         = mysql-bin</code><br><code>server-id       = 2</code><br><code>binlog-do-db    = test_db</code><br><code>relay-log       = mysql-relay-bin</code><br><code>log-slave-updates = 1</code><br>我们解释一下2个在Master中没有出现的字段：<br><code>relay-log       = mysql-relay-bin</code>配置中继日志（主要是在MySQL服务器的主从架构中的Slave上用到的，当Slave想要和Master进行数据的同步时，从服务器将Master的二进制日志文件拷贝到自己的主机上放在中继日志中，然后调用SQL线程按照拷中继日志文件中的二进制日志文件执行以便就可达到数据的同步。）<br><code>log-slave-updates = 1</code>表示slave将复制事件写进自己的二进制日志；  </p>
-<p>重启MySQL服务：<br><code>/etc/init.d/mysql restart</code>  </p>
-<p>如果主数据库已经有数据，需要将新建database并将数据导入：<br><code>CREATE DATABASE test_db;</code><br>切换到终端（linux终端）：<br><code>mysql -uroot -p****** test_db &lt; test_db.sql</code>  </p>
-<p>接下来就是让Slave连接Master，在Slave上执行以下SQL语句：<br><code>CHANGE MASTER TO MASTER_HOST=&#39;10.0.0.1&#39;,MASTER_USER=&#39;backup&#39;, MASTER_PASSWORD=&#39;backup_mysql&#39;, MASTER_LOG_FILE=&#39;mysql-bin.000001&#39;,MASTER_LOG_POS=0;</code><br>(如果主数据库有数据，需要将MASTER_LOG_FILE和MASTER_LOG_POS按照SHOW MASTER STATUS\G;的结果修改，如MASTER_LOG_FILE=’mysql-bin.000002’,MASTER_LOG_POS=107)<br><code>START SLAVE\G;</code>   </p>
-<p>最后，我们通过执行<code>SHOW SLAVE STATUS\G;</code>来查看是否配置成功，如果出现：<br><code>*************************** 1. row ***************************</code><br><code>Slave_IO_State:</code><br><code>Master_Host: 10.0.0.1</code><br><code>Master_User: backup</code><br><code>Master_Port: 3306</code><br><code>Connect_Retry: 60</code><br><code>Master_Log_File: mysql-bin.000001</code><br><code>Read_Master_Log_Pos: 4</code><br><code>Relay_Log_File: mysqld-relay-bin.000001</code><br><code>Relay_Log_Pos: 4</code><br><code>Relay_Master_Log_File: mysql-bin.000001</code><br><code>Slave_IO_Running: No</code><br><code>Slave_SQL_Running: No</code><br><code>Replicate_Do_DB:</code><br><code>Replicate_Ignore_DB:</code><br><code>Replicate_Do_Table:</code><br><code>Replicate_Ignore_Table:</code><br><code>Replicate_Wild_Do_Table:</code><br><code>Replicate_Wild_Ignore_Table:</code><br><code>Last_Errno: 0</code><br><code>Last_Error:</code><br><code>Skip_Counter: 0</code><br><code>Exec_Master_Log_Pos: 4</code><br><code>Relay_Log_Space: 107</code><br><code>Until_Condition: None</code><br><code>Until_Log_File:</code><br><code>Until_Log_Pos: 0</code><br><code>Master_SSL_Allowed: No</code><br><code>Master_SSL_CA_File:</code><br><code>Master_SSL_CA_Path:</code><br><code>Master_SSL_Cert:</code><br><code>Master_SSL_Cipher:</code><br><code>Master_SSL_Key:</code><br><code>Seconds_Behind_Master: NULL</code><br><code>Master_SSL_Verify_Server_Cert: No</code><br><code>Last_IO_Errno: 0</code><br><code>Last_IO_Error:</code><br><code>Last_SQL_Errno: 0</code><br><code>Last_SQL_Error:</code><br><code>Replicate_Ignore_Server_Ids:</code><br><code>Master_Server_Id: 0</code>  </p>
-<p>那么恭喜你，配置成功。</p>
-<p>至此，整个MySQL主从集群已经搭建好了。</p>
+<p>今天我们来介绍Scala中的函数的一些基本概念以及用法。  </p>
+<h2 id="函数是一等公民">函数是一等公民</h2><p>在Scala中，函数是一等公民。<br>首先来解释一下什么是<em>一等公民</em>，它指的是在程序中可无限使用的对象。<br>那么”函数是Scala的一等公民“这句话怎么理解呢？一言蔽之，就是函数能作为实参，还能作为返回值，它能作为一个普通变量进行使用。详细一点来说，Scala中作为一等公民的主要表现有：<br>1.可以传递和赋值<br>2.嵌套函数<br>3.匿名函数<br>4.高阶函数<br>5.闭包<br><a id="more"></a></p>
+<h2 id="函数">函数</h2><p>我们来正式介绍Scala中的函数，先看函数的主要构成，和其他编程语言一样，函数主要由：<strong>函数名</strong>、<strong>参数</strong>以及<strong>函数体</strong>三部分组成。下面我们会从这三个方面介绍Scala中的函数。下面是一个函数的示例：</p>
+<pre><code>
+def foo(x: Int) = println(x)
+</code></pre>
+
+<h3 id="函数名">函数名</h3><p>关于函数名，没有太多需要介绍的，和其他编程语言一样，支持数字、字母以及下划线，$符号，同样的，数字不能放在函数名第一位。一般建议，函数命名采用驼峰风格（小驼峰）。  </p>
+<h3 id="参数">参数</h3><p>接下来是参数，在Scala中，所有的参数必须指定类型。在某些情况下，函数的参数可以有默认值，我们称之为默认参数：</p>
+<pre><code>
+scala> def func(x: Int, y: Int = 3) = x + y
+func: (x: Int, y: Int)Int
+
+scala> func(2)
+res14: Int = 5
+
+scala> func(2, 4)
+res15: Int = 6
+
+scala> func(1, 3, 4)
+<console>:16: error: too many arguments for method func: (x: Int, y: Int)Int
+       func(1, 3, 4)
+
+scala> func(y=2, x=6)
+res17: Int = 8
+</console></code></pre>
+我们需要注意，如果我们传入的参数数量和函数的参数数量不一致(不能多于函数的参数数量)，函数会从左到右依次将值传给参数。但是当你在传参时指定了参数名（带名参数），那么参数的顺序就不再重要。
+
+如果我们的参数长度未知，这时我们可以使用**变长参数**。变长参数实际上是一个类型为Seq的参数（Seq是一个有先后顺序的值的序列，比如数组或者列表）。但是你不能直接将值的序列当成参数传给函数（特指参数为变长参数的函数）。我们看下面的代码便能明白变长参数的使用：
+<pre><code>
+scala> def toStr(args: String *) = args.mkString(",")
+toStr: (args: String*)String
+
+scala> toStr("leotse", "yolovon")
+res20: String = leotse,yolovon
+
+scala> toStr("One", "Two", "Three")
+res21: String = One,Two,Three
+</code></pre>
+
+<h3 id="函数体">函数体</h3><p>在上面的示例中，我们已经多次见过Scala中的函数，他们的函数体如果只有一个表达式或者语句，那么直接跟在函数名后即可（有等号=），如果函数体包含多条语句，那么我们可以使用我们以前介绍过的块表达式。</p>
+<h3 id="返回值">返回值</h3><p>我们知道，块表达式的值为{…}中的最后一个表达式的值，那么在Scala的函数中，如果没有指定函数的返回值，块表达式的返回值就是块表达式的最后一个语句的值。<strong>一般情况下，我们都不需要显式指定Scala函数的返回值。</strong>当然我们也可以直接指定函数的返回值类型，如下：</p>
+<pre><code>
+def func(v1: Int, v2: String): Double = {...}
+</code></pre>
+这里再一次说明了函数是第一等公民，因为我们直接将函数func指定了一个类型Double。
+
+## 过程
+在前面介绍函数的时候，我们看到Scala函数和其他编程语言函数定义不同的地方，那就是函数名后面加了一个等号＝。那么这个＝是不是必须的呢？答案是不。如果函数体在块表达式中而且返回值为Unit类型，那么就可以不要这里的＝，我们称这样的函数为**过程**。不过，有人建议我们一般情况下都加上＝号，并且指定函数的返回值类型，哪怕是Unit类型：  
+<pre><code>
+scala> def func1 (a: Int, b: Int) {
+     |     println(a + b)
+     | }
+func1: (a: Int, b: Int)Unit
+
+scala> func1(2, 5)
+7
+
+scala> def func2 (a: Int, b: Int): Unit = {
+     |     println(a + b)
+     | }
+func2: (a: Int, b: Int)Unit
+
+scala> func2(4, 5)
+9
+</code></pre>
+
+<p>Scala的函数基础知识暂且告一段落，但是只有多动手试试才能对Scala的函数有更深层次的理解。</p>
 
       
     </div>
@@ -263,18 +312,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/20/SSH免密码登录设置/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          SSH免密码登录设置
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/13/改变FastDFS中某个机器的分组/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">改变FastDFS中某个机器的分组</div>
+    <a href="/2015/10/21/Scala控制结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Scala基础之控制结构</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -303,7 +343,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="MySQL的主从配置" data-title="MySQL的主从配置" data-url="http://leotse90.com/2015/09/13/MySQL的主从配置/"></div>
+	<div class="ds-thread" data-thread-key="Scala之函数" data-title="Scala基础之函数" data-url="http://leotse90.com/2015/10/22/Scala之函数/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
