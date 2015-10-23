@@ -21,7 +21,7 @@
 
 可以传递和赋值
 嵌套">
-<meta property="og:updated_time" content="2015-10-22T12:05:00.000Z">
+<meta property="og:updated_time" content="2015-10-23T02:14:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala基础之函数">
 <meta name="twitter:description" content="by:leotse
@@ -252,10 +252,7 @@
 <li>匿名函数</li>
 <li>高阶函数</li>
 <li>闭包<a id="more"></a>
-<h2 id="函数">函数</h2>我们来正式介绍Scala中的函数，先看函数的主要构成，和其他编程语言一样，函数主要由：<strong>函数名</strong>、<strong>参数</strong>以及<strong>函数体</strong>三部分组成。下面我们会从这三个方面介绍Scala中的函数。下面是一个函数的示例：<pre><code>
-def foo(x: Int) = println(x)
-</code></pre>
-
+<h2 id="函数">函数</h2>我们来正式介绍Scala中的函数，先看函数的主要构成，和其他编程语言一样，函数主要由：<strong>函数名</strong>、<strong>参数</strong>以及<strong>函数体</strong>三部分组成。下面我们会从这三个方面介绍Scala中的函数。下面是一个函数的示例：<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span>(</span>x: <span class="type">Int</span>) = println(x)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="函数名">函数名</h3><p>关于函数名，没有太多需要介绍的，和其他编程语言一样，支持数字、字母以及下划线，$符号，同样的，数字不能放在函数名第一位。一般建议，函数命名采用驼峰风格（小驼峰）。  </p>
@@ -294,9 +291,10 @@ res21: String = One,Two,Three
 <h3 id="函数体">函数体</h3><p>在上面的示例中，我们已经多次见过Scala中的函数，他们的函数体如果只有一个表达式或者语句，那么直接跟在函数名后即可（有等号=），如果函数体包含多条语句，那么我们可以使用我们以前介绍过的块表达式。</p>
 <h3 id="返回值">返回值</h3><p>我们知道，块表达式的值为{…}中的最后一个表达式的值，那么在Scala的函数中，如果没有指定函数的返回值，块表达式的返回值就是块表达式的最后一个语句的值。<strong>一般情况下，我们都不需要显式指定Scala函数的返回值。</strong>当然我们也可以直接指定函数的返回值类型，如下：</p>
 <pre><code>
-def func(v1: Int, v2: String): Double = {...}
+def func(v1: Int, v2: String): Double = {function body}
 </code></pre>
 这里再一次说明了函数是第一等公民，因为我们直接将函数func指定了一个类型Double。
+
 
 ## 过程
 在前面介绍函数的时候，我们看到Scala函数和其他编程语言函数定义不同的地方，那就是函数名后面加了一个等号＝。那么这个＝是不是必须的呢？答案是不。如果函数体在块表达式中而且返回值为Unit类型，那么就可以不要这里的＝，我们称这样的函数为**过程**。不过，有人建议我们一般情况下都加上＝号，并且指定函数的返回值类型，哪怕是Unit类型：  
