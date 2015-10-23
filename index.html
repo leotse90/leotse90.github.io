@@ -285,14 +285,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h3 id="块表达式">块表达式</h3><p>首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  </p>
-<pre><code>
-scala> var v = {var a = 2; var b = 4; a + b;}
-v: Int = 6
-scala> val v1 = {var s1 = "hello"; var i = 20;}
-v1: Unit = ()
-</code></pre>
-
+<h3 id="块表达式">块表达式</h3><p>首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">var</span> v = &#123;<span class="keyword">var</span> a = <span class="number">2</span>; <span class="keyword">var</span> b = <span class="number">4</span>; a + b;&#125;</span><br><span class="line">v: <span class="type">Int</span> = <span class="number">6</span></span><br><span class="line">scala&gt; <span class="function"><span class="keyword">val</span> <span class="title">v1</span> =</span> &#123;<span class="keyword">var</span> s1 = <span class="string">"hello"</span>; <span class="keyword">var</span> i = <span class="number">20</span>;&#125;</span><br><span class="line">v1: <span class="type">Unit</span> = ()</span><br></pre></td></tr></table></figure></p>
 <p>在这里，我们可以总结以下两点：1.块表达式的值由{…}中的最后一条语句的值决定，那么当我们在定义一个函数的时候，一般不需要定义返回值，因为最后一条语句的值就是这个块表达式的值；2.侧面反映了Scala中赋值语句的值为Unit类型（注：Scala中的Unit类型相当于Java中的void，其只有一个值()）。<br>
       
     </div>

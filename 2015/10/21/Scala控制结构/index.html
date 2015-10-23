@@ -6,30 +6,18 @@
   <title>Scala基础之控制结构 | 一条狗的风花雪月</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="by:leotse
-块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  
-
-scala&amp;gt; var v = {var a = 2; var b = 4; a + b;}
-v: Int = 6
-scala&amp;gt; val v1 = {va">
+块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：1234scala&amp;gt; var v = &amp;#123;var a = 2; var b = 4; a + b;&amp;#125;v: Int = 6scala&amp;gt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scala基础之控制结构">
 <meta property="og:url" content="http://leotse90.com/2015/10/21/Scala控制结构/index.html">
 <meta property="og:site_name" content="一条狗的风花雪月">
 <meta property="og:description" content="by:leotse
-块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  
-
-scala&amp;gt; var v = {var a = 2; var b = 4; a + b;}
-v: Int = 6
-scala&amp;gt; val v1 = {va">
-<meta property="og:updated_time" content="2015-10-22T10:33:13.000Z">
+块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：1234scala&amp;gt; var v = &amp;#123;var a = 2; var b = 4; a + b;&amp;#125;v: Int = 6scala&amp;gt">
+<meta property="og:updated_time" content="2015-10-23T02:30:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala基础之控制结构">
 <meta name="twitter:description" content="by:leotse
-块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  
-
-scala&amp;gt; var v = {var a = 2; var b = 4; a + b;}
-v: Int = 6
-scala&amp;gt; val v1 = {va">
+块表达式首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：1234scala&amp;gt; var v = &amp;#123;var a = 2; var b = 4; a + b;&amp;#125;v: Int = 6scala&amp;gt">
   
     <link rel="alternative" href="/atom.xml" title="一条狗的风花雪月" type="application/atom+xml">
   
@@ -244,60 +232,19 @@ scala&amp;gt; val v1 = {va">
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h3 id="块表达式">块表达式</h3><p>首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：  </p>
-<pre><code>
-scala> var v = {var a = 2; var b = 4; a + b;}
-v: Int = 6
-scala> val v1 = {var s1 = "hello"; var i = 20;}
-v1: Unit = ()
-</code></pre>
-
+<h3 id="块表达式">块表达式</h3><p>首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">var</span> v = &#123;<span class="keyword">var</span> a = <span class="number">2</span>; <span class="keyword">var</span> b = <span class="number">4</span>; a + b;&#125;</span><br><span class="line">v: <span class="type">Int</span> = <span class="number">6</span></span><br><span class="line">scala&gt; <span class="function"><span class="keyword">val</span> <span class="title">v1</span> =</span> &#123;<span class="keyword">var</span> s1 = <span class="string">"hello"</span>; <span class="keyword">var</span> i = <span class="number">20</span>;&#125;</span><br><span class="line">v1: <span class="type">Unit</span> = ()</span><br></pre></td></tr></table></figure></p>
 <p>在这里，我们可以总结以下两点：1.块表达式的值由{…}中的最后一条语句的值决定，那么当我们在定义一个函数的时候，一般不需要定义返回值，因为最后一条语句的值就是这个块表达式的值；2.侧面反映了Scala中赋值语句的值为Unit类型（注：Scala中的Unit类型相当于Java中的void，其只有一个值()）。<br><a id="more"></a></p>
-<h3 id="条件表达式">条件表达式</h3><p>条件表达式的作用就不赘述，我们直接来介绍Scala中的条件表达式。它的一般形式如下：<br><code>if (expression) block1 else block2</code><br>值得注意的是，Scala虽然和Java一样，判断条件expression需要为Boolean类型，但是和其他一些语言不一样的是，在Scala中，只有真正的Boolean类型：true或者false能作为判断的依据，而正整数、非空字符串等不能表示true，同理，整数0、空字符串等亦不能表示false。看下面的代码：  </p>
-<pre><code>
-scala> if (1) 1 else -1
-<console>:11: error: type mismatch;
- found   : Int(1)
- required: Boolean
-       if (1) 1 else -1
-           ^
-
-scala> if ("") 1 else -1
-<console>:11: error: type mismatch;
- found   : String("")
- required: Boolean
-       if ("") 1 else -1
-           ^
-</console></console></code></pre>
-
-<p>在Scala中，我们可以将条件表达式的值直接赋给一个变量：  </p>
-<pre><code>
-scala> val r = if ("hello" > "world") "hello" else "world"
-r: String = world
-</code></pre>
-
+<h3 id="条件表达式">条件表达式</h3><p>条件表达式的作用就不赘述，我们直接来介绍Scala中的条件表达式。它的一般形式如下：<br><code>if (expression) block1 else block2</code><br>值得注意的是，Scala虽然和Java一样，判断条件expression需要为Boolean类型，但是和其他一些语言不一样的是，在Scala中，只有真正的Boolean类型：true或者false能作为判断的依据，而正整数、非空字符串等不能表示true，同理，整数0、空字符串等亦不能表示false。看下面的代码：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">if</span> (<span class="number">1</span>) <span class="number">1</span> <span class="keyword">else</span> -<span class="number">1</span></span><br><span class="line">&lt;console&gt;:<span class="number">11</span>: error: <span class="class"><span class="keyword">type</span> <span class="title">mismatch</span>;</span></span><br><span class="line"> found   : <span class="type">Int</span>(<span class="number">1</span>)</span><br><span class="line"> required: <span class="type">Boolean</span></span><br><span class="line">       <span class="keyword">if</span> (<span class="number">1</span>) <span class="number">1</span> <span class="keyword">else</span> -<span class="number">1</span></span><br><span class="line">           ^</span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">if</span> (<span class="string">""</span>) <span class="number">1</span> <span class="keyword">else</span> -<span class="number">1</span></span><br><span class="line">&lt;console&gt;:<span class="number">11</span>: error: <span class="class"><span class="keyword">type</span> <span class="title">mismatch</span>;</span></span><br><span class="line"> found   : <span class="type">String</span>(<span class="string">""</span>)</span><br><span class="line"> required: <span class="type">Boolean</span></span><br><span class="line">       <span class="keyword">if</span> (<span class="string">""</span>) <span class="number">1</span> <span class="keyword">else</span> -<span class="number">1</span></span><br><span class="line">           ^</span><br></pre></td></tr></table></figure></p>
+<p>在Scala中，我们可以将条件表达式的值直接赋给一个变量：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="function"><span class="keyword">val</span> <span class="title">r</span> =</span> <span class="keyword">if</span> (<span class="string">"hello"</span> &gt; <span class="string">"world"</span>) <span class="string">"hello"</span> <span class="keyword">else</span> <span class="string">"world"</span></span><br><span class="line">r: <span class="type">String</span> = world</span><br></pre></td></tr></table></figure></p>
 <p>这种用法熟悉Python的coder可能会比较容易接受，Scala这种设计可能会使得代码在阅读起来并没有那么友善，但是确实可以使得我们的代码更简洁。</p>
 <p>另外，Scala并不支持switch语句，因此如果我们有模式匹配上的需求，我们需要用到Scala提供的更强大的模式匹配机制，感兴趣的朋友可以先行了解一下。</p>
-<h3 id="循环表达式">循环表达式</h3><p>和Java一样，Scala提供了两种循环表达式：while以及for。<br>通常，函数式语言会避开while循环，因为while实现的大多数操作都可以使用递归来完成。Scala中while循环和Java类似：  </p>
-<pre><code>
-scala> var x = 3
-x: Int = 3
-
-scala> while (x > 0) {
-     |     println(x)
-     |     x -= 1
-     | }
-3
-2
-1
-</code></pre>
-
-<p>Scala中的for循环却和Java中的不太一样，在形式上有较大的改变，有一种观点认为：“Scala 的for实际上是一条管道，它在将元素传递给循环主体之前处理元素组成的集合，每次一个。此管道其中的一部分负责将更多的元素添加到管道中（生成器），一部分负责编辑管道中的元素（过滤器），还有一些负责处理中间的操作（比如记录）。”：<br><code>scala&gt; for (i &lt;- 1 to 4) print(i + &quot; &quot;)</code><br><code>1 2 3 4</code><br>这段代码等同于：<br><code>scala&gt; for (i &lt;- 1 to 4) {</code><br><code>|     print(i + &quot; &quot;)</code><br><code>| }</code><br><code>1 2 3 4</code>  </p>
+<h3 id="循环表达式">循环表达式</h3><p>和Java一样，Scala提供了两种循环表达式：while以及for。<br>通常，函数式语言会避开while循环，因为while实现的大多数操作都可以使用递归来完成。Scala中while循环和Java类似：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">var</span> x = <span class="number">3</span></span><br><span class="line">x: <span class="type">Int</span> = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">scala&gt; <span class="keyword">while</span> (x &gt; <span class="number">0</span>) &#123;</span><br><span class="line">     |     println(x)</span><br><span class="line">     |     x -= <span class="number">1</span></span><br><span class="line">     | &#125;</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>Scala中的for循环却和Java中的不太一样，在形式上有较大的改变，有一种观点认为：“Scala 的for实际上是一条管道，它在将元素传递给循环主体之前处理元素组成的集合，每次一个。此管道其中的一部分负责将更多的元素添加到管道中（生成器），一部分负责编辑管道中的元素（过滤器），还有一些负责处理中间的操作（比如记录）。”：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to <span class="number">4</span>) print(i + <span class="string">" "</span>)</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> </span><br><span class="line">```  </span><br><span class="line">这段代码等同于：  </span><br><span class="line">```scala</span><br><span class="line">scala&gt; <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to <span class="number">4</span>) &#123;</span><br><span class="line">     |     print(i + <span class="string">" "</span>)</span><br><span class="line">     | &#125;</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br></pre></td></tr></table></figure></p>
 <p>这里我们看到<code>for (i &lt;- 1 to 4)</code>这种形式的表达式，这条表达式的意思是我们从1到4进行一个遍历，然后将这些值依次赋予变量i。更普遍的for定义是<code>for (v &lt;- expression)</code>，也就是将expression每次生成的值赋给变量v。我们看到<strong>在for循环的变量v之前并没有var或者val，此时，v的类型是集合的元素类型。</strong></p>
-<p>这种循环便利非常方便，比如我们要遍历一个字符串：<br><code>scala&gt; for (c &lt;- &quot;hello, scala&quot;) print(c + &quot;-&quot;)</code><br><code>h-e-l-l-o-,- -s-c-a-l-a-</code></p>
+<p>这种循环便利非常方便，比如我们要遍历一个字符串：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">for</span> (c &lt;- <span class="string">"hello, scala"</span>) print(c + <span class="string">"-"</span>)</span><br><span class="line">h-e-l-l-o-,- -s-c-a-l-a-</span><br></pre></td></tr></table></figure></p>
 <p>我们还可以这样遍历其他诸如数组、集合之类。</p>
-<p>for循环表达式还有更加先进的使用方法，我们称之为<em>for推导式</em>。还是先看一段代码：  </p>
-<p><pre><code><br>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3) println((i, j))<br>(1,1)<br>(1,2)<br>(2,1)<br>(2,2)<br>scala&gt; for (i &lt;- 1 to 2; j &lt;- 1 until 3 if i != j) println((i, j))<br>(1,2)<br>(2,1)<br></code></pre><br>我们需要解释一下这段代码，首先额外解释一下to和until的区别，x to y表示从x到y的所有整数，包含y；而x until y表示从x到y的所有整数不包含y（y &gt; x）。我们在这段代码看到，for循环的循环控制语句中有多条表达式，并且以分号分割，每个表达式我们称之为<strong>生成器</strong>，生成器的作用是在每一次循环的时候生成变量的值，控制变量j的赋值语句后跟着<code>if i != j</code>，这是一个<strong>守卫</strong>，守卫用以过滤符合条件的控制变量。</p>
+<p>for循环表达式还有更加先进的使用方法，我们称之为<em>for推导式</em>。还是先看一段代码：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to <span class="number">2</span>; j &lt;- <span class="number">1</span> until <span class="number">3</span>) println((i, j))</span><br><span class="line">(<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line">(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">scala&gt; <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to <span class="number">2</span>; j &lt;- <span class="number">1</span> until <span class="number">3</span> <span class="keyword">if</span> i != j) println((i, j))</span><br><span class="line">(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">(<span class="number">2</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<p>我们需要解释一下这段代码，首先额外解释一下to和until的区别，x to y表示从x到y的所有整数，包含y；而x until y表示从x到y的所有整数不包含y（y &gt; x）。我们在这段代码看到，for循环的循环控制语句中有多条表达式，并且以分号分割，每个表达式我们称之为<strong>生成器</strong>，生成器的作用是在每一次循环的时候生成变量的值，控制变量j的赋值语句后跟着<code>if i != j</code>，这是一个<strong>守卫</strong>，守卫用以过滤符合条件的控制变量。</p>
 <p>到这里为止，我们已经对Scala的控制结构有一个大致的了解。在实际编码中，我们会看到更灵活、更强大的控制结构使用方法，但是万变不离其宗，它们都是基于这些基本的控制结构形式。</p>
 
       
