@@ -15,7 +15,7 @@
 <meta property="og:description" content="by：leotse
 一、概述FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。更多内容见论坛：http://bbs.chinaunix.net/forum-240-1.html
 本文档内容包括：FastDFS安装、Python API安装及调用、通过Nginx访问文">
-<meta property="og:updated_time" content="2015-10-23T03:49:16.000Z">
+<meta property="og:updated_time" content="2015-10-23T03:51:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FastDFS安装使用说明">
 <meta name="twitter:description" content="by：leotse
@@ -325,20 +325,40 @@ make install
 
 <h3 id="5-Tracker配置与启动：">5.Tracker配置与启动：</h3><p>在配置之前，非常郑重地推荐这个：<a href="http://bbs.chinaunix.net/thread-1941456-1-1.html" target="_blank" rel="external">FastDFS 配置文件详解(修订版1) </a>，里面非常详尽地介绍了FastDFS的配置文件具体参数。  </p>
 <p>a）修改tracker.conf文件，该文件的位置在fastdfs-5.05/conf下。在此之前，我们需要创建一个目录存放Tracker的data和log，我们在这里假定这个路径为：/home/leotse/fastdfs/tracker/，我们需要确保该路径存在。我们只需要修改：  </p>
-<pre>base_path=/home/leotse/fastdfs/tracker/<pre>
+<pre>base_path=/home/leotse/fastdfs/tracker/</pre>
 
-b）复制tracker.conf文件到/etc/fdfs/目录下：  
+<p>b）复制tracker.conf文件到/etc/fdfs/目录下：  </p>
 <pre>cp tracker.conf /etc/fdfs/</pre>
 
-<p>c）运行Tracker：<br>fdfs_tracker /etc/fdfs/tracker.conf<br>停止Tracker：/usr/local/bin/stop.sh fdfs_tracker /etc/fdfs/tracker.conf<br>重启Tracker：/usr/local/bin/restart.sh fdfs_tracker /etc/fdfs/tracker.conf </p>
-<h3 id="6-Storage配置与运行：">6.Storage配置与运行：</h3><p>在这里，同样我们需要创建一个目录保存Storage的data和log，我们假定Storage上该目录为/home/leotse/fastdfs/storage/。<br>a）修改Nginx端口（可选）：<br>Nginx默认的端口号为80，为了防止引起冲突，我们建议修改Nginx的端口：<br>vi /usr/local/nginx/conf/nginx.conf<br>修改<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">server</span> &#123;  </span><br><span class="line">    <span class="title">listen</span>       <span class="number">80</span>;  </span><br><span class="line">    <span class="title">server_name</span>  localhost;</span><br></pre></td></tr></table></figure></p>
-<p>在这个示例里，我们将80改为9096（可以更改）。  </p>
-<p>b）在Nginx中支持FastDFS模块：<br>vi /usr/local/nginx/conf/nginx.conf<br>我们在server模块中增加：  </p>
-<pre><code><span class="xml">location /group1/M00</span><span class="expression">{  
-    <span class="variable">root</span> <span class="end-block">/home</span><span class="end-block">/leotse</span><span class="end-block">/fastdfs</span><span class="end-block">/storage</span><span class="end-block">/data</span>;  
-    <span class="variable">ngx</span>_<span class="variable">fastdfs</span>_<span class="variable">module</span>;  
-}</span><span class="xml"></span>
-</code></pre><p>c）给Storage的存储目录做一个软连接：  </p>
+<p>c）运行Tracker：  </p>
+<pre>fdfs_tracker /etc/fdfs/tracker.conf</pre>
+停止Tracker：/usr/local/bin/stop.sh fdfs_tracker /etc/fdfs/tracker.conf   
+重启Tracker：/usr/local/bin/restart.sh fdfs_tracker /etc/fdfs/tracker.conf 
+
+### 6.Storage配置与运行：  
+在这里，同样我们需要创建一个目录保存Storage的data和log，我们假定Storage上该目录为/home/leotse/fastdfs/storage/。  
+a）修改Nginx端口（可选）：  
+Nginx默认的端口号为80，为了防止引起冲突，我们建议修改Nginx的端口：  
+vi /usr/local/nginx/conf/nginx.conf  
+修改
+<pre>
+    server {  
+        listen       80;  
+        server_name  localhost;
+</pre>
+在这个示例里，我们将80改为9096（可以更改）。  
+
+b）在Nginx中支持FastDFS模块：  
+vi /usr/local/nginx/conf/nginx.conf  
+我们在server模块中增加：  
+<pre>
+location /group1/M00{  
+    root /home/leotse/fastdfs/storage/data;  
+    ngx_fastdfs_module;  
+}
+</pre>
+
+<p>c）给Storage的存储目录做一个软连接：  </p>
 <pre>ln -s /home/leotse/ fastdfs /storage/data  /home/leotse/ fastdfs /storage /data /M00</pre>
 
 <p>d）修改Storage配置。我们将注意力从Nginx转到FastDFS上来，<br>修改storage.conf文件，该文件的位置在fastdfs-5.  05/conf下，我们需要创建目录/home/leotse/fastdfs/storage/用以保存Storage的data和logs。我们需要做以下修改：<br>修改group_name，根据实际配置确定：  </p>
@@ -400,7 +420,7 @@ conf目录下的http.conf和mime.types两个文件也需要copy到/etc/fdfs目�
 <p>==============================result============================<br>file size: 39.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 0.36199669838 s  </p>
 <p>==============================result============================<br>file size: 128.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 1.27810112 s  </p>
 <p>==============================result============================<br>file size: 336.00MB<br>download file 50 times<br>failed 0 times<br>rate of failed download: 0.0 %<br>average download duration: 3.0081551671 s  </p>
-</pre></pre>
+
       
     </div>
     
