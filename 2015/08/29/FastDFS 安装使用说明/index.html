@@ -15,7 +15,7 @@
 <meta property="og:description" content="by：leotse
 一、概述FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。更多内容见论坛：http://bbs.chinaunix.net/forum-240-1.html
 本文档内容包括：FastDFS安装、Python API安装及调用、通过Nginx访问文">
-<meta property="og:updated_time" content="2015-10-23T03:51:40.000Z">
+<meta property="og:updated_time" content="2015-10-23T03:53:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FastDFS安装使用说明">
 <meta name="twitter:description" content="by：leotse
@@ -240,11 +240,9 @@
 <h2 id="二、准备工作">二、准备工作</h2><p>1.建议先了解一下FastDFS；  </p>
 <p>2.所用到的环境或软件有如下一些：<br>1）Ubuntu 12.04<br>2）libfastcommon-master.zip<br>3）fastdfs-5.05.tar.gz<br>4）fastdfs-nginx-module_v1.16.tar.gz<br>5）nginx-1.9.0.tar.gz<br>6）pcre-8.33.tar.gz<br>7）zlib-1.2.8.tar.gz<br>8）fdfs_client-py-master.zip<br>虽然看起来用到的软件比较多，但是安装配置过程比较简单。（注：相关软件都可以在本压缩文件中找到。）  </p>
 <p>3.我们假设我们用到的机器有：  </p>
-<pre>
-**Tracker**：192.168.9.229  
-**Storage**：192.168.9.230， 192.168.9.231  
-</pre>
-
+<blockquote>
+<p>Tracker：192.168.9.229<br>Storage：192.168.9.230， 192.168.9.231  </p>
+</blockquote>
 <h2 id="三、安装步骤">三、安装步骤</h2><h3 id="1-安装libfastcommon（Tracker和Storage都需要）：">1.安装libfastcommon（Tracker和Storage都需要）：</h3><p>相较于旧版的FastDFS，新版的FastDFS已经不需要依赖libevent，我们需要先安装它的依赖包libfastcommon。<br>a)解压libfastcommon-master.zip：  </p>
 <pre>
 unzip libfastcommon-master.zip  
