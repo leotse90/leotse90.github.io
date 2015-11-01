@@ -17,7 +17,7 @@ Elasticsearch is a search server based on Lucene. It provides a distributed, mul
 ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
 
 Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
-<meta property="og:updated_time" content="2015-11-01T14:17:47.000Z">
+<meta property="og:updated_time" content="2015-11-01T14:22:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch初探">
 <meta name="twitter:description" content="by:leotse
@@ -242,7 +242,7 @@ Elasticsearch is a search server based on Lucene. It provides a distributed, mul
 <blockquote>
 <p>ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是第二流行的企业搜索引擎。</p>
 </blockquote>
-<p>在这段定义之外，我们看看ES还有哪些吸引人的地方：<br><a id="more"></a><br>-ES的搜索几乎是实时的，当你向一个ES服务器或者一个ES集群发出搜索请求后，你可以在非常短的延迟后获取到你想要的数据（不超过1s）；<br>-ES的集群是去中心化的，也就是说，不像Hadoop这种分布式框架，ES集群不存在单点故障。ES集群中包含多个节点，节点可以通过选举选出它们的中心节点，因此，当集群中的一个节点出现故障时，集群马上会选取出下一个新的中心节点来管理集群；<br>-ES的横向扩展性能非常好，集群维护者不用担心集群出现资源不够的情况，因为你只需要增加一台服务器，然后在其上安装ES然后简单进行配置，这台新的节点就能成为集群中的一员；<br>-ES提供了分片机制（Shard），一个索引（Index）可以划分为多个Shard，这些Shard分布在集群中不同的节点上，能有效提升集群的处理效率；<br>-ES为其中的数据提供了replica，确保数据的冗余存储，从而使得整个ES集群可用性大大增强，亦即当一个节点出现故障时，存储在其上的数据仍然可以在其他的节点上访问到；<br>-ES简单易用，除了为开发者和使用者提供了RESTful接口外，ES本身非常易于学习和使用，这一点在应用中你可以感受到。它的社区也十分活跃，相关的文档资料也较健全。</p>
+<p>在这段定义之外，我们看看ES还有哪些吸引人的地方：<br><a id="more"></a><br>1)ES的搜索几乎是实时的，当你向一个ES服务器或者一个ES集群发出搜索请求后，你可以在非常短的延迟后获取到你想要的数据（不超过1s）；<br>2)ES的集群是去中心化的，也就是说，不像Hadoop这种分布式框架，ES集群不存在单点故障。ES集群中包含多个节点，节点可以通过选举选出它们的中心节点，因此，当集群中的一个节点出现故障时，集群马上会选取出下一个新的中心节点来管理集群；<br>3)ES的横向扩展性能非常好，集群维护者不用担心集群出现资源不够的情况，因为你只需要增加一台服务器，然后在其上安装ES然后简单进行配置，这台新的节点就能成为集群中的一员；<br>4)ES提供了分片机制（Shard），一个索引（Index）可以划分为多个Shard，这些Shard分布在集群中不同的节点上，能有效提升集群的处理效率；<br>5)ES为其中的数据提供了replica，确保数据的冗余存储，从而使得整个ES集群可用性大大增强，亦即当一个节点出现故障时，存储在其上的数据仍然可以在其他的节点上访问到；<br>6)ES简单易用，除了为开发者和使用者提供了RESTful接口外，ES本身非常易于学习和使用，这一点在应用中你可以感受到。它的社区也十分活跃，相关的文档资料也较健全。</p>
 <p>这些点足以让我们拥有信心在需要的时候投入ES的怀抱，当然我们还需要考虑ES的一些不足，在本人的了解范围里以及结合本人的使用经验，ES集群可能存在以下问题：<br><strong>脑裂问题</strong>：ES集群有可能在节点间网络通信故障时成为“裂脑人”。这是ES集群的去中心化带来的不足。我们假设这样一个场景，我们的ES集群有10个节点，它们分别在两个机房A和B，有一天机房的网络出现问题，A机房无法与B机房进行通信，这时候，ES的选举机制会被触发，A机房会选取出一个中心节点，B机房也会选取出一个中心节点，整个集群一分为二，虽然对外提供访问时仍然问题不大，但是这两个集群会出现数据不同步的问题；  </p>
 <p><strong>权限管理机制不健全</strong>：迄今为止，ES集群没有比较健全的权限管理机制，如果你需要对ES的访问和使用权限进行管理，或者你需要为ES集群提供一个前端web服务，那么你需要在后台自行实现一个权限管理机制。</p>
 <h2 id="ES相关概念">ES相关概念</h2><p>我们这里只介绍ES的一些相关的术语，在此之前，我们结合关系型数据库来简单介绍一下ES的结构：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Relational DB <span class="subst">-&gt; </span>Databases <span class="subst">-&gt; </span>Tables <span class="subst">-&gt; </span><span class="keyword">Rows</span> <span class="subst">-&gt; </span>Columns</span><br><span class="line">Elasticsearch <span class="subst">-&gt; </span>Indices   <span class="subst">-&gt; </span>Types  <span class="subst">-&gt; </span>Documents <span class="subst">-&gt; </span>Fields</span><br></pre></td></tr></table></figure></p>
