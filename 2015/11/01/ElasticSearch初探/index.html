@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>你真的懂单链表吗 | 一条狗的风花雪月</title>
+  <title>ElasticSearch初探 | 一条狗的风花雪月</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="by:leotse
-引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
-我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  
-我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们">
+ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
+
+Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="你真的懂单链表吗">
-<meta property="og:url" content="http://leotse90.com/2015/09/21/你真的懂单链表吗/index.html">
+<meta property="og:title" content="ElasticSearch初探">
+<meta property="og:url" content="http://leotse90.com/2015/11/01/ElasticSearch初探/index.html">
 <meta property="og:site_name" content="一条狗的风花雪月">
 <meta property="og:description" content="by:leotse
-引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
-我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  
-我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们">
-<meta property="og:updated_time" content="2015-10-21T06:44:44.000Z">
+ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
+
+Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
+<meta property="og:updated_time" content="2015-11-01T14:08:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你真的懂单链表吗">
+<meta name="twitter:title" content="ElasticSearch初探">
 <meta name="twitter:description" content="by:leotse
-引子首先，上一道开胃菜：怎么判断两个单链表是否相交？  
-我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  
-我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们">
+ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
+
+Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
   
     <link rel="alternative" href="/atom.xml" title="一条狗的风花雪月" type="application/atom+xml">
   
@@ -192,11 +192,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-你真的懂单链表吗" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ElasticSearch初探" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/21/你真的懂单链表吗/" class="article-date">
-  	<time datetime="2015-09-21T02:55:15.000Z" itemprop="datePublished">2015-09-21</time>
+      <a href="/2015/11/01/ElasticSearch初探/" class="article-date">
+  	<time datetime="2015-11-01T14:05:15.000Z" itemprop="datePublished">2015-11-01</time>
 </a>
     </div>
   
@@ -209,7 +209,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      你真的懂单链表吗
+      ElasticSearch初探
     </h1>
   
 
@@ -218,7 +218,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li></ul>
 	</div>
 
         
@@ -234,19 +234,30 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h2 id="引子">引子</h2><p><strong>首先，上一道开胃菜：怎么判断两个单链表是否相交？</strong>  </p>
-<p>我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  </p>
-<p>我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只能是Y形相交，而不可能是X形相交，亦即从第一个相同的结点开始，后面的结点全部一样。如果能想到这个，后面的就简单明了了：只要A链表和B链表的最后一个结点值相等，则证明A链表和B链表相交。该算法的时间复杂度也下降到O(m+n)。</p>
-<p>我们进一步来思考：<strong>怎么找到第一个相交的元素呢？</strong><br><a id="more"></a><br>这里就当然不能像刚才那样，但是出发点还是一样，我们同样可以保证只要两次遍历。我们假设m &gt; n，那么如果我们将两个链表的末尾对齐，是不是从最后一个往前看（当然单链表不能往前遍历，我们先这样看）的时候，A链表会比B链表多m-n个元素，而A链表中的前m-n个元素可以忽略，直接从第m-n个元素开始和B链表一起向前遍历，比较A链表上第m-n+i个元素和B链表第i个元素（i&lt;n）即可。第一个相同的元素即为所求。  </p>
-<p>下面来看看其它的几个单链表相关的典型问题（贴代码太占空间，这里就只谈谈思路，大家可以动手试试）： </p>
-<h3 id="单链表的反转">单链表的反转</h3><p>如题，怎么实现一个单链表A（有m个元素）的反转呢？<br><strong>方案一</strong>：如果不能破坏原单链表，我们需要重新新建一个链表C，然后遍历原来的A链表，对C链表实行头插法建表（头插法即将新加入的结点作为链表的头结点，对应的还有尾插法，即直接在链表末尾添加元素）；<br><strong>方案二</strong>：如果可以破坏原单链表呢？暴力一点的办法是不断地交换相邻的两个元素，即首先将第一个元素通过m-1次交换使其变成链表的最后一个元素，然后又是同样的方法将现任的第一个元素通过m-2次交换使其成为链表的倒数第二个元素，以此类推。  </p>
-<h3 id="单链表的排序">单链表的排序</h3><p>就排序原理而言，个人觉得其实不用过多考虑存储结构的问题，即不管是顺序存储还是链式存储，都不影响排序的基本原理，只是不同的存储结构会影响不同排序方法的效率而已。因为我们完全可以夸张地将顺序存储也想象为不连续的存储只是它们相邻两者的间隙极端的小。即我们将货物分别存在美国和中国的仓库里和都存放在一个仓库里是一样的，只是运费问题而已。<br>明白了这一点，那么单链表的排序就和普通的数组排序没有什么太大的区别。我们现在要做的事就是针对性地选择一个时间性能相对较好的排序算法。<br>我们知道的排序方法有很多：插入排序、冒泡排序、快速排序、归并排序、堆排序以及基数排序等等，那么这其中哪些对顺序结构和链式结构不那么感冒呢？熟悉这些排序的童鞋肯定知道，是插入排序和冒泡排序。其他的几种常见排序方法就比较偏袒顺序存储结构了。所以，如果要对链表进行排序，我会选择插入排序或者冒泡排序。（不太清楚这些基本排序原理的click here：<a href="http://wlh0706-163-com.iteye.com/blog/1465570" target="_blank" rel="external">5种基本排序 娱乐版开脑解析</a>）  </p>
-<h3 id="删除单链表中的最小元素">删除单链表中的最小元素</h3><p>我能想到的办法就是遍历两次：第一次找到单链表中最小的元素，第二次遍历删除该元素。第一次遍历的时候需要借助两个变量，一个保存当前的最小元素的值，另一个保存当前最小值的位序。第二次遍历的时候当然就是删除第一次遍历得到的最小元素的位序上的元素了。 </p>
-<h3 id="删除所有重复结点">删除所有重复结点</h3><p>这个一般得借助其他的数据结构了。基本思路应该是：遍历链表，用一个数据结构保存当前已经遍历的元素，若下一个访问的链表里的元素已经存在于已经访问的元素集合中，则删除单链表中的该元素，否则继续，直至到达链表的末尾。保存已经访问过的元素可以用数组，也可以用其他的。 </p>
-<h3 id="判断一个链表是否包含另一个链表">判断一个链表是否包含另一个链表</h3><p>这个问题其实和开篇的问题一样，只是换了一种说法而已。因此只要找到第一个相同的元素就可以了。 </p>
-<h3 id="找出单链表中的倒数第K个元素">找出单链表中的倒数第K个元素</h3><p>我们首先要确保的就是单链表的元素个数大于K。<br>这里的实现思路也很巧妙：我们定义两个指针a和b，全部指向链表的头结点，然后a指针开始向后遍历，但a遍历到第K个元素的时候，b指针也开始从头开始遍历，接下来的事你应该知道了，当a指针到达链表的末尾时，b指针恰好指着链表的倒数第K个元素。这样的时间复杂度是O(n)。 </p>
-<p>那么，<strong>怎么找单链表中间的那个元素呢？</strong>  </p>
-<p>PS：这些问题肯定还有更好地解法和方案，希望您不吝赐教。</p>
+<h2 id="ES介绍">ES介绍</h2><p>我们首先来看<a href="https://www.elastic.co" target="_blank" rel="external">ES</a>（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：</p>
+<blockquote>
+<p>Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTful web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License. Elasticsearch is the second most popular enterprise search engine after Apache Solr.</p>
+<p>ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是第二流行的企业搜索引擎。</p>
+</blockquote>
+<p>在这段定义之外，我们看看ES还有哪些吸引人的地方：<br><a id="more"></a><br><em>ES的搜索几乎是实时的，当你向一个ES服务器或者一个ES集群发出搜索请求后，你可以在非常短的延迟后获取到你想要的数据（不超过1s）；  
+</em>ES的集群是去中心化的，也就是说，不像Hadoop这种分布式框架，ES集群不存在单点故障。ES集群中包含多个节点，节点可以通过选举选出它们的中心节点，因此，当集群中的一个节点出现故障时，集群马上会选取出下一个新的中心节点来管理集群；<br><em>ES的横向扩展性能非常好，集群维护者不用担心集群出现资源不够的情况，因为你只需要增加一台服务器，然后在其上安装ES然后简单进行配置，这台新的节点就能成为集群中的一员；  
+</em>ES提供了分片机制（Shard），一个索引（Index）可以划分为多个Shard，这些Shard分布在集群中不同的节点上，能有效提升集群的处理效率；<br><em>ES为其中的数据提供了replica，确保数据的冗余存储，从而使得整个ES集群可用性大大增强，亦即当一个节点出现故障时，存储在其上的数据仍然可以在其他的节点上访问到；  
+</em>ES简单易用，除了为开发者和使用者提供了RESTful接口外，ES本身非常易于学习和使用，这一点在应用中你可以感受到。它的社区也十分活跃，相关的文档资料也较健全。</p>
+<p>这些点足以让我们拥有信心在需要的时候投入ES的怀抱，当然我们还需要考虑ES的一些不足，在本人的了解范围里以及结合本人的使用经验，ES集群可能存在以下问题：<br>1.<strong>脑裂问题</strong>：ES集群有可能在节点间网络通信故障时成为“裂脑人”。这是ES集群的去中心化带来的不足。我们假设这样一个场景，我们的ES集群有10个节点，它们分别在两个机房A和B，有一天机房的网络出现问题，A机房无法与B机房进行通信，这时候，ES的选举机制会被触发，A机房会选取出一个中心节点，B机房也会选取出一个中心节点，整个集群一分为二，虽然对外提供访问时仍然问题不大，但是这两个集群会出现数据不同步的问题；<br>2.<strong>权限管理机制不健全</strong>：迄今为止，ES集群没有比较健全的权限管理机制，如果你需要对ES的访问和使用权限进行管理，或者你需要为ES集群提供一个前端web服务，那么你需要在后台自行实现一个权限管理机制。</p>
+<h2 id="ES相关概念">ES相关概念</h2><p>我们这里只介绍ES的一些相关的术语，在此之前，我们结合关系型数据库来简单介绍一下ES的结构：</p>
+<pre>
+Relational DB -> Databases -> Tables -> Rows -> Columns
+Elasticsearch -> Indices   -> Types  -> Documents -> Fields
+</pre>
+
+<p>理解ES的结构本身不难，但是由于ES的这些术语在我们的圈子里已经有一些其他的受众较广的含义，所以这样一种与RDB的对比可以帮助我们理解ES的结构，ES本身可以想象成一个MySQL，ES中的Index就是数据库DB，而Type相当于数据库中的表，以此类推。</p>
+<p><strong>索引Index</strong>:在ES中，Document中的所有字段都会建立索引（这里的索引是我们平常所理解的意思，如数据库的索引），这种设定使得ES中的每个文档的每个字段都是可以直接用来搜索的。事实上，我们的数据被存储和索引在分片中，索引只是一个把一个或多个分片分组在一起的逻辑空间。</p>
+<p><strong>分片Shard</strong>:我们可以将ES中的分片Shard理解为HDFS中的文件块Block，一个完整的Index可以划分为多个Shard，然后分别存储在不同的节点上；</p>
+<p><strong>类型Type</strong>:我们能够自己定义ES中的Type，Type是Index的一个逻辑分区，每个类型都有自己的映射或者结构定义，就像传统数据库表中的列一样；</p>
+<p><strong>文档Document</strong>:如果你的Tool Kit中有OOP，那么你可以简单将Document理解为对象Object，它是ES中可被索引的基础信息单元；Type是序列化为JSON格式的数据。</p>
+<p><strong>映射Mapping</strong>:ES中的映射相当于数据库中表的定义，映射定义了字段类型，每个字段的数据类型，以及字段被ES处理的方式。映射还用于设置关联到类型上的元数据。</p>
+<p>这里只简单介绍了ES相关的基础信息，万里长征这才是第一步，但是希望这些信息可以让我们对ES有一个比较清晰的理解，至于如何使用ES进行存储数据、查询数据以及分析数据，我们需要在实践上不断学习和参悟。</p>
+<p>最后推荐一本书，希望能帮助到各位学习和理解ES：<a href="http://es.xiaoleilu.com/index.html" target="_blank" rel="external">Elasticsearch 权威指南</a>。</p>
 
       
     </div>
@@ -256,18 +267,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/10/01/HDFS文件系统命名空间/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          HDFS文件系统命名空间
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/20/Hadoop集群部署(RedHat)/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hadoop集群部署（RedHat）</div>
+    <a href="/2015/10/26/Scala学习之数组/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">心猿意码Scala之数组</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -296,7 +298,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="你真的懂单链表吗" data-title="你真的懂单链表吗" data-url="http://leotse90.com/2015/09/21/你真的懂单链表吗/"></div>
+	<div class="ds-thread" data-thread-key="ElasticSearch初探" data-title="ElasticSearch初探" data-url="http://leotse90.com/2015/11/01/ElasticSearch初探/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
