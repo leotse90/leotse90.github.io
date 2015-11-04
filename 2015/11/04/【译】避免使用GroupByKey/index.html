@@ -3,23 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hive 本地模式 | 一条心猿意码的狗</title>
+  <title>【译】避免使用GroupByKey.md | 一条心猿意码的狗</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="by:leotse
-我们都知道，Hive是通过将HiveQL转化为MR job进行数据查询和处理。当然，不是全部的HQL语句都需要转为MR，比如我们常见的：SELECT * FROM access_log;这时候，Hive Shell能很快地返回给我们结果，这是因为这里用到的是Hive的本地模式。Hive查询耗时太长，一直都是大家吐槽的对象，在数据量大的情况下，当然微不足道，但是当我们的查询量很小">
+原文：Avoid GroupByKey
+译文让我们来看两个wordcount的例子，一个使用了reduceByKey，而另一个使用groupByKey:1234567891011val words = Array(&quot;one&quot;, &quot;two&quot;, &quot;two&quot;, &quot;three&quot;, &quot;three&quot;, &quot;three&quot;)val wordPairsRDD = sc.parallelize(wo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hive 本地模式">
-<meta property="og:url" content="http://leotse90.com/2015/10/11/Hive本地模式/index.html">
+<meta property="og:title" content="【译】避免使用GroupByKey.md">
+<meta property="og:url" content="http://leotse90.com/2015/11/04/【译】避免使用GroupByKey/index.html">
 <meta property="og:site_name" content="一条心猿意码的狗">
 <meta property="og:description" content="by:leotse
-我们都知道，Hive是通过将HiveQL转化为MR job进行数据查询和处理。当然，不是全部的HQL语句都需要转为MR，比如我们常见的：SELECT * FROM access_log;这时候，Hive Shell能很快地返回给我们结果，这是因为这里用到的是Hive的本地模式。Hive查询耗时太长，一直都是大家吐槽的对象，在数据量大的情况下，当然微不足道，但是当我们的查询量很小">
-<meta property="og:image" content="https://github.com/leotse90/SparkNotes/blob/master/images/hive_local_mode_false.png">
-<meta property="og:image" content="https://github.com/leotse90/SparkNotes/blob/master/images/hive_local_mode_true.png">
-<meta property="og:updated_time" content="2015-10-21T06:42:20.000Z">
+原文：Avoid GroupByKey
+译文让我们来看两个wordcount的例子，一个使用了reduceByKey，而另一个使用groupByKey:1234567891011val words = Array(&quot;one&quot;, &quot;two&quot;, &quot;two&quot;, &quot;three&quot;, &quot;three&quot;, &quot;three&quot;)val wordPairsRDD = sc.parallelize(wo">
+<meta property="og:image" content="http://databricks.gitbooks.io/databricks-spark-knowledge-base/content/images/reduce_by.png">
+<meta property="og:image" content="http://databricks.gitbooks.io/databricks-spark-knowledge-base/content/images/group_by.png">
+<meta property="og:updated_time" content="2015-11-04T11:38:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hive 本地模式">
+<meta name="twitter:title" content="【译】避免使用GroupByKey.md">
 <meta name="twitter:description" content="by:leotse
-我们都知道，Hive是通过将HiveQL转化为MR job进行数据查询和处理。当然，不是全部的HQL语句都需要转为MR，比如我们常见的：SELECT * FROM access_log;这时候，Hive Shell能很快地返回给我们结果，这是因为这里用到的是Hive的本地模式。Hive查询耗时太长，一直都是大家吐槽的对象，在数据量大的情况下，当然微不足道，但是当我们的查询量很小">
+原文：Avoid GroupByKey
+译文让我们来看两个wordcount的例子，一个使用了reduceByKey，而另一个使用groupByKey:1234567891011val words = Array(&quot;one&quot;, &quot;two&quot;, &quot;two&quot;, &quot;three&quot;, &quot;three&quot;, &quot;three&quot;)val wordPairsRDD = sc.parallelize(wo">
   
     <link rel="alternative" href="/atom.xml" title="一条心猿意码的狗" type="application/atom+xml">
   
@@ -188,11 +191,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-Hive本地模式" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-【译】避免使用GroupByKey" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/10/11/Hive本地模式/" class="article-date">
-  	<time datetime="2015-10-11T02:55:15.000Z" itemprop="datePublished">2015-10-11</time>
+      <a href="/2015/11/04/【译】避免使用GroupByKey/" class="article-date">
+  	<time datetime="2015-11-04T11:37:15.000Z" itemprop="datePublished">2015-11-04</time>
 </a>
     </div>
   
@@ -205,7 +208,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hive 本地模式
+      【译】避免使用GroupByKey.md
     </h1>
   
 
@@ -214,7 +217,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
 	</div>
 
         
@@ -230,13 +233,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<p>我们都知道，Hive是通过将HiveQL转化为MR job进行数据查询和处理。当然，不是全部的HQL语句都需要转为MR，比如我们常见的：<br><code>SELECT * FROM access_log;</code><br>这时候，Hive Shell能很快地返回给我们结果，这是因为这里用到的是Hive的<strong>本地模式</strong>。<br>Hive查询耗时太长，一直都是大家吐槽的对象，在数据量大的情况下，当然微不足道，但是当我们的查询量很小亦即查询数据很少的时候，Hive启动的耗时将会显得非常刺眼，因此在0.7版本以后，Hive开始支持本地模式。</p>
-<p>除了上面的示例使用到了本地模式，如果WHERE语句中只是分区字段这种情况，也是无需使用MR job的：<br><code>SELECT * FROM access_log</code><br><code>WHERE dt=&#39;20150916&#39;</code><br><code>LIMIT 10;</code><br>这是因为分区字段在HDFS中保存实际上是目录结构，这些都是不用通过计算获取的（包含LIMIT）。<br><a id="more"></a><br>除此之外，我们还可以怎么利用本地模式帮助我们快速处理少量数据呢？我们可以通过设置下面变量打开本地模式：<br><code>set hive.exec.mode.local.auto=true;</code><br>默认情况下这个设置为false，也就是说，Hive使用MR来执行其他的所有操作（区别上面介绍的两种）。</p>
-<p>我们来感受下，下面截图为没有使用本地模式时查询数据条目数：<br><img src="https://github.com/leotse90/SparkNotes/blob/master/images/hive_local_mode_false.png" alt="hive_local_mode_false"><br>我们看到这个简单的操作用了34.321s，一共也就192条数据，这个固然和机器有关，但是MR启动以及计算导致时间成本太高。我们在下面的示例里打开了本地模式：<br><img src="https://github.com/leotse90/SparkNotes/blob/master/images/hive_local_mode_true.png" alt="hive_local_mode_true"><br>1.322s!，我们看到耗时明显降低，这就是本地模式的威力。</p>
-<p>当然，使用本地模式也有一些条件：<br>1.<strong>输入数据的size</strong>：我们用参数hive.exec.mode.local.auto.inputbytes.max来指定本地模式处理的最大输入数据，默认为128MB；<br>2.<strong>Mapper的数量</strong>：参数hive.exec.mode.local.auto.tasks.max指定了本地模式下Mapper的最大数量，默认为4；<br>3.<strong>Reducer的数量</strong>：Reducer数量必须是0或1；</p>
-<p>我们在使用Hive时，最好在$HOME/.hiverc配置文件中加入<code>set hive.exec.mode.local.auto=true;</code>设置。特别是当我们常常处理的数据量不大的时候！</p>
-<p>另：由于Hadoop运行的机器和Hive client运行的机器可能环境不一致，JVM版本的不同或者软件的libs不同会导致本地模式可能出现不可预期的错误。另外一点值得我们注意的是，本地模式运行在Hive Client上一个独立的子JVM上，如果你愿意，那么你可以通过<code>hive.mapred.local.mem</code>参数来设置该子JVM最大内存，默认情况下，这个参数的值为0，在这种情况下，Hive会让Hadoop决定子JVM的默认内存限制。</p>
-<p>参考：<br><a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-Hive,Map-ReduceandLocal-Mode" target="_blank" rel="external">Hive GettingStarted</a></p>
+<p>原文：<a href="http://databricks.gitbooks.io/databricks-spark-knowledge-base/content/best_practices/prefer_reducebykey_over_groupbykey.html" target="_blank" rel="external">Avoid GroupByKey</a></p>
+<h3 id="译文">译文</h3><p>让我们来看两个wordcount的例子，一个使用了<code>reduceByKey</code>，而另一个使用<code>groupByKey</code>:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">words</span> =</span> <span class="type">Array</span>(<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>, <span class="string">"three"</span>, <span class="string">"three"</span>)</span><br><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">wordPairsRDD</span> =</span> sc.parallelize(words).map(word =&gt; (word, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">wordCountsWithReduce</span> =</span> wordPairsRDD</span><br><span class="line">                           .reduceByKey(_ + _)</span><br><span class="line">                           .collect()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">wordCountsWithGroup</span> =</span> wordPairsRDD</span><br><span class="line">                          .groupByKey()</span><br><span class="line">                          .map(t =&gt; (t._1, t._2.sum))</span><br><span class="line">                          .collect()</span><br></pre></td></tr></table></figure></p>
+<p>上面两个函数所得到的结果都是正确的，但是当数据集很大时，使用了<code>reduceByKey</code>的例子表现更佳。这是因为在shuffle输出的数据前，Spark会Combine每一个partition上具有相同key的输出结果。<br><a id="more"></a><br>看下图我们就能理解<code>reduceByKey</code>的工作流程。我们注意到同一台机器上数据shuffle之前，相同key的数据（通过调用传入<code>reduceByKey</code>的lambda函数）Combine在一起的，然后再一次调用这个lambda函数去reduce来自各个partition的全部值，从而得到最终的结果。  </p>
+<p><img src="http://databricks.gitbooks.io/databricks-spark-knowledge-base/content/images/reduce_by.png" alt="ReduceByKey"></p>
+<p>另一方面，当调用<code>groupByKey</code>的时候，所有的键值对都会进行shuffle，这将增加很多无谓的数据进行网络传输。</p>
+<p>为了确定哪台机器将接受Shuffle后的键值对，Spark会针对该键值对数据的key调用一个分区函数。当某一台executor机器上的内存不足以保存过多的Shuffle后数据时，Spark就会溢写数据到磁盘上。然而，这种溢写磁盘会一次性将一个key的全部键值对数据写入磁盘，因此如果一个key拥有过多键值对数据——多到内存放不下时，将会抛出Out Of Memory异常。在之后发布的Spark中将会更加优雅地处理这种情况，使得这个job仍会继续运行，但是我们仍然需要避免（使用<code>groupByKey</code>）。<strong>当Spark需要溢写磁盘的时候，它的性能将受到严重影响</strong>。</p>
+<p><img src="http://databricks.gitbooks.io/databricks-spark-knowledge-base/content/images/group_by.png" alt="GroupByKey"></p>
+<p>如果你有一个非常大的数据集，那么<code>reduceByKey</code>和<code>groupByKey</code>进行shuffle的数据量之间的差异将会更加夸张。</p>
+<p>下面是一些你可以用来替代<code>groupByKey</code>的函数：<br>1）当你在combine数据但是返回的数据类型因输入值的类型而异时，你可以使用<code>combineByKey</code>；<br>2）如果key使用到结合函数和“零值”，你可以用<code>foldByKey</code>函数合并value；</p>
 
       
     </div>
@@ -246,18 +251,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/10/12/Hive浮点数比较与计算/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Hive浮点数比较与计算
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/10/10/FastDFS概览/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">FastDFS概览</div>
+    <a href="/2015/11/01/ElasticSearch初探/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ElasticSearch初探</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -286,7 +282,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Hive本地模式" data-title="Hive 本地模式" data-url="http://leotse90.com/2015/10/11/Hive本地模式/"></div>
+	<div class="ds-thread" data-thread-key="【译】避免使用GroupByKey" data-title="【译】避免使用GroupByKey.md" data-url="http://leotse90.com/2015/11/04/【译】避免使用GroupByKey/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
