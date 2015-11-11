@@ -126,7 +126,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 13.33px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 16.67px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 16.67px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 16.67px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -199,6 +199,72 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-ElasticSearch与MySQL数据同步以及修改表结构" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/" class="article-date">
+  	<time datetime="2015-11-11T14:12:23.000Z" itemprop="datePublished">2015-11-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/">ElasticSearch与MySQL数据同步</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="ES与MySQL的数据同步">ES与MySQL的数据同步</h2><p>如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：<br>1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；</p>
+<p>2.<a href="https://github.com/siddontang/go-mysql-elasticsearch">go-mysql-elasticsearch</a>。这是Git上的一个开源项目，差不多是第一种方案的一个实现版本。这个插件支持实时同步MySQL与ES的新增、修改以及删除操作。但是缺点是使用起来不够灵活，它的作者给出了它的以下缺点：</p>
+<blockquote>
+<p>binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>Can not alter table format at runtime.<br>mysqldump must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-ElasticSearch-match-VS-match-phrase" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -449,76 +515,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2015/10/26/Scala学习之数组/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-Scala之函数" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/22/Scala之函数/" class="article-date">
-  	<time datetime="2015-10-22T10:31:41.000Z" itemprop="datePublished">2015-10-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/22/Scala之函数/">心猿意码Scala之函数</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<p>今天我们来介绍Scala中的函数的一些基本概念以及用法。  </p>
-<h2 id="函数是一等公民">函数是一等公民</h2><p>在Scala中，函数是一等公民。<br>首先来解释一下什么是<em>一等公民</em>，它指的是在程序中可无限使用的对象。<br>那么”函数是Scala的一等公民“这句话怎么理解呢？一言蔽之，就是函数能作为实参，还能作为返回值，它能作为一个普通变量进行使用。详细一点来说，Scala中函数作为一等公民的主要表现有：  </p>
-<ul>
-<li>可以传递和赋值</li>
-<li>嵌套函数</li>
-<li>匿名函数</li>
-<li>高阶函数</li>
-<li>闭包
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/22/Scala之函数/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

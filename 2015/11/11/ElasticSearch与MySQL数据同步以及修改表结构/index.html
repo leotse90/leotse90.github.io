@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ElasticSearch与MySQL数据同步 | 一条心猿意码的狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="by:leotse
+ES与MySQL的数据同步如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；
+2.go-mysql-elasticsearch。这是Git上的一个开源项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElasticSearch与MySQL数据同步">
+<meta property="og:url" content="http://leotse90.com/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/index.html">
+<meta property="og:site_name" content="一条心猿意码的狗">
+<meta property="og:description" content="by:leotse
+ES与MySQL的数据同步如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；
+2.go-mysql-elasticsearch。这是Git上的一个开源项目">
+<meta property="og:updated_time" content="2015-11-11T14:13:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ElasticSearch与MySQL数据同步">
+<meta name="twitter:description" content="by:leotse
+ES与MySQL的数据同步如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；
+2.go-mysql-elasticsearch。这是Git上的一个开源项目">
+  
+    <link rel="alternative" href="/atom.xml" title="一条心猿意码的狗" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?be4918235f4dd713fe3fef59f4af6fad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leo Tse</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">My name is L.T.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 16.67px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 16.67px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.iteblog.com">过往记忆</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.skywod.com">互联网广告人</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://yanyiwu.com">大厨的日常</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">货真价实90后，潜心修炼大数据，期待成为键盘上的肖邦。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leo Tse</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leo Tse</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">My name is L.T.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-ElasticSearch与MySQL数据同步以及修改表结构" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/" class="article-date">
+  	<time datetime="2015-11-11T14:12:23.000Z" itemprop="datePublished">2015-11-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ElasticSearch与MySQL数据同步
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="ES与MySQL的数据同步">ES与MySQL的数据同步</h2><p>如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：<br>1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；</p>
+<p>2.<a href="https://github.com/siddontang/go-mysql-elasticsearch" target="_blank" rel="external">go-mysql-elasticsearch</a>。这是Git上的一个开源项目，差不多是第一种方案的一个实现版本。这个插件支持实时同步MySQL与ES的新增、修改以及删除操作。但是缺点是使用起来不够灵活，它的作者给出了它的以下缺点：</p>
+<blockquote>
+<p>binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>Can not alter table format at runtime.<br>mysqldump must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.<br><a id="more"></a><br>这三点比较重要的缺点影响我使用这种方案，特别是不能运行时修改表结构。对于很多在线业务来说是比较难以接受的。</p>
+</blockquote>
+<p>3.<a href="https://github.com/jprante/elasticsearch-jdbc" target="_blank" rel="external">elasticsearch-river-jdbc</a>。这种方案是1、2的结合体。可以较为灵活地进行数据同步，比如可以在同步的时候指定需要同步的字段以及筛选条件。这也是比较流行的解决方案，但是它也有一个比较致命的缺点，那就是删除操作不能同步（物理删除）！</p>
+<p>如果你的系统对删除操作频繁，而且都是物理删除，并且能接受不能运行时修改表结构等条件，那么使用go-mysql-elasticsearch将是非常不错的选择；如果你的表结构改变得相对频繁，而且不用对表进行物理删除（比如用逻辑删除取而代之），那么你可以选择elasticsearch-river-jdbc。如果你对这两者都不满意，而且觉得自己的编码能力还不错，那么完全可以自己定制一个满足自己需求的插件。</p>
+<h2 id="elasticsearch-river-jdbc使用">elasticsearch-river-jdbc使用</h2><p>我们这里选择使用elasticsearch-river-jdbc作为我们同步ES与MySQL的插件。我们这里简单介绍一下elasticsearch-river-jdbc的安装与使用：<br>1.确保ES的集群的每个Node都能访问MySQL数据库；  </p>
+<p>2.安装River：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;./bin/plugin --install river-jdbc --url  <span class="symbol">http:</span>/<span class="regexp">/xbib.org/repository</span><span class="regexp">/org/xbib</span><span class="regexp">/elasticsearch/plugin</span><span class="regexp">/elasticsearch-river-jdbc/</span><span class="number">1.5</span>.<span class="number">0.5</span>/elasticsearch-river-jdbc-<span class="number">1.5</span>.<span class="number">0.5</span>-plugin.zip</span><br></pre></td></tr></table></figure></p>
+<p>3.下载mysql-connector-java-5.1.30-bin.jar并将其保存在{$ES_HOME}/plugins/jdbc/目录下：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">http:</span>/<span class="regexp">/cdn.mysql.com/</span><span class="regexp">/Downloads/</span><span class="constant">Connector</span>-<span class="constant">J</span>/mysql-connector-java-<span class="number">5.1</span>.<span class="number">37</span>.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>如果是ES集群，你需要在每一个Node上执行这一步。</p>
+<p>4.创建一个JDBC river<br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">&gt;curl -XPUT 'localhost:9200/_river/my_jdbc_river/_meta' -d '</span><span class="expression">&#123;</span><br><span class="line">     <span class="string">"type"</span> : <span class="string">"jdbc”,</span><br><span class="line">     "</span><span class="variable">jdbc</span><span class="string">" : &#123;</span><br><span class="line">         "</span><span class="variable">driver</span><span class="string">" : "</span><span class="variable">com.mysql.jdbc.Driver</span><span class="string">",</span><br><span class="line">         "</span><span class="variable">url</span><span class="string">" : "</span><span class="variable">jdbc</span>:<span class="variable">mysql</span>:/<span class="end-block">/localhost</span>:3306<span class="end-block">/test</span><span class="string">",</span><br><span class="line">         "</span><span class="variable">user</span><span class="string">" : “root"</span>,</span><br><span class="line">         <span class="string">"password"</span> : “123456<span class="string">",</span><br><span class="line">         "</span><span class="variable">sql</span><span class="string">" : "</span><span class="variable"><span class="keyword">select</span></span> * <span class="variable">from</span> <span class="variable">test.student</span>;”,</span><br><span class="line">         <span class="string">"interval"</span> : <span class="string">"30"</span>,</span><br><span class="line">         <span class="string">"index"</span> : <span class="string">"test"</span>,</span><br><span class="line">         <span class="string">"type"</span> : <span class="string">"student"</span></span><br><span class="line">     &#125;</span><span class="xml"></span><br><span class="line"> &#125;’</span></span><br></pre></td></tr></table></figure></p>
+<p> 5.你可以查看ES是否已经同步了这些数据：<br> <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; curl -XGET <span class="comment">'localhost:9200/test/student/_search?pretty&amp;q=*'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="修改表结构后的数据同步">修改表结构后的数据同步</h2><p>如果你需要修改正在与ES进行数据同步的表的结构，你有以下三种方案（亲测可行）：<br><strong>方案一</strong>：创建JDBC river的时候使用sql语句：<code>select * from table_name;</code><br>乍一看，这种方法很坑。但是确实适合那些喜欢简单粗暴的coder。但是这种方案的场景比较苛刻：   </p>
+<blockquote>
+<p>MySQL中表在创建时id命名为_id，这是因为_id是ES中每一条document的唯一标识；如果不这样干，你会发现每一次同步ES的type中都会增加MySQL表中条目数个Document；<br>MySQL表所有的字段对ES都是有效的、必要的；</p>
+</blockquote>
+<p><strong>方案二</strong>.方案一的改进版，使用sql语句：<code>select *, id as _id from table_name;</code><br>这个方案在你需要在ES中存储MySQL中表所有字段的时候变得比较有效。</p>
+<p><strong>方案三</strong>：使用elasticsearch的alias。具体的操作比较简单，可以参照<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html" target="_blank" rel="external">官网的介绍</a>。</p>
+<p>前两种方案有点取巧，第三种方案才是正道。</p>
+<p>如果你愿意，完全建议自己定制一套解决方案。由于业务需要，本人最近也在开始写这样的插件。我会在这个博客里保持更新。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/11/10/ElasticSearch-match-VS-match-phrase/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ES查询－match VS match_phrase</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="ElasticSearch与MySQL数据同步以及修改表结构" data-title="ElasticSearch与MySQL数据同步" data-url="http://leotse90.com/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Leo Tse
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
