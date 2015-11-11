@@ -15,7 +15,7 @@ ES与MySQL的数据同步如果你需要进行ES与MySQL的数据同步，亦即
 <meta property="og:description" content="by:leotse
 ES与MySQL的数据同步如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；
 2.go-mysql-elasticsearch。这是Git上的一个开源项目">
-<meta property="og:updated_time" content="2015-11-11T14:13:26.000Z">
+<meta property="og:updated_time" content="2015-11-11T14:19:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch与MySQL数据同步">
 <meta name="twitter:description" content="by:leotse
@@ -258,7 +258,7 @@ var _hmt = _hmt || [];
 <h2 id="ES与MySQL的数据同步">ES与MySQL的数据同步</h2><p>如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：<br>1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；</p>
 <p>2.<a href="https://github.com/siddontang/go-mysql-elasticsearch" target="_blank" rel="external">go-mysql-elasticsearch</a>。这是Git上的一个开源项目，差不多是第一种方案的一个实现版本。这个插件支持实时同步MySQL与ES的新增、修改以及删除操作。但是缺点是使用起来不够灵活，它的作者给出了它的以下缺点：</p>
 <blockquote>
-<p>binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>Can not alter table format at runtime.<br>mysqldump must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.<br><a id="more"></a><br>这三点比较重要的缺点影响我使用这种方案，特别是不能运行时修改表结构。对于很多在线业务来说是比较难以接受的。</p>
+<p>1)binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>2)Can not alter table format at runtime.<br>3)mysqldump must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.<br><a id="more"></a><br>这三点比较重要的缺点影响我使用这种方案，特别是不能运行时修改表结构。对于很多在线业务来说是比较难以接受的。</p>
 </blockquote>
 <p>3.<a href="https://github.com/jprante/elasticsearch-jdbc" target="_blank" rel="external">elasticsearch-river-jdbc</a>。这种方案是1、2的结合体。可以较为灵活地进行数据同步，比如可以在同步的时候指定需要同步的字段以及筛选条件。这也是比较流行的解决方案，但是它也有一个比较致命的缺点，那就是删除操作不能同步（物理删除）！</p>
 <p>如果你的系统对删除操作频繁，而且都是物理删除，并且能接受不能运行时修改表结构等条件，那么使用go-mysql-elasticsearch将是非常不错的选择；如果你的表结构改变得相对频繁，而且不用对表进行物理删除（比如用逻辑删除取而代之），那么你可以选择elasticsearch-river-jdbc。如果你对这两者都不满意，而且觉得自己的编码能力还不错，那么完全可以自己定制一个满足自己需求的插件。</p>
