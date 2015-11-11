@@ -242,7 +242,8 @@ var _hmt = _hmt || [];
 <h2 id="ES与MySQL的数据同步">ES与MySQL的数据同步</h2><p>如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：<br>1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；</p>
 <p>2.<a href="https://github.com/siddontang/go-mysql-elasticsearch">go-mysql-elasticsearch</a>。这是Git上的一个开源项目，差不多是第一种方案的一个实现版本。这个插件支持实时同步MySQL与ES的新增、修改以及删除操作。但是缺点是使用起来不够灵活，它的作者给出了它的以下缺点：</p>
 <blockquote>
-<p>1)binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>2)Can not alter table format at runtime.<br>3)mysqldump must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.</p>
+<p><em>binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.  
+</em>Can not alter table format at runtime.<br>*<code>mysqldump</code> must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.  </p>
 </blockquote>
       
     </div>
