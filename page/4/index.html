@@ -212,204 +212,6 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
-    <article id="post-HDFS文件系统命名空间" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/01/HDFS文件系统命名空间/" class="article-date">
-  	<time datetime="2015-10-01T02:55:15.000Z" itemprop="datePublished">2015-10-01</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/HDFS文件系统命名空间/">HDFS文件系统命名空间</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h3 id="HDFS_Namespace">HDFS Namespace</h3><p>在HDFS中，我们知道NameNode负责管理文件系统的命名空间，那么NameNode到底怎么管理HDFS的命名空间，又有哪些内容需要管理呢？我们接下来将讨论到这两个问题。</p>
-<p>作为HDFS的Master，NameNode掌握着整个HDFS的文件目录树及其目录与文件，这些信息会以文件的形式永久地存储在本地磁盘。我们可以在$HADOOP_HOME/tmp/dfs/name/current下找到这些文件：fsimage以及edits。</p>
-<p><strong>fsimage</strong>：保存了最新的元数据检查点；<br><strong>edits</strong>：保存了HDFS中自最新的元数据检查点后的命名空间变化记录；</p>
-<p>为了防止edits中保存的最新变更记录过大，HDFS会定期合并fsimage和edits文件形成新的fsimage文件，然后重新记录edits文件。由于NameNode存在单点问题（Hadoop2.0以前版本），因此为了减少NameNode的压力，HDFS把fsimage和edits的合并的工作放到SecondaryNameNode上，然后将合并后的文件返回给NameNode。但是，这也会造成一个新的问题，当NameNode宕机，那么NameNode中edits的记录就会丢失。也就是说，NameNode中的命名空间信息有可能发生丢失。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/">HDFS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/01/HDFS文件系统命名空间/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-你真的懂单链表吗" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/21/你真的懂单链表吗/" class="article-date">
-  	<time datetime="2015-09-21T02:55:15.000Z" itemprop="datePublished">2015-09-21</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/21/你真的懂单链表吗/">你真的懂单链表吗</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h2 id="引子">引子</h2><p><strong>首先，上一道开胃菜：怎么判断两个单链表是否相交？</strong>  </p>
-<p>我们假设两个单链表分别是A（有m个结点）和B（有n个结点），当然，最容易想到的肯定是两层循环，遍历A中的元素，然后分别与B中的元素进行比较，但是这样做的时间复杂度达到了O(m*n)，那么有没有更简单的办法呢？肯定有！  </p>
-<p>我们来看看单链表的性质：每个结点只通过一个指针指向后继结点。那么是不是意味着两个单链表如若相交，它们就只能是Y形相交，而不可能是X形相交，亦即从第一个相同的结点开始，后面的结点全部一样。如果能想到这个，后面的就简单明了了：只要A链表和B链表的最后一个结点值相等，则证明A链表和B链表相交。该算法的时间复杂度也下降到O(m+n)。</p>
-<p>我们进一步来思考：<strong>怎么找到第一个相交的元素呢？</strong><br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/09/21/你真的懂单链表吗/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-MooseFS概览" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/20/MooseFS概览/" class="article-date">
-  	<time datetime="2015-09-20T02:55:15.000Z" itemprop="datePublished">2015-09-20</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/20/MooseFS概览/">MooseFS概览</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
-<h2 id="Architecture">Architecture</h2><p>MooseFS主要由四部分组成：</p>
-<h3 id="Master_Server（元数据服务器）">Master Server（元数据服务器）</h3><p>管理整个MooseFS系统的单点，保存了MooseFS中每个文件的元数据，包括文件的大小、属性、文件位置等等；我们的元数据信息同时保存在Master的内存和磁盘里。</p>
-<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MooseFS/">MooseFS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/09/20/MooseFS概览/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
     <article id="post-SSH免密码登录设置" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -540,9 +342,267 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-MySQL的主从配置" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/13/MySQL的主从配置/" class="article-date">
+  	<time datetime="2015-09-13T02:55:15.000Z" itemprop="datePublished">2015-09-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/13/MySQL的主从配置/">MySQL的主从配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="准备工作">准备工作</h2><p>我们假设有两台机器，操作系统为linux，其中一台作为Master，另一台作为Slave：<br>Master：10.0.0.1<br>Slave：10.0.0.2<br>这两台机器都已经安装了MySQL数据库。  </p>
+<h2 id="主从配置">主从配置</h2><h3 id="Master配置">Master配置</h3><p>1.创建备份账户<br>首先，我们在Master上专门为Slave访问Master进行数据备份建立一个账号，用户名为backup，密码为“backup_mysql”。我们在Master上执行以下SQL语句：<br><code>GRANT REPLICATION SLAVE, RELOAD, SUPER ON *.* TO backup@&#39;10.0.0.2&#39; IDENTIFIED BY &#39;backup_mysql&#39;;</code><br>如果我们有多个Slave，就执行上面的SQL多次，只需将backup@10.0.0.2中的IP改成其他Slave的IP。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/13/MySQL的主从配置/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-改变FastDFS中某个机器的分组" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/13/改变FastDFS中某个机器的分组/" class="article-date">
+  	<time datetime="2015-09-13T02:55:15.000Z" itemprop="datePublished">2015-09-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/13/改变FastDFS中某个机器的分组/">改变FastDFS中某个机器的分组</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<p>我们假设有FastDFS集群A，B，C，D三台机器，其中A为Tracker。BCD都为Storage，它们同属group1，现在想要将C机器重新建一个group2，应该怎么操作呢？  </p>
+<p><em>step1：停止C机器上的FastDFS服务</em><br><code>/usr/bin/stop.sh /usr/bin/fdfs_storaged /etc/fdfs/storage.conf</code></p>
+<p><em>step2：将C从FastDFS集群的group1中删除</em><br><code>/usr/bin/fdfs_monitor /usr/bin/client.conf delete group1 C_ip_addr</code><br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastDFS/">FastDFS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/13/改变FastDFS中某个机器的分组/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-Hadoop安装之你不知道的事" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/10/Hadoop安装之你不知道的事/" class="article-date">
+  	<time datetime="2015-09-10T02:55:15.000Z" itemprop="datePublished">2015-09-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/10/Hadoop安装之你不知道的事/">Hadoop安装之你不知道的事</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="概述">概述</h2><p>这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到<a href="https://github.com/leotse90/blogs/blob/master/Hadoop集群部署\(RedHat\">这里</a>.md)。</p>
+<p>那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。</p>
+<p>我们先简单总结一下Hadoop集群的安装过程：<br>1.准备工作：SSH免密码登录设置以及HostName配置；<br>2.NameNode安装与配置：解压Hadoop安装包到NameNode服务器上，并修改配置文件；<br>3.DataNode安装与配置：将NameNode的Hadoop文件分发到各DataNode服务器；<br>4.集群启动：格式化NameNode，然后先后启动Hadoop集群的dfs以及yarn；<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/10/Hadoop安装之你不知道的事/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-FastDFS 安装使用说明" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/29/FastDFS 安装使用说明/" class="article-date">
+  	<time datetime="2015-08-29T02:55:15.000Z" itemprop="datePublished">2015-08-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/29/FastDFS 安装使用说明/">FastDFS安装使用说明</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by：leotse</em></p>
+<h2 id="一、概述">一、概述</h2><p>FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。<br>更多内容见论坛：<a href="http://bbs.chinaunix.net/forum-240-1.html">http://bbs.chinaunix.net/forum-240-1.html</a></p>
+<p>本文档内容包括：FastDFS安装、Python API安装及调用、通过Nginx访问文件。FastDFS安装又包括Tracker、Storage以及Nginx的安装。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastDFS/">FastDFS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/08/29/FastDFS 安装使用说明/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
     </nav>
   
 </div>
