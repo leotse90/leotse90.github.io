@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 16.67px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 16.67px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+						<a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
 					</div>
 				</section>
 				
@@ -211,6 +211,84 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-ES之当你更新Document你在更新些什么" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/24/ES之当你更新Document你在更新些什么/" class="article-date">
+  	<time datetime="2015-11-24T14:59:13.000Z" itemprop="datePublished">2015-11-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/24/ES之当你更新Document你在更新些什么/">ES之当你更新Document，你在更新些什么？</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="怎么更新ElasticSearch中的Document？">怎么更新ElasticSearch中的Document？</h2><p>在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /<span class="built_in">test</span>/customer/<span class="number">1</span>/_<span class="built_in">source</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">   <span class="string">"age"</span>: <span class="number">24</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们想将yolovon女神的年龄修改到真实年龄18岁。我们可以进行以下两种方法：<br>1.使用PUT，就像我们插入数据时那样：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PUT /test/customer/<span class="number">1</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">  <span class="string">"age"</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"_index"</span>: <span class="string">"test"</span>,</span><br><span class="line">   <span class="string">"_type"</span>: <span class="string">"customer"</span>,</span><br><span class="line">   <span class="string">"_id"</span>: <span class="string">"1"</span>,</span><br><span class="line">   <span class="string">"_version"</span>: <span class="number">2</span>,</span><br><span class="line">   <span class="string">"created"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意的是，我们必须将所有的字段全部输入一次，如果你只在PUT的body里输入我们要更新的字段（比如在这里我们只传入age的值），那么新的Document的就会变成我们后面PUT进去的样子（即只有age一个字段）。<br>另外，我们可以看到这里的返回信息有用以标示该document唯一性的<code>_index</code>，<code>_type</code>，<code>_id</code>，以及<code>_version</code>表明该document的更新版本，<code>created</code>表明这个不是新建的而是已经存在的document。</p>
+<p>2.使用POST，update模式更新Document：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /test/customer/<span class="number">1</span>/_<span class="keyword">update</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"doc"</span>: &#123;</span><br><span class="line">    <span class="string">"age"</span>: <span class="number">20</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你会看到这样的结果：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   "<span class="attribute">_index</span>": <span class="value"><span class="string">"test"</span></span>,</span><br><span class="line">   "<span class="attribute">_type</span>": <span class="value"><span class="string">"customer"</span></span>,</span><br><span class="line">   "<span class="attribute">_id</span>": <span class="value"><span class="string">"1"</span></span>,</span><br><span class="line">   "<span class="attribute">_version</span>": <span class="value"><span class="number">3</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时候，我们的document也变为了：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   "<span class="attribute">name</span>": <span class="value"><span class="string">"yolovon"</span></span>,</span><br><span class="line">   "<span class="attribute">age</span>": <span class="value"><span class="number">20</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的<code>age</code>已经变成了20。而且在这里，我们只针对需要修改的<code>age</code>字段进行操作，而其他字段并不需要关心。</p>
+<h2 id="更新操作都干了些什么？">更新操作都干了些什么？</h2><p>那么，在更新的时候到底发生了什么？上面的两种更新策略又有什么区别？  </p>
+<p>我们知道，在Elasticsearch中，document是不可变的。  </p>
+<blockquote>
+<p>Documents in Elasticsearch are immutable; we cannot change them. Instead, if we need to update an existing document, we reindex or replace it.</p>
+</blockquote>
+<p>这样一来，我们在更新Document时到底是怎么实现的？<br>在ES中，不管我们用以上哪种方式进行更新document，它都不是真正地对原来的document进行操作。而是先将原来的document标记为删除状态，然后重新新增一个document（也就是我们看到的新的document），实际上，原来的document并没有立即消失，只是你已经不能访问它了，ES稍后会在后台真正地删除原来的document。</p>
+<p>不管我们用那种方式进行更新，ES都会按照以下的步骤进行更新：</p>
+<blockquote>
+<p>1.查询出旧的document；<br>2.修改document中的字段；<br>3.删除旧的document；<br>4.重新索引一个新的document。</p>
+</blockquote>
+<p>但是两者还是有区别的，当使用<code>PUT</code>一个完整的document时，它需要请求两次，一次<code>get</code>请求和一次<code>index</code>请求，而使用<code>POST</code>进行<code>_update</code>操作的时候只需要一次<code>_udpate</code>请求即可。</p>
+<p>因此我们在使用的时候，尽量避免使用<code>PUT</code>进行document的更新，特别是当我们需要批量地修改ES数据时。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-ElasticSearch与MySQL数据同步以及修改表结构" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -544,79 +622,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-Scala之函数" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/22/Scala之函数/" class="article-date">
-  	<time datetime="2015-10-22T10:31:41.000Z" itemprop="datePublished">2015-10-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/22/Scala之函数/">心猿意码Scala之函数</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<p>今天我们来介绍Scala中的函数的一些基本概念以及用法。  </p>
-<h2 id="函数是一等公民">函数是一等公民</h2><p>在Scala中，函数是一等公民。<br>首先来解释一下什么是<em>一等公民</em>，它指的是在程序中可无限使用的对象。<br>那么”函数是Scala的一等公民“这句话怎么理解呢？一言蔽之，就是函数能作为实参，还能作为返回值，它能作为一个普通变量进行使用。详细一点来说，Scala中函数作为一等公民的主要表现有：  </p>
-<ul>
-<li>可以传递和赋值</li>
-<li>嵌套函数</li>
-<li>匿名函数</li>
-<li>高阶函数</li>
-<li>闭包
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/22/Scala之函数/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2015-11-12T00:31:38.000Z</updated>
+  <updated>2015-11-24T14:59:37.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[ES之当你更新Document，你在更新些什么？]]></title>
+    <link href="http://leotse90.com/2015/11/24/ES%E4%B9%8B%E5%BD%93%E4%BD%A0%E6%9B%B4%E6%96%B0Document%E4%BD%A0%E5%9C%A8%E6%9B%B4%E6%96%B0%E4%BA%9B%E4%BB%80%E4%B9%88/"/>
+    <id>http://leotse90.com/2015/11/24/ES之当你更新Document你在更新些什么/</id>
+    <published>2015-11-24T14:59:13.000Z</published>
+    <updated>2015-11-24T14:59:37.000Z</updated>
+    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
+<h2 id="怎么更新ElasticSearch中的Document？">怎么更新ElasticSearch中的Document？</h2><p>在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /<span class="built_in">test</span>/customer/<span class="number">1</span>/_<span class="built_in">source</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">   <span class="string">"age"</span>: <span class="number">24</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们想将yolovon女神的年龄修改到真实年龄18岁。我们可以进行以下两种方法：<br>1.使用PUT，就像我们插入数据时那样：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PUT /test/customer/<span class="number">1</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">  <span class="string">"age"</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"_index"</span>: <span class="string">"test"</span>,</span><br><span class="line">   <span class="string">"_type"</span>: <span class="string">"customer"</span>,</span><br><span class="line">   <span class="string">"_id"</span>: <span class="string">"1"</span>,</span><br><span class="line">   <span class="string">"_version"</span>: <span class="number">2</span>,</span><br><span class="line">   <span class="string">"created"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意的是，我们必须将所有的字段全部输入一次，如果你只在PUT的body里输入我们要更新的字段（比如在这里我们只传入age的值），那么新的Document的就会变成我们后面PUT进去的样子（即只有age一个字段）。<br>另外，我们可以看到这里的返回信息有用以标示该document唯一性的<code>_index</code>，<code>_type</code>，<code>_id</code>，以及<code>_version</code>表明该document的更新版本，<code>created</code>表明这个不是新建的而是已经存在的document。</p>
+<p>2.使用POST，update模式更新Document：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /test/customer/<span class="number">1</span>/_<span class="keyword">update</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"doc"</span>: &#123;</span><br><span class="line">    <span class="string">"age"</span>: <span class="number">20</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你会看到这样的结果：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   "<span class="attribute">_index</span>": <span class="value"><span class="string">"test"</span></span>,</span><br><span class="line">   "<span class="attribute">_type</span>": <span class="value"><span class="string">"customer"</span></span>,</span><br><span class="line">   "<span class="attribute">_id</span>": <span class="value"><span class="string">"1"</span></span>,</span><br><span class="line">   "<span class="attribute">_version</span>": <span class="value"><span class="number">3</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时候，我们的document也变为了：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   "<span class="attribute">name</span>": <span class="value"><span class="string">"yolovon"</span></span>,</span><br><span class="line">   "<span class="attribute">age</span>": <span class="value"><span class="number">20</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的<code>age</code>已经变成了20。而且在这里，我们只针对需要修改的<code>age</code>字段进行操作，而其他字段并不需要关心。</p>
+<h2 id="更新操作都干了些什么？">更新操作都干了些什么？</h2><p>那么，在更新的时候到底发生了什么？上面的两种更新策略又有什么区别？  </p>
+<p>我们知道，在Elasticsearch中，document是不可变的。  </p>
+<blockquote>
+<p>Documents in Elasticsearch are immutable; we cannot change them. Instead, if we need to update an existing document, we reindex or replace it.</p>
+</blockquote>
+<p>这样一来，我们在更新Document时到底是怎么实现的？<br>在ES中，不管我们用以上哪种方式进行更新document，它都不是真正地对原来的document进行操作。而是先将原来的document标记为删除状态，然后重新新增一个document（也就是我们看到的新的document），实际上，原来的document并没有立即消失，只是你已经不能访问它了，ES稍后会在后台真正地删除原来的document。</p>
+<p>不管我们用那种方式进行更新，ES都会按照以下的步骤进行更新：</p>
+<blockquote>
+<p>1.查询出旧的document；<br>2.修改document中的字段；<br>3.删除旧的document；<br>4.重新索引一个新的document。</p>
+</blockquote>
+<p>但是两者还是有区别的，当使用<code>PUT</code>一个完整的document时，它需要请求两次，一次<code>get</code>请求和一次<code>index</code>请求，而使用<code>POST</code>进行<code>_update</code>操作的时候只需要一次<code>_udpate</code>请求即可。</p>
+<p>因此我们在使用的时候，尽量避免使用<code>PUT</code>进行document的更新，特别是当我们需要批量地修改ES数据时。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>by:leotse</em></p>
+<h2 id="怎么更新ElasticSearch中的Document？">怎么更新ElasticSearch中的Document？</h2><p>在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要]]>
+    </summary>
+    
+      <category term="ElasticSearch" scheme="http://leotse90.com/tags/ElasticSearch/"/>
+    
+      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[ElasticSearch与MySQL数据同步]]></title>
@@ -723,44 +761,6 @@ celery -A download_video_worker worker --loglevel=info
     </summary>
     
       <category term="数据结构" scheme="http://leotse90.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[MooseFS概览]]></title>
-    <link href="http://leotse90.com/2015/09/20/MooseFS%E6%A6%82%E8%A7%88/"/>
-    <id>http://leotse90.com/2015/09/20/MooseFS概览/</id>
-    <published>2015-09-20T02:55:15.000Z</published>
-    <updated>2015-10-21T06:42:53.000Z</updated>
-    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
-<h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/" target="_blank" rel="external">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
-<h2 id="Architecture">Architecture</h2><p>MooseFS主要由四部分组成：</p>
-<h3 id="Master_Server（元数据服务器）">Master Server（元数据服务器）</h3><p>管理整个MooseFS系统的单点，保存了MooseFS中每个文件的元数据，包括文件的大小、属性、文件位置等等；我们的元数据信息同时保存在Master的内存和磁盘里。</p>
-<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；<br><a id="more"></a></p>
-<h3 id="Chunk_Server（数据存储服务器）">Chunk Server（数据存储服务器）</h3><p>用于存储系统中的数据。如果我们指定数据需要备份（我们一般都会这么做），那么ChunkServer之间就会通过算法完成数据的备份工作；</p>
-<h3 id="Client（客户端）">Client（客户端）</h3><p>所有通过mfsmount进程和Master进行交互的机器，都可以叫做MooseFS的客户端。对客户端来说，所有的ChunkServer就像一台普通的NFS服务器一样在为它提供强大的数据存取服务；</p>
-<p>笔者从MooseFS的官网上kiang了两张图，分别是MooseFS读数据和写数据的，大家闭上眼睛，用心感受下：  </p>
-<p><img src="http://www.moosefs.org/tl_files/mfs_folder/read862.png" alt="MooseFS Read Process"><br><img src="http://www.moosefs.org/tl_files/mfs_folder/write862.png" alt="MooseFS Write Process"></p>
-<p>我们从图上可以很清晰地看到整个读写过程。  </p>
-<h2 id="Uses">Uses</h2><p>1.大规模高并发的数据存储与访问（大文件、小文件皆可）；<br>2.大规模的数据处理；</p>
-<h2 id="Features">Features</h2><h3 id="Advantages">Advantages</h3><p>1）简单易用。安装、部署以及配置都相对简单容易；<br>2）高可靠性：MooseFS采用数据备份的方式确保我们的数据安全可靠；<br>3）可伸缩性：我们可以在不停服务的情况下，新增或者删除MooseFS中的服务器；<br>4）支持POSIX访问，支持FUSE；<br>5）可移植性：适用于任何实现FUSE的系统，包括但不限于Linux、FreeBSD、OpenSolaris以及MacOS X；<br>6）MooseFS提供了快照功能，可以对整个文件甚至在正在写入的文件创建文件的快照；<br>7）提供类似JVM的GC机制；<br>8）提供web GUI监控接口；<br>9）随机读写的效率较高，海量小文件读写效率高；<br>10）发展比较成熟，文档全面；  </p>
-<h3 id="Disadvantages">Disadvantages</h3><p>1）MooseFS客户端程序使用FUSE编写加载MooseFS磁盘的命令；因此我们需要确保我们系统内置或者安装了FUSE；<br>2）存在单点故障。MooseFS只有一个Metadata Server，因此MDS的性能就会成为MooseFS性能的瓶颈；<br>3）故障恢复需手动恢复;<br>4）MooseFS的Master是单线程的程序，并不能发挥多核CPU的优势，由于大部分的处理逻辑都是内存操作，因此并不会存在太大的问题，但一旦涉及到磁盘I/O就有可能导致阻塞，严重的话整个集群会瘫痪掉，因此不建议把Master放在虚拟机中。<a href="http://tech.uc.cn/?tag=moosefs" target="_blank" rel="external">MooseFS之虚拟机惹的祸</a></p>
-<h2 id="Conclusion">Conclusion</h2><p>当前，MooseFS在国际国内都拥有了大量的用户，正是由于这些用户基础，也推动了MooseFS继续发展。<br>虽然MooseFS仍然存在单点故障这样的瓶颈，但是它的简单易用以及高可靠性，仍然让它成为我们DFS方案的不错的选择。</p>
-<h2 id="Others">Others</h2><p>MooseFS官网解答了我们一些常见的问题：<a href="http://www.moosefs.org/moosefs-faq.html" target="_blank" rel="external">FAQ</a></p>
-<p><strong>NFS</strong>：Network File System。一种用于分散式系统的协议。通过网络让不同的机器、不同的操作系统分享彼此个别的数据，让应用程序在客户端通过网络访问位于服务器磁盘中的数据，是在Unix系统间实现磁盘文件共享的一种方法。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><em>by:leotse</em></p>
-<h2 id="Intro">Intro</h2><p><a href="http://www.moosefs.org/">MooseFS</a>，是一种容错的网络分布式文件系统。它提供了FUSE接口的客户端，挂载后和读写本地磁盘上的文件无异，是替代NFS的理想选择。<br>用户访问MooseFs系统中不同机器上的数据没有差异，对用户来说，只有一个源。</p>
-<h2 id="Architecture">Architecture</h2><p>MooseFS主要由四部分组成：</p>
-<h3 id="Master_Server（元数据服务器）">Master Server（元数据服务器）</h3><p>管理整个MooseFS系统的单点，保存了MooseFS中每个文件的元数据，包括文件的大小、属性、文件位置等等；我们的元数据信息同时保存在Master的内存和磁盘里。</p>
-<h3 id="Metalogger_Server（元数据日志服务器）">Metalogger Server（元数据日志服务器）</h3><p>存储元数据服务器的变更日志，用以恢复Master Server，它也会周期性下载MasterServer的元数据文件，服务器数量不定。我们也可以在Master Server宕掉后使用Metalogger Server作为我们的MasterServer；<br>]]>
-    
-    </summary>
-    
-      <category term="MooseFS" scheme="http://leotse90.com/tags/MooseFS/"/>
     
       <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
     

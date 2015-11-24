@@ -3,27 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ElasticSearch初探 | 一条心猿意码的狗</title>
+  <title>ES之当你更新Document，你在更新些什么？ | 一条心猿意码的狗</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="by:leotse
-ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
-
-Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
+怎么更新ElasticSearch中的Document？在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：123456GET /test/customer/1/_source&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ElasticSearch初探">
-<meta property="og:url" content="http://leotse90.com/2015/11/01/ElasticSearch初探/index.html">
+<meta property="og:title" content="ES之当你更新Document，你在更新些什么？">
+<meta property="og:url" content="http://leotse90.com/2015/11/24/ES之当你更新Document你在更新些什么/index.html">
 <meta property="og:site_name" content="一条心猿意码的狗">
 <meta property="og:description" content="by:leotse
-ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
-
-Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
-<meta property="og:updated_time" content="2015-11-01T14:29:49.000Z">
+怎么更新ElasticSearch中的Document？在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：123456GET /test/customer/1/_source&amp;">
+<meta property="og:updated_time" content="2015-11-24T14:59:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ElasticSearch初探">
+<meta name="twitter:title" content="ES之当你更新Document，你在更新些什么？">
 <meta name="twitter:description" content="by:leotse
-ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
-
-Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
+怎么更新ElasticSearch中的Document？在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：123456GET /test/customer/1/_source&amp;">
   
     <link rel="alternative" href="/atom.xml" title="一条心猿意码的狗" type="application/atom+xml">
   
@@ -220,11 +214,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-ElasticSearch初探" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ES之当你更新Document你在更新些什么" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/11/01/ElasticSearch初探/" class="article-date">
-  	<time datetime="2015-11-01T14:05:15.000Z" itemprop="datePublished">2015-11-01</time>
+      <a href="/2015/11/24/ES之当你更新Document你在更新些什么/" class="article-date">
+  	<time datetime="2015-11-24T14:59:13.000Z" itemprop="datePublished">2015-11-24</time>
 </a>
     </div>
   
@@ -237,7 +231,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      ElasticSearch初探
+      ES之当你更新Document，你在更新些什么？
     </h1>
   
 
@@ -262,27 +256,25 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <p><em>by:leotse</em></p>
-<h2 id="ES介绍">ES介绍</h2><p>我们首先来看<a href="https://www.elastic.co" target="_blank" rel="external">ES</a>（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：</p>
+<h2 id="怎么更新ElasticSearch中的Document？">怎么更新ElasticSearch中的Document？</h2><p>在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /<span class="built_in">test</span>/customer/<span class="number">1</span>/_<span class="built_in">source</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">   <span class="string">"age"</span>: <span class="number">24</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们想将yolovon女神的年龄修改到真实年龄18岁。我们可以进行以下两种方法：<br>1.使用PUT，就像我们插入数据时那样：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PUT /test/customer/<span class="number">1</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">  <span class="string">"age"</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"_index"</span>: <span class="string">"test"</span>,</span><br><span class="line">   <span class="string">"_type"</span>: <span class="string">"customer"</span>,</span><br><span class="line">   <span class="string">"_id"</span>: <span class="string">"1"</span>,</span><br><span class="line">   <span class="string">"_version"</span>: <span class="number">2</span>,</span><br><span class="line">   <span class="string">"created"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意的是，我们必须将所有的字段全部输入一次，如果你只在PUT的body里输入我们要更新的字段（比如在这里我们只传入age的值），那么新的Document的就会变成我们后面PUT进去的样子（即只有age一个字段）。<br>另外，我们可以看到这里的返回信息有用以标示该document唯一性的<code>_index</code>，<code>_type</code>，<code>_id</code>，以及<code>_version</code>表明该document的更新版本，<code>created</code>表明这个不是新建的而是已经存在的document。</p>
+<p>2.使用POST，update模式更新Document：<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /test/customer/<span class="number">1</span>/_<span class="keyword">update</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"doc"</span>: &#123;</span><br><span class="line">    <span class="string">"age"</span>: <span class="number">20</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你会看到这样的结果：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   "<span class="attribute">_index</span>": <span class="value"><span class="string">"test"</span></span>,</span><br><span class="line">   "<span class="attribute">_type</span>": <span class="value"><span class="string">"customer"</span></span>,</span><br><span class="line">   "<span class="attribute">_id</span>": <span class="value"><span class="string">"1"</span></span>,</span><br><span class="line">   "<span class="attribute">_version</span>": <span class="value"><span class="number">3</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时候，我们的document也变为了：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   "<span class="attribute">name</span>": <span class="value"><span class="string">"yolovon"</span></span>,</span><br><span class="line">   "<span class="attribute">age</span>": <span class="value"><span class="number">20</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的<code>age</code>已经变成了20。而且在这里，我们只针对需要修改的<code>age</code>字段进行操作，而其他字段并不需要关心。</p>
+<h2 id="更新操作都干了些什么？">更新操作都干了些什么？</h2><p>那么，在更新的时候到底发生了什么？上面的两种更新策略又有什么区别？  </p>
+<p>我们知道，在Elasticsearch中，document是不可变的。  </p>
 <blockquote>
-<p>Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTful web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License. Elasticsearch is the second most popular enterprise search engine after Apache Solr.</p>
+<p>Documents in Elasticsearch are immutable; we cannot change them. Instead, if we need to update an existing document, we reindex or replace it.</p>
 </blockquote>
-<p>百度上给出了中文版定义：</p>
+<p>这样一来，我们在更新Document时到底是怎么实现的？<br>在ES中，不管我们用以上哪种方式进行更新document，它都不是真正地对原来的document进行操作。而是先将原来的document标记为删除状态，然后重新新增一个document（也就是我们看到的新的document），实际上，原来的document并没有立即消失，只是你已经不能访问它了，ES稍后会在后台真正地删除原来的document。</p>
+<p>不管我们用那种方式进行更新，ES都会按照以下的步骤进行更新：</p>
 <blockquote>
-<p>ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是第二流行的企业搜索引擎。</p>
+<p>1.查询出旧的document；<br>2.修改document中的字段；<br>3.删除旧的document；<br>4.重新索引一个新的document。</p>
 </blockquote>
-<p>在这段定义之外，我们看看ES还有哪些吸引人的地方：<br><a id="more"></a><br>1）ES的搜索几乎是实时的，当你向一个ES服务器或者一个ES集群发出搜索请求后，你可以在非常短的延迟后获取到你想要的数据（不超过1s）；<br>2）ES的集群是去中心化的，也就是说，不像Hadoop这种分布式框架，ES集群不存在单点故障。ES集群中包含多个节点，节点可以通过选举选出它们的中心节点，因此，当集群中的一个节点出现故障时，集群马上会选取出下一个新的中心节点来管理集群；<br>3）ES的横向扩展性能非常好，集群维护者不用担心集群出现资源不够的情况，因为你只需要增加一台服务器，然后在其上安装ES然后简单进行配置，这台新的节点就能成为集群中的一员；<br>4）ES提供了分片机制（Shard），一个索引（Index）可以划分为多个Shard，这些Shard分布在集群中不同的节点上，能有效提升集群的处理效率；<br>5）ES为其中的数据提供了replica，确保数据的冗余存储，从而使得整个ES集群可用性大大增强，亦即当一个节点出现故障时，存储在其上的数据仍然可以在其他的节点上访问到；<br>6）ES简单易用，除了为开发者和使用者提供了RESTful接口外，ES本身非常易于学习和使用，这一点在应用中你可以感受到。它的社区也十分活跃，相关的文档资料也较健全。</p>
-<p>这些点足以让我们拥有信心在需要的时候投入ES的怀抱，当然我们还需要考虑ES的一些不足，在本人的了解范围里以及结合本人的使用经验，ES集群可能存在以下问题：  </p>
-<p><strong>脑裂问题</strong>：ES集群有可能在节点间网络通信故障时成为“裂脑人”。这是ES集群的去中心化带来的不足。我们假设这样一个场景，我们的ES集群有10个节点，它们分别在两个机房A和B，有一天机房的网络出现问题，A机房无法与B机房进行通信，这时候，ES的选举机制会被触发，A机房会选取出一个中心节点，B机房也会选取出一个中心节点，整个集群一分为二，虽然对外提供访问时仍然问题不大，但是这两个集群会出现数据不同步的问题；  </p>
-<p><strong>权限管理机制不健全</strong>：迄今为止，ES集群没有比较健全的权限管理机制，如果你需要对ES的访问和使用权限进行管理，或者你需要为ES集群提供一个前端web服务，那么你需要在后台自行实现一个权限管理机制。</p>
-<h2 id="ES相关概念">ES相关概念</h2><p>我们这里只介绍ES的一些相关的术语，在此之前，我们结合关系型数据库来简单介绍一下ES的结构：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Relational DB <span class="subst">-&gt; </span>Databases <span class="subst">-&gt; </span>Tables <span class="subst">-&gt; </span><span class="keyword">Rows</span> <span class="subst">-&gt; </span>Columns</span><br><span class="line">Elasticsearch <span class="subst">-&gt; </span>Indices   <span class="subst">-&gt; </span>Types  <span class="subst">-&gt; </span>Documents <span class="subst">-&gt; </span>Fields</span><br></pre></td></tr></table></figure></p>
-<p>理解ES的结构本身不难，但是由于ES的这些术语在我们的圈子里已经有一些其他的受众较广的含义，所以这样一种与RDB的对比可以帮助我们理解ES的结构，ES本身可以想象成一个MySQL，ES中的Index就是数据库DB，而Type相当于数据库中的表，以此类推。</p>
-<p><strong>索引Index</strong>:在ES中，Document中的所有字段都会建立索引（这里的索引是我们平常所理解的意思，如数据库的索引），这种设定使得ES中的每个文档的每个字段都是可以直接用来搜索的。事实上，我们的数据被存储和索引在分片中，索引只是一个把一个或多个分片分组在一起的逻辑空间。</p>
-<p><strong>分片Shard</strong>:我们可以将ES中的分片Shard理解为HDFS中的文件块Block，一个完整的Index可以划分为多个Shard，然后分别存储在不同的节点上；</p>
-<p><strong>类型Type</strong>:我们能够自己定义ES中的Type，Type是Index的一个逻辑分区，每个类型都有自己的映射或者结构定义，就像传统数据库表中的列一样；</p>
-<p><strong>文档Document</strong>:如果你的Tool Kit中有OOP，那么你可以简单将Document理解为对象Object，它是ES中可被索引的基础信息单元；Type是序列化为JSON格式的数据。</p>
-<p><strong>映射Mapping</strong>:ES中的映射相当于数据库中表的定义，映射定义了字段类型，每个字段的数据类型，以及字段被ES处理的方式。映射还用于设置关联到类型上的元数据。</p>
-<p>这里只简单介绍了ES相关的基础信息，万里长征这才是第一步，但是希望这些信息可以让我们对ES有一个比较清晰的理解，至于如何使用ES进行存储数据、查询数据以及分析数据，我们需要在实践上不断学习和参悟。</p>
-<p>最后推荐一本书，希望能帮助到各位学习和理解ES：<a href="http://es.xiaoleilu.com/index.html" target="_blank" rel="external">Elasticsearch 权威指南</a>。</p>
+<p>但是两者还是有区别的，当使用<code>PUT</code>一个完整的document时，它需要请求两次，一次<code>get</code>请求和一次<code>index</code>请求，而使用<code>POST</code>进行<code>_update</code>操作的时候只需要一次<code>_udpate</code>请求即可。</p>
+<p>因此我们在使用的时候，尽量避免使用<code>PUT</code>进行document的更新，特别是当我们需要批量地修改ES数据时。</p>
 
       
     </div>
@@ -292,18 +284,9 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2015/11/04/【译】避免使用GroupByKey/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          【译】避免使用GroupByKey
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/10/26/Scala学习之数组/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">心猿意码Scala之数组</div>
+    <a href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ElasticSearch与MySQL数据同步</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -332,7 +315,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ElasticSearch初探" data-title="ElasticSearch初探" data-url="http://leotse90.com/2015/11/01/ElasticSearch初探/"></div>
+	<div class="ds-thread" data-thread-key="ES之当你更新Document你在更新些什么" data-title="ES之当你更新Document，你在更新些什么？" data-url="http://leotse90.com/2015/11/24/ES之当你更新Document你在更新些什么/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
