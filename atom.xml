@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2015-11-24T15:03:28.000Z</updated>
+  <updated>2015-11-25T00:09:32.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://leotse90.com/2015/11/24/ES%E4%B9%8B%E5%BD%93%E4%BD%A0%E6%9B%B4%E6%96%B0Document%E4%BD%A0%E5%9C%A8%E6%9B%B4%E6%96%B0%E4%BA%9B%E4%BB%80%E4%B9%88/"/>
     <id>http://leotse90.com/2015/11/24/ES之当你更新Document你在更新些什么/</id>
     <published>2015-11-24T14:59:13.000Z</published>
-    <updated>2015-11-24T15:03:28.000Z</updated>
+    <updated>2015-11-25T00:09:32.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <h2 id="怎么更新ElasticSearch中的Document？">怎么更新ElasticSearch中的Document？</h2><p>在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /<span class="built_in">test</span>/customer/<span class="number">1</span>/_<span class="built_in">source</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">   <span class="string">"age"</span>: <span class="number">24</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>我们想将yolovon女神的年龄修改到真实年龄18岁。我们可以进行以下两种方法：<br>1.使用PUT，就像我们插入数据时那样：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PUT /test/customer/<span class="number">1</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"yolovon"</span>,</span><br><span class="line">  <span class="string">"age"</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   <span class="string">"_index"</span>: <span class="string">"test"</span>,</span><br><span class="line">   <span class="string">"_type"</span>: <span class="string">"customer"</span>,</span><br><span class="line">   <span class="string">"_id"</span>: <span class="string">"1"</span>,</span><br><span class="line">   <span class="string">"_version"</span>: <span class="number">2</span>,</span><br><span class="line">   <span class="string">"created"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -34,7 +34,7 @@
 <blockquote>
 <p>Documents in Elasticsearch are immutable; we cannot change them. Instead, if we need to update an existing document, we reindex or replace it.</p>
 </blockquote>
-<p>这样一来，我们在更新Document时到底是怎么实现的？<br>在ES中，不管我们用以上哪种方式进行更新document，它都不是真正地对原来的document进行操作。而是先将原来的document标记为删除状态，然后重新新增一个document（也就是我们看到的新的document），实际上，原来的document并没有立即消失，只是你已经不能访问它了，ES稍后会在后台真正地删除原来的document。</p>
+<p>这样一来，我们在更新Document时到底是怎么实现的？<br><strong>在ES中，不管我们用以上哪种方式进行更新document，它都不是真正地对原来的document进行操作。而是先将原来的document标记为删除状态，然后重新新增一个document（也就是我们看到的新的document），实际上，原来的document并没有立即消失，只是你已经不能访问它了，ES稍后会在后台真正地删除原来的document。</strong></p>
 <p>不管我们用那种方式进行更新，ES都会按照以下的步骤进行更新：</p>
 <blockquote>
 <p>1.查询出旧的document；<br>2.修改document中的字段；<br>3.删除旧的document；<br>4.重新索引一个新的document。</p>

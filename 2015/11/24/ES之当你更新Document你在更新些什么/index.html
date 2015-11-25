@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="一条心猿意码的狗">
 <meta property="og:description" content="by:leotse
 怎么更新ElasticSearch中的Document？在ES中更新数据的场景有很多，比如我们要修改一个用户的年龄、爱好，又或者我们需要实时同步MySQL中的数据到ES中。我们都有修改已经存在的Document的需求。ES本身提供了两种方法让我们修改一个Document的数据，我们假设我们想要修改的内容如下：123456GET /test/customer/1/_source&amp;">
-<meta property="og:updated_time" content="2015-11-24T15:03:28.000Z">
+<meta property="og:updated_time" content="2015-11-25T00:09:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES之当你更新Document，你在更新些什么？">
 <meta name="twitter:description" content="by:leotse
@@ -269,7 +269,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>Documents in Elasticsearch are immutable; we cannot change them. Instead, if we need to update an existing document, we reindex or replace it.</p>
 </blockquote>
-<p>这样一来，我们在更新Document时到底是怎么实现的？<br>在ES中，不管我们用以上哪种方式进行更新document，它都不是真正地对原来的document进行操作。而是先将原来的document标记为删除状态，然后重新新增一个document（也就是我们看到的新的document），实际上，原来的document并没有立即消失，只是你已经不能访问它了，ES稍后会在后台真正地删除原来的document。</p>
+<p>这样一来，我们在更新Document时到底是怎么实现的？<br><strong>在ES中，不管我们用以上哪种方式进行更新document，它都不是真正地对原来的document进行操作。而是先将原来的document标记为删除状态，然后重新新增一个document（也就是我们看到的新的document），实际上，原来的document并没有立即消失，只是你已经不能访问它了，ES稍后会在后台真正地删除原来的document。</strong></p>
 <p>不管我们用那种方式进行更新，ES都会按照以下的步骤进行更新：</p>
 <blockquote>
 <p>1.查询出旧的document；<br>2.修改document中的字段；<br>3.删除旧的document；<br>4.重新索引一个新的document。</p>
