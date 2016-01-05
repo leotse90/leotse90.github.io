@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2015-12-17T14:54:42.000Z</updated>
+  <updated>2016-01-05T16:30:22.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Java并发编程(一)]]></title>
+    <link href="http://leotse90.com/2016/01/06/Java%E5%B9%B6%E5%8F%91/"/>
+    <id>http://leotse90.com/2016/01/06/Java并发/</id>
+    <published>2016-01-05T16:30:15.000Z</published>
+    <updated>2016-01-05T16:30:22.000Z</updated>
+    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
+<h2 id="并发，并发，并发">并发，并发，并发</h2><p>有顺序编程，就有并发编程。事实上，几乎我们所有的程序都可以通过顺序编程来完成，只是你必须忍受一些非常情况。<br>并发说起来很奇怪，它具有可论证的确定性，但是实际上却具有不可确定性。它的不可确定性是因为你没有办法预知在实际情况下会发生事情导致工作失败，而且你也没有办法通过编写代码进行完备的测试。<br>虽然实际应用中，并发很难做到完全掌握，但是这不能成为我们不作为的理由。</p>
+<blockquote>
+<p>如果视而不见，你就会遭其反噬。</p>
+</blockquote>
+<p>作为一名骄傲的程序员，并发编程是基础，也是必备知识。</p>
+<h2 id="为什么需要并发">为什么需要并发</h2><p>这是一个老生常谈的问题，但是我们不能规避这个问题，要想深入理解一件事物，就必须弄清楚它的来龙去脉。<br><a id="more"></a><br>我们设定我们现在在做饭，我们需要做的事情list如下：<br>1）淘洗大米；<br>2）插电做饭；<br>3）洗好紫菜；<br>4）打鸡蛋；<br>5）洗净豌豆并剥开；<br>6）牛肉切丁；<br>…</p>
+<p>是的，我们想来一顿米饭＋紫菜蛋汤＋豌豆牛肉粒的穷人版商务套餐。我们可以有很多种方法完成这顿午餐。其中有两种常见可行的方案：<br>1.完全按照顺序来，即1) -&gt; 2) -&gt; 3) -&gt; 4) -&gt; 5) -&gt; 6)，也就是每次都需要等待上一个步骤完成再进行下一步；<br>2.我们将时间打碎，在完成1) -&gt; 2)之后，无需等待2）完成，即不用等到生米煮成熟饭，就开始着手洗紫菜、打鸡蛋，然后在煲汤的同时，开始准备豌豆和牛肉。</p>
+<p>很明显，除了死心眼，大家都会选择第2种方案或者其他类似的方案。第1种方案就是我们所说的顺序编程，而第二种方案就是并发编程。</p>
+<blockquote>
+<p>通常来说，并发是提高运行在单核上的程序的性能。</p>
+</blockquote>
+<p>为什么是提供单核上程序的性能呢？<br>如果只有一个核即处理器，我们来回切换工作，反而会增加上下文切换的损耗，怎么会是提高性能呢？如果和上述的例子结合起来就不难发现，如果有些事情需要等待，但是这个等待的时间间隙我们可以做一些并不依赖于正在处理的事情的其他业务，比如做菜并不依赖煮饭（除非你用同一口锅），洗豌豆并不依赖于煲汤。这样我们的时间就被充分利用起来了。用行话来说，就是<strong>阻塞</strong>。如果程序中的某个任务因为该程序控制范围外的某些条件而导致不能继续执行，那么我们就说这个任务或者线程阻塞了。如果没有引入并发，那么线程将一直阻塞，直至这些条件发生改变。</p>
+<blockquote>
+<p>某种程度上讲，没有阻塞，就没有并发。（单核）</p>
+</blockquote>
+<p>最简单直接的方式就是使用进程。<br>多任务操作系统会周期性将CPU从一个进程切换到另一个进程，虽然会有切换带来的耗时，但是对用户来说基本可以当作同时在运行多个进程。而且操作系统会帮我们将这些进程隔离开来，每个进程都有自己的一亩三分地，使得它们变得相互独立。这对并发编程来说，似乎非常理想，不会出现争夺公共资源的情况，每个任务都在自己的地址空间中做着自己的事情，进程们也根本不需要相互通信。但是进程通常都有数量限制以及开销上的限制，因此在实际编程中并不常见直接将进程作为并发的实现方式。</p>
+<blockquote>
+<p>函数型语言被设计为可以将并发任务彼此隔离，其中每个函数的调用都不会产生任何副作用，因此可以当作独立的任务来驱动。</p>
+</blockquote>
+<p>在Java中，我们常常用到的是在顺序编程的基础上使用比进程更小粒度的线程来实现并发。编写Java并发程序的一个最基本的困难是如何协调不同线程驱动的任务之间对一些公共资源（如IO、内存）的使用。</p>
+<p>使用并发的另一个目的是改进代码设计。我们前面提到，我们可以使用顺序编程完成几乎所有程序，但是这会使得我们的程序变得复杂，使用并发可以使得我们的程序结构更加清晰简化。</p>
+<p>我们假设我们的程序由很多的部件的组成，每一个部件都可以独立运作，那么理想情况就是每一个部件都对应一个线程，但是实际上我们的多线程系统一般都会限制线程的数量，而且这个数字不会太大，因此我们往往我们不能达到理想情况下的每一个部件都对应一个线程。在Java中，线程机制是抢占式的，也就是说，系统可能周期性中断线程，然后切换到另一个线程，从而让每个线程都有运行的时间片。我们可以通过协作多线程来解决这个问题。在协作式系统中，每个任务都是可控的，即可以通过编程人员的控制自动放弃控制，相对于抢占式线程机制，协作式线程机制一方面上下文切换的开销小，另一方面同时执行的线程数量理论上没有限制。</p>
+<p>当然，并发是有代价的，那就是我们需要额外花费上下文切换的代价，但是这个代价不算高昂，特别是和它所带来的收益进行比较。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>by:leotse</em></p>
+<h2 id="并发，并发，并发">并发，并发，并发</h2><p>有顺序编程，就有并发编程。事实上，几乎我们所有的程序都可以通过顺序编程来完成，只是你必须忍受一些非常情况。<br>并发说起来很奇怪，它具有可论证的确定性，但是实际上却具有不可确定性。它的不可确定性是因为你没有办法预知在实际情况下会发生事情导致工作失败，而且你也没有办法通过编写代码进行完备的测试。<br>虽然实际应用中，并发很难做到完全掌握，但是这不能成为我们不作为的理由。</p>
+<blockquote>
+<p>如果视而不见，你就会遭其反噬。</p>
+</blockquote>
+<p>作为一名骄傲的程序员，并发编程是基础，也是必备知识。</p>
+<h2 id="为什么需要并发">为什么需要并发</h2><p>这是一个老生常谈的问题，但是我们不能规避这个问题，要想深入理解一件事物，就必须弄清楚它的来龙去脉。<br>]]>
+    
+    </summary>
+    
+      <category term="Java" scheme="http://leotse90.com/tags/Java/"/>
+    
+      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[企业计算的终结]]></title>
@@ -832,55 +880,6 @@ celery -A download_video_worker worker --loglevel=info
     </summary>
     
       <category term="数据结构" scheme="http://leotse90.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Hadoop集群部署（RedHat）]]></title>
-    <link href="http://leotse90.com/2015/09/20/Hadoop%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2(RedHat)/"/>
-    <id>http://leotse90.com/2015/09/20/Hadoop集群部署(RedHat)/</id>
-    <published>2015-09-20T02:55:15.000Z</published>
-    <updated>2015-10-21T07:21:34.000Z</updated>
-    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
-<h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
-<p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
-<p>接下来我们对每一步进行详细介绍。<br><a id="more"></a></p>
-<h2 id="SSH免密码登录设置">SSH免密码登录设置</h2><p>进行SSH免密码登录设置是为了避免在集群内部机器交互的时候频繁输入登录密码，我们在这里为集群内的每个机器都执行SSH免密码登录设置。在这里不具体介绍SSH免密码登录的具体步骤，可以参见<a href="https://github.com/leotse90/blogs/blob/master/SSH免密码登录设置.md" target="_blank" rel="external">SSH免密码登录设置</a></p>
-<h2 id="环境变量设置">环境变量设置</h2><p>修改hosts文件：<br><code>vi /etc/hosts</code><br>新增：<br><code>172.16.10.136   Master</code><br><code>172.16.10.137   Slave1</code>  </p>
-<p>一般，Java都已经安装好。如果没有，需要先行安装Java并配置JAVA_HOME。然后修改~/.bashrc文件，在文件的末尾增加JAVA和HADOOP的配置：  </p>
-<p><code>### set java home</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
-<p><code>### set hadoop env</code><br><code>export HADOOP_HOME=/home/xiefeng/dependecies/hadoop-2.6.0</code><br><code>export HADOOP_COMMON_HOME=$HADOOP_HOME</code><br><code>export HADOOP_HDFS_HOME=$HADOOP_HOME</code><br><code>export HADOOP_MAPRED_HOME=$HADOOP_HOME</code><br><code>export HADOOP_YARN_HOME=$HADOOP_HOME</code><br><code>export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop</code><br><code>export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/lib</code><br><code>export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native</code><br><code>export HADOOP_OPTS=&quot;-Djava.library.path=$HADOOP_HOME/lib&quot;</code>  </p>
-<p>然后：<br><code>source ~/.bashrc</code>  </p>
-<p>检查是否配置成功，可以<code>echo $HADOOP_HOME</code>看是否是配置中的路径。  </p>
-<h2 id="Master部署">Master部署</h2><p>1.解压Hadoop 2.6安装包到安装目录，在这个示例里是/home/xiefeng/dependecies/目录：<br><code>tar xvf hadoop-2.6.0.tar</code>  </p>
-<p>2.进入Hadoop目录，修改slaves文件，增加Slave1到slaves文件中：<br><code>cd hadoop-2.6.0</code><br><code>vi etc/hadoop/slaves</code><br>添加：<br><code>Slave1</code>  </p>
-<p>3.修改core-site.xml配置文件：<br><code>vi etc/hadoop/core-site.xml</code><br>修改为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;fs.defaultFS&lt;/name&gt;</code><br><code>&lt;value&gt;hdfs://Master:9000&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp&lt;/value&gt;</code><br><code>&lt;description&gt;Abase for other temporary directories.&lt;/description&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>4.修改hdfs-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</code><br><code>&lt;value&gt;Master:50090&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/name&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</code><br><code>&lt;value&gt;file:/home/xiefeng/dependecies/hadoop-2.6.0/tmp/dfs/data&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;dfs.replication&lt;/name&gt;</code><br><code>&lt;value&gt;1&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>5.复制mapred-site.xml.template得到mapred-site.xml文件：<br><code>cp mapred-site.xml.template mapred-site.xml</code><br>修改mapred-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</code><br><code>&lt;value&gt;yarn&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>6.修改yarn-site.xml配置文件为：<br><code>&lt;configuration&gt;</code><br><code>&lt;!-- Site specific YARN configuration properties --&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</code><br><code>&lt;value&gt;Master&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;property&gt;</code><br><code>&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</code><br><code>&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</code><br><code>&lt;/property&gt;</code><br><code>&lt;/configuration&gt;</code>  </p>
-<p>7.一般的，我们还需要修改一下hadoop-env.sh，将其JAVA_HOME修改为当前机器的JAVA_HOME：<br><code># The java implementation to use.</code><br><code># export JAVA_HOME=${JAVA_HOME}</code><br><code>export JAVA_HOME=/work/p/jdk/default</code>  </p>
-<h2 id="Slave部署">Slave部署</h2><p>1.将 Master 上的 Hadoop 文件先打包然后复制到各个节点上：<br><code>sudo tar -zcf hadoop－2.6.0.tar.gz hadoop－2.6.0/</code><br><code>scp hadoop－2.6.0.tar.gz Slave1:/home/xiefeng/dependecies</code>  </p>
-<p>2.解压到Slave1的安装目录：<br><code>sudo tar -zxf hadoop－2.6.0.tar.gz</code><br><code>sudo chown -R xiefeng:xiefeng /home/xiefeng/dependecies/hadoop-2.6.0</code>  </p>
-<h2 id="集群启动">集群启动</h2><p>我们回到Master，进入hadoop安装目录：<br><code>cd /home/xiefeng/dependecies/hadoop-2.6.0</code><br>第一次执行，初始化：<br><code>bin/hdfs namenode -format</code>  </p>
-<p>启动dfs：<br><code>sbin/start-dfs.sh</code><br>启动yarn：<br><code>sbin/start-yarn.sh</code>  </p>
-<p>分别在Master和Slave1输入jps，看看是否有以下输出，有则表明安装ok：<br><code>[xiefeng@Master hadoop-2.6.0]$ jps</code><br><code>8498 NameNode</code><br><code>8837 ResourceManager</code><br><code>8680 SecondaryNameNode</code><br><code>9817 Jps</code>  </p>
-<p><code>[xiefeng@Slave1 logs]$ jps</code><br><code>20208 NodeManager</code><br><code>20344 Jps</code><br><code>20107 DataNode</code>  </p>
-<p>在浏览器输入：<a href="http://master：8088就可以查看集群All" target="_blank" rel="external">http://master：8088就可以查看集群All</a> Applications信息；输入<a href="http://master:50070可以查看namenode信息。" target="_blank" rel="external">http://master:50070可以查看namenode信息。</a></p>
-<p>停止dfs：<br><code>sbin/stop-dfs.sh</code><br>停止yarn：<br><code>sbin/stop-yarn.sh</code>  </p>
-<p>另外，还可以使用以下脚本进行集群的启动和停止：<br><code>sbin/start-all.sh</code><br><code>sbin/stop-all.sh</code></p>
-<p>至此，Hadoop集群搭建完毕！！！</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><em>by:leotse</em></p>
-<h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
-<p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
-<p>接下来我们对每一步进行详细介绍。<br>]]>
-    
-    </summary>
-    
-      <category term="Hadoop" scheme="http://leotse90.com/tags/Hadoop/"/>
     
       <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
