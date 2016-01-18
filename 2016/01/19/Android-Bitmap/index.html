@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android中的Bitmap | 一条心猿意码的狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="by:leotse
+Bitmap简介Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android中的Bitmap">
+<meta property="og:url" content="http://leotse90.com/2016/01/19/Android-Bitmap/index.html">
+<meta property="og:site_name" content="一条心猿意码的狗">
+<meta property="og:description" content="by:leotse
+Bitmap简介Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图">
+<meta property="og:image" content="http://leotse90.com/img/bitmap-example.bmp">
+<meta property="og:updated_time" content="2016-01-18T16:11:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android中的Bitmap">
+<meta name="twitter:description" content="by:leotse
+Bitmap简介Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图">
+  
+    <link rel="alternative" href="/atom.xml" title="一条心猿意码的狗" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?be4918235f4dd713fe3fef59f4af6fad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leo Tse</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">My name is L.T.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/leotse1990" title="facebook">facebook</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/leotse90" title="twitter">twitter</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 17.5px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/并发/" style="font-size: 15px;">并发</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.iteblog.com">过往记忆</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.skywod.com">互联网广告人</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://yanyiwu.com">大厨的日常</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.runoob.com/w3cnote/android-tutorial-contents.html">Android 基础入门教程</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">货真价实90后，潜心修炼大数据，期待成为键盘上的肖邦。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leo Tse</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leo Tse</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">My name is L.T.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/leotse1990" title="facebook">facebook</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/leotse90" title="twitter">twitter</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Android-Bitmap" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/19/Android-Bitmap/" class="article-date">
+  	<time datetime="2016-01-18T16:10:12.000Z" itemprop="datePublished">2016-01-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android中的Bitmap
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="Bitmap简介">Bitmap简介</h2><p>Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图的构造，使得其图像效果很好好，它是非压缩格式的，但是这也导致它需要占用较大的存储空间，这让位图变得不太适合在网络上传输。</p>
+<p><img src="/img/bitmap-example.bmp" alt="Bitmap example"><br><a id="more"></a><br>由于Bitmap的应用比较广泛，因此Android中常常使用到Bitmap。但是在使用Bitmap的时候，我们常常需要考虑到其占用内存较大的事实，因此关注Bitmap的OOM异常成为我们使用Bitmap的必修课。我们主要需要注意以下几个方面：</p>
+<blockquote>
+<p>1.Android系统资源有限；<br>2.Bitmap很能吃内存；<br>3.应用的UI一般加载多张Bitmap，这样会一下消耗很多内存。</p>
+</blockquote>
+<h2 id="Bitmap的处理">Bitmap的处理</h2><h3 id="Bitmap的加载优化">Bitmap的加载优化</h3><p>考虑我们前面讲到的Bitmap很耗内存，我们在加载Bitmap的时候就需要时时注意内存情况。在选择图片时，我们就需要知道找到一张合适的图片比一张效果好的图片更加合理（除非你的应用对图片质量要求很高，比如壁纸类应用）。这里介绍Android中的Bitmap的处理类：<code>BitmapFactory</code>。</p>
+<p><code>BitmapFactory</code>提供了多种decode图片的方法，比如：<code>decodeByteArray()</code>，<code>decodeFile()</code>，<code>decodeResource()</code>等等，这些方法方便我们从不同的来源创建Bitmap，这些方法都可以通过<code>BitmapFactory.Options</code>来指定decode选项，设置<code>inJustDecodeBounds</code>属性为true可以在decode时避免分配内存，它会返回一个空的Bitmap，但是我们可以获取到Bitmap的outWidth, outHeight与outMimeType。我们这样就可以在构造Bitmap之前读图片的尺寸与类型。为了避免OOM，我们在一开始就可以检查Bitmap图片的尺寸。示例代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkBitmap</span><span class="params">()</span></span>&#123;</span><br><span class="line">    BitmapFactory.Options mOptions = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">    mOptions.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">    BitmapFactory.decodeResource(getImgResource(), R.id.mImage, mOptions);</span><br><span class="line">    <span class="keyword">int</span> mImgHeight = mOptions.outHeight;</span><br><span class="line">    <span class="keyword">int</span> mImgWidth = mOptions.outWidth;</span><br><span class="line">    String mImgType = mOptions.outMimeType;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Resources <span class="title">getImgResource</span><span class="params">()</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们在获取了Bitmap的尺寸后，就能很灵活地决定是否需要加载完整的Bitmap图片，如果我们在评估以下几项后决定是否需要加载一个缩小版本的图片：</p>
+<blockquote>
+<p>1.加载完整的Bitmap需要耗费的内存；<br>2.加载这张Bitmap是否会增加其他相关的内存占用；<br>3.放置这张图片的的控件尺寸是否合适；<br>4.屏幕大小以及设备的屏幕密度；</p>
+</blockquote>
+<p>在评估后如果觉得没有必要加载完整的图片就可以考虑加载缩小版的Bitmap。我们需要告诉Bitmap的解码器我们打算加载缩小版的Bitmap，这时可以在<code>BitmapFactory.Options</code>中设置<code>inSampleSize</code>的值，例如, 一个分辨率为2048x1536的图片，如果设置<code>inSampleSize</code>为4，那么会产出一个大约512x384大小的Bitmap。加载这张缩小的图片仅仅使用大概0.75MB的内存，如果是加载完整尺寸的图片，那么大概需要花费12MB（前提都是Bitmap的配置是 ARGB_8888）。下面有一段根据目标图片大小来计算Sample图片大小的代码示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(</span><br><span class="line">            BitmapFactory.Options options, <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Raw height and width of image</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> height = options.outHeight;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> width = options.outWidth;</span><br><span class="line">    <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (height &gt; reqHeight || width &gt; reqWidth) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> halfHeight = height / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> halfWidth = width / <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// Calculate the largest inSampleSize value that is a power of 2 and keeps both</span></span><br><span class="line">        <span class="comment">// height and width larger than the requested height and width.</span></span><br><span class="line">        <span class="keyword">while</span> ((halfHeight / inSampleSize) &gt; reqHeight</span><br><span class="line">                &amp;&amp; (halfWidth / inSampleSize) &gt; reqWidth) &#123;</span><br><span class="line">            inSampleSize *= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> inSampleSize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Note</strong>: 设置inSampleSize为2的幂是因为解码器最终还是会对非2的幂的数进行向下处理，获取到最靠近2的幂的数。详情参考<code>inSampleSize</code>的文档。<br>为了使用该方法，首先需要设置<code>inJustDecodeBounds</code>为true, 把options的值传递过来，然后设置<code>inSampleSize</code>的值并设置 <code>inJustDecodeBounds</code>为false，之后重新调用相关的解码方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeSampledBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,</span><br><span class="line">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// First decode with inJustDecodeBounds=true to check dimensions</span></span><br><span class="line">    <span class="keyword">final</span> BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">    BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Calculate inSampleSize</span></span><br><span class="line">    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decode bitmap with inSampleSize set</span></span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用上面这个方法可以简单地加载一张任意大小的图片。如下面的代码样例显示了一个接近100x100像素的缩略图：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mImageView.setImageBitmap(</span><br><span class="line">    decodeSampledBitmapFromResource(getImgResources(), R.id.mImage, <span class="number">100</span>, <span class="number">100</span>));</span><br></pre></td></tr></table></figure></p>
+<p>类似的，我们也可以通过替换合适的<code>BitmapFactory</code>解码方法来实现一个类似的方法从其他的数据源解析Bitmap。</p>
+<h3 id="Bitmap的内存优化">Bitmap的内存优化</h3><p>在Android的演变进程中，管理Bitmap内存也发生了改变。在Android 2.2及以前的版本，当GC的时候，应用的线程会被暂停，在Android2.3开始，新增了并发GC机制，<strong>这意味着在一个Bitmap不再被引用之后，它所占用的内存会被立即回收。</strong><br>在Android2.3.3及之前，一个Bitmap的像素级是存放在Native空间里，这些数据与Bitmap本身是隔离的，Bitmap本身被存放在Dalvik堆中，我们无法预测在Native内存中的像素级数据何时会被释放，这意味着程序容易超过它的内存限制并且崩溃。自Android 3.0开始， 像素级数据则是与Bitmap本身一起存放在Dalvik堆中。</p>
+<p>好在我们现在Android的主流版本在Android4.0以上，因此Bitmap在不被引用后就会被回收。</p>
+<blockquote>
+<p>在过去，一种比较流行的内存缓存实现方法是使用软引用（SoftReference）或弱引用（WeakReference）对Bitmap进行缓存，然而我们并不推荐这样的做法。从Android 2.3开始，垃圾回收机制变得更加频繁，这使得释放软（弱）引用的频率也随之增高，导致使用引用的效率降低很多。而且在Android 3.0之前，备份的Bitmap会存放在Native Memory中，它不是以可预知的方式被释放的，这样可能导致程序超出它的内存限制而崩溃。</p>
+</blockquote>
+<h3 id="Bitmap的线程操作">Bitmap的线程操作</h3><p>我们可以通过<code>BitmapFactory</code>的解码方法来获取Bitmap，但是当图片来源于网络或者其他非内存来源时，我们就需要考虑由此带来的线程问题，毕竟我们在UI线程上不适合干这件事，那么我们可以考虑使用<code>AsyncTask</code>：加载Bitmap的类继承<code>AsyncTask</code>，并重载<code>doInBackground()</code>以及<code>onPostExecute()</code>方法。开始异步加载Bitmap，只需要创建一个新的任务并执行它即可。</p>
+<blockquote>
+<p>为ImageView使用WeakReference确保了AsyncTask所引用的资源可以被垃圾回收器回收。由于当任务结束时不能确保ImageView仍然存在，因此我们必须在onPostExecute()里面对引用进行检查。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BitmapWorkerTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> WeakReference imageViewReference;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BitmapWorkerTask</span><span class="params">(ImageView imageView)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Use a WeakReference to ensure the ImageView can be garbage collected</span></span><br><span class="line">        imageViewReference = <span class="keyword">new</span> WeakReference(imageView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decode image in background.</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Bitmap <span class="title">doInBackground</span><span class="params">(Integer... params)</span> </span>&#123;</span><br><span class="line">        data = params[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> decodeSampledBitmapFromResource(getResources(), data, <span class="number">100</span>, <span class="number">100</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Once complete, see if ImageView is still around and set bitmap.</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (imageViewReference != <span class="keyword">null</span> &amp;&amp; bitmap != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> ImageView imageView = imageViewReference.get();</span><br><span class="line">            <span class="keyword">if</span> (imageView != <span class="keyword">null</span>) &#123;</span><br><span class="line">                imageView.setImageBitmap(bitmap);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以按照这样异步加载Bitmap：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadBitmap</span><span class="params">(<span class="keyword">int</span> resId, ImageView imageView)</span> </span>&#123;</span><br><span class="line">    BitmapWorkerTask task = <span class="keyword">new</span> BitmapWorkerTask(imageView);</span><br><span class="line">    task.execute(resId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此，我们就Android中的Bitmap进行比较全面的介绍，当然可以参考官网了解更多有关<a href="http://developer.android.com/reference/android/graphics/Bitmap.html" target="_blank" rel="external">Bitmap</a>的信息。</p>
+<p>(整理自网络)</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/12/Java-concurrency3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java并发(三)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Android-Bitmap" data-title="Android中的Bitmap" data-url="http://leotse90.com/2016/01/19/Android-Bitmap/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Leo Tse
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

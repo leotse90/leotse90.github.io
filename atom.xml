@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-01-11T16:16:10.000Z</updated>
+  <updated>2016-01-18T16:11:20.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Android中的Bitmap]]></title>
+    <link href="http://leotse90.com/2016/01/19/Android-Bitmap/"/>
+    <id>http://leotse90.com/2016/01/19/Android-Bitmap/</id>
+    <published>2016-01-18T16:10:12.000Z</published>
+    <updated>2016-01-18T16:11:20.000Z</updated>
+    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
+<h2 id="Bitmap简介">Bitmap简介</h2><p>Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图的构造，使得其图像效果很好好，它是非压缩格式的，但是这也导致它需要占用较大的存储空间，这让位图变得不太适合在网络上传输。</p>
+<p><img src="/img/bitmap-example.bmp" alt="Bitmap example"><br><a id="more"></a><br>由于Bitmap的应用比较广泛，因此Android中常常使用到Bitmap。但是在使用Bitmap的时候，我们常常需要考虑到其占用内存较大的事实，因此关注Bitmap的OOM异常成为我们使用Bitmap的必修课。我们主要需要注意以下几个方面：</p>
+<blockquote>
+<p>1.Android系统资源有限；<br>2.Bitmap很能吃内存；<br>3.应用的UI一般加载多张Bitmap，这样会一下消耗很多内存。</p>
+</blockquote>
+<h2 id="Bitmap的处理">Bitmap的处理</h2><h3 id="Bitmap的加载优化">Bitmap的加载优化</h3><p>考虑我们前面讲到的Bitmap很耗内存，我们在加载Bitmap的时候就需要时时注意内存情况。在选择图片时，我们就需要知道找到一张合适的图片比一张效果好的图片更加合理（除非你的应用对图片质量要求很高，比如壁纸类应用）。这里介绍Android中的Bitmap的处理类：<code>BitmapFactory</code>。</p>
+<p><code>BitmapFactory</code>提供了多种decode图片的方法，比如：<code>decodeByteArray()</code>，<code>decodeFile()</code>，<code>decodeResource()</code>等等，这些方法方便我们从不同的来源创建Bitmap，这些方法都可以通过<code>BitmapFactory.Options</code>来指定decode选项，设置<code>inJustDecodeBounds</code>属性为true可以在decode时避免分配内存，它会返回一个空的Bitmap，但是我们可以获取到Bitmap的outWidth, outHeight与outMimeType。我们这样就可以在构造Bitmap之前读图片的尺寸与类型。为了避免OOM，我们在一开始就可以检查Bitmap图片的尺寸。示例代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkBitmap</span><span class="params">()</span></span>&#123;</span><br><span class="line">    BitmapFactory.Options mOptions = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">    mOptions.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">    BitmapFactory.decodeResource(getImgResource(), R.id.mImage, mOptions);</span><br><span class="line">    <span class="keyword">int</span> mImgHeight = mOptions.outHeight;</span><br><span class="line">    <span class="keyword">int</span> mImgWidth = mOptions.outWidth;</span><br><span class="line">    String mImgType = mOptions.outMimeType;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Resources <span class="title">getImgResource</span><span class="params">()</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们在获取了Bitmap的尺寸后，就能很灵活地决定是否需要加载完整的Bitmap图片，如果我们在评估以下几项后决定是否需要加载一个缩小版本的图片：</p>
+<blockquote>
+<p>1.加载完整的Bitmap需要耗费的内存；<br>2.加载这张Bitmap是否会增加其他相关的内存占用；<br>3.放置这张图片的的控件尺寸是否合适；<br>4.屏幕大小以及设备的屏幕密度；</p>
+</blockquote>
+<p>在评估后如果觉得没有必要加载完整的图片就可以考虑加载缩小版的Bitmap。我们需要告诉Bitmap的解码器我们打算加载缩小版的Bitmap，这时可以在<code>BitmapFactory.Options</code>中设置<code>inSampleSize</code>的值，例如, 一个分辨率为2048x1536的图片，如果设置<code>inSampleSize</code>为4，那么会产出一个大约512x384大小的Bitmap。加载这张缩小的图片仅仅使用大概0.75MB的内存，如果是加载完整尺寸的图片，那么大概需要花费12MB（前提都是Bitmap的配置是 ARGB_8888）。下面有一段根据目标图片大小来计算Sample图片大小的代码示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(</span><br><span class="line">            BitmapFactory.Options options, <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Raw height and width of image</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> height = options.outHeight;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> width = options.outWidth;</span><br><span class="line">    <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (height &gt; reqHeight || width &gt; reqWidth) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> halfHeight = height / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> halfWidth = width / <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// Calculate the largest inSampleSize value that is a power of 2 and keeps both</span></span><br><span class="line">        <span class="comment">// height and width larger than the requested height and width.</span></span><br><span class="line">        <span class="keyword">while</span> ((halfHeight / inSampleSize) &gt; reqHeight</span><br><span class="line">                &amp;&amp; (halfWidth / inSampleSize) &gt; reqWidth) &#123;</span><br><span class="line">            inSampleSize *= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> inSampleSize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>Note</strong>: 设置inSampleSize为2的幂是因为解码器最终还是会对非2的幂的数进行向下处理，获取到最靠近2的幂的数。详情参考<code>inSampleSize</code>的文档。<br>为了使用该方法，首先需要设置<code>inJustDecodeBounds</code>为true, 把options的值传递过来，然后设置<code>inSampleSize</code>的值并设置 <code>inJustDecodeBounds</code>为false，之后重新调用相关的解码方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeSampledBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,</span><br><span class="line">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// First decode with inJustDecodeBounds=true to check dimensions</span></span><br><span class="line">    <span class="keyword">final</span> BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">    BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Calculate inSampleSize</span></span><br><span class="line">    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decode bitmap with inSampleSize set</span></span><br><span class="line">    options.inJustDecodeBounds = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用上面这个方法可以简单地加载一张任意大小的图片。如下面的代码样例显示了一个接近100x100像素的缩略图：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mImageView.setImageBitmap(</span><br><span class="line">    decodeSampledBitmapFromResource(getImgResources(), R.id.mImage, <span class="number">100</span>, <span class="number">100</span>));</span><br></pre></td></tr></table></figure></p>
+<p>类似的，我们也可以通过替换合适的<code>BitmapFactory</code>解码方法来实现一个类似的方法从其他的数据源解析Bitmap。</p>
+<h3 id="Bitmap的内存优化">Bitmap的内存优化</h3><p>在Android的演变进程中，管理Bitmap内存也发生了改变。在Android 2.2及以前的版本，当GC的时候，应用的线程会被暂停，在Android2.3开始，新增了并发GC机制，<strong>这意味着在一个Bitmap不再被引用之后，它所占用的内存会被立即回收。</strong><br>在Android2.3.3及之前，一个Bitmap的像素级是存放在Native空间里，这些数据与Bitmap本身是隔离的，Bitmap本身被存放在Dalvik堆中，我们无法预测在Native内存中的像素级数据何时会被释放，这意味着程序容易超过它的内存限制并且崩溃。自Android 3.0开始， 像素级数据则是与Bitmap本身一起存放在Dalvik堆中。</p>
+<p>好在我们现在Android的主流版本在Android4.0以上，因此Bitmap在不被引用后就会被回收。</p>
+<blockquote>
+<p>在过去，一种比较流行的内存缓存实现方法是使用软引用（SoftReference）或弱引用（WeakReference）对Bitmap进行缓存，然而我们并不推荐这样的做法。从Android 2.3开始，垃圾回收机制变得更加频繁，这使得释放软（弱）引用的频率也随之增高，导致使用引用的效率降低很多。而且在Android 3.0之前，备份的Bitmap会存放在Native Memory中，它不是以可预知的方式被释放的，这样可能导致程序超出它的内存限制而崩溃。</p>
+</blockquote>
+<h3 id="Bitmap的线程操作">Bitmap的线程操作</h3><p>我们可以通过<code>BitmapFactory</code>的解码方法来获取Bitmap，但是当图片来源于网络或者其他非内存来源时，我们就需要考虑由此带来的线程问题，毕竟我们在UI线程上不适合干这件事，那么我们可以考虑使用<code>AsyncTask</code>：加载Bitmap的类继承<code>AsyncTask</code>，并重载<code>doInBackground()</code>以及<code>onPostExecute()</code>方法。开始异步加载Bitmap，只需要创建一个新的任务并执行它即可。</p>
+<blockquote>
+<p>为ImageView使用WeakReference确保了AsyncTask所引用的资源可以被垃圾回收器回收。由于当任务结束时不能确保ImageView仍然存在，因此我们必须在onPostExecute()里面对引用进行检查。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BitmapWorkerTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> WeakReference imageViewReference;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> data = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BitmapWorkerTask</span><span class="params">(ImageView imageView)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Use a WeakReference to ensure the ImageView can be garbage collected</span></span><br><span class="line">        imageViewReference = <span class="keyword">new</span> WeakReference(imageView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decode image in background.</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Bitmap <span class="title">doInBackground</span><span class="params">(Integer... params)</span> </span>&#123;</span><br><span class="line">        data = params[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> decodeSampledBitmapFromResource(getResources(), data, <span class="number">100</span>, <span class="number">100</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Once complete, see if ImageView is still around and set bitmap.</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (imageViewReference != <span class="keyword">null</span> &amp;&amp; bitmap != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> ImageView imageView = imageViewReference.get();</span><br><span class="line">            <span class="keyword">if</span> (imageView != <span class="keyword">null</span>) &#123;</span><br><span class="line">                imageView.setImageBitmap(bitmap);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以按照这样异步加载Bitmap：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadBitmap</span><span class="params">(<span class="keyword">int</span> resId, ImageView imageView)</span> </span>&#123;</span><br><span class="line">    BitmapWorkerTask task = <span class="keyword">new</span> BitmapWorkerTask(imageView);</span><br><span class="line">    task.execute(resId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此，我们就Android中的Bitmap进行比较全面的介绍，当然可以参考官网了解更多有关<a href="http://developer.android.com/reference/android/graphics/Bitmap.html" target="_blank" rel="external">Bitmap</a>的信息。</p>
+<p>(整理自网络)</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>by:leotse</em></p>
+<h2 id="Bitmap简介">Bitmap简介</h2><p>Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图的构造，使得其图像效果很好好，它是非压缩格式的，但是这也导致它需要占用较大的存储空间，这让位图变得不太适合在网络上传输。</p>
+<p><img src="/img/bitmap-example.bmp" alt="Bitmap example"><br>]]>
+    
+    </summary>
+    
+      <category term="Android" scheme="http://leotse90.com/tags/Android/"/>
+    
+      <category term="Java" scheme="http://leotse90.com/tags/Java/"/>
+    
+      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Java并发(三)]]></title>
@@ -835,70 +886,6 @@ celery -A download_video_worker worker --loglevel=info
     </summary>
     
       <category term="Hive" scheme="http://leotse90.com/tags/Hive/"/>
-    
-      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[FastDFS概览]]></title>
-    <link href="http://leotse90.com/2015/10/10/FastDFS%E6%A6%82%E8%A7%88/"/>
-    <id>http://leotse90.com/2015/10/10/FastDFS概览/</id>
-    <published>2015-10-10T02:55:15.000Z</published>
-    <updated>2015-10-21T06:38:48.000Z</updated>
-    <content type="html"><![CDATA[<p><em>by：leotse</em></p>
-<h2 id="Definition">Definition</h2><p>FastDFS是C语言实现的、开源的、轻量级的<strong>应用级分布式文件系统</strong>，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。</p>
-<h2 id="Architecture">Architecture</h2><p>FastDFS一共由三部分组成：<br><strong>TrackerServer</strong>：负责负载均衡和调度。是整个FastDFS的中心，它将StorageServer的分组信息以及状态信息保存在内存中；<br><strong>StorageServer</strong>：存储文件和文件meta信息。直接使用操作系统的文件系统管理DFS上的文件；<br><strong>Client</strong>：使用者与请求发起方。通过专有接口，使用TCP/IP协议与跟踪器服务器或存储节点进行数据交互；<br><a id="more"></a><br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs01.gif" alt="FastDFS架构"></p>
-<p><strong>上传文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs02.gif" alt="FastDFS上传文件"></p>
-<p><strong>下载文件</strong>：<br><img src="https://github.com/leotse90/blogs/blob/master/images/fdfs03.gif" alt="FastDFS下载文件"></p>
-<h2 id="Applies">Applies</h2><p>适合大中型网站使用，用于视频、图片、音频等中小资源文件的存储。（建议范围：4KB&lt;file_size&lt;500MB）</p>
-<h2 id="Features">Features</h2><h3 id="1-Advantages">1.Advantages</h3><p>1）支持Linux、FreeBSD、AIX等Unix系统；<br>2）支持Java、Python、PHP API；<br>3）轻量级：相比GFS简化了master角色，不再管理meta数据信息；代码量较小，总代码行数不到5.2w行；<br>4）对等结构：FastDFS集群中的TrackerServer也可以有多台，TrackerServer和StorageServer均<strong>不存在单点问题</strong>。TrackerServer之间是对等关系，组内的StoragServer之间也是对等关系。和MasterSlave结构相比，对等结构中所有结点的地位是相同的，每个结点都是Master，不存在单点问题；<br>5）分组：FastDFS采用了分组存储方式。集群由一个或多个组构成，集群存储总容量为集群中所有组的存储容量之和。一个组由一台或多台存储服务器组成，同组内的多台StorageServer之间是互备关系，同组存储服务器上的文件是完全一致的。文件上传、下载、删除等操作可以在组内任意一台StorageServer上进行。所有的存储服务器均是同时在线服务，极大的提高的服务器的使用率，分担了数据访问压力；<br>6）可以使用Apache、Nginx等WebServer访问和下载文件；<br>7）FastDFS不对文件进行分块存储，与支持文件分块存储的DFS相比，更加简洁高效，并且完全能满足绝大多数互联网应用的实际需要。<br>8）FastDFS的设计目标就是支持大容量和高访问量，因此对于大量的小文件，可以支持得很好；<br>9）FastDFS自v1.14开始支持相同文件内容只存储一份，但是需要安装FastDHT，如果已经存在上传的文件，则建立一个符号链接以节省磁盘空间；</p>
-<h3 id="2-Disadvantages">2.Disadvantages</h3><p>1）FastDFS不支持POSIX接口方式，不是通用的文件系统，不支持FUSE，不能<a href="http://en.wikipedia.org/wiki/Mount_(Unix" target="_blank" rel="external">mount使用</a>)；<br>2）不适用于分布式计算环境；<br>3）Group容量受单机存储容量限制，同时，当Group内有机器坏掉，数据恢复只能从Group内其他机器复制，使得恢复时间较长；<br>4）FastDFS适合存储用户上传的文件，比如用户照片。如果只是存储网站的静态文件（如装饰图片、css、js等），那没有必要使用FastDFS；<br>5）文档不够完善。相较于GlusterFS等DFS，FastDFS的相关文档资料相对欠缺。当前比较活跃的是ChinaUnix上的<a href="http://bbs.chinaunix.net/forum-240-1.html" target="_blank" rel="external">FastDFS论坛</a>。  </p>
-<h2 id="others">others</h2><p>来源于论坛原作者的话：<br>1.单台tracker的性能特别高。因为tracker处理查询时，直接访问内存中的索引数据，不存在任何性能瓶颈。单台服务器支持的QPS超过5000没有任何问题。  </p>
-<p>2.出于性能等考虑，必须通过FastDFS的API来对文件进行存取，不能mount使用。 </p>
-<p>3.上传文件成功后，文件ID由storage server返回给客户端。文件ID中包括了分组、文件路径和文件名等信息，需要由客户端来保存文件ID。因此FastDFS 服务器端是不需要保存文件ID或索引等信息的。不再使用的文件（比如用户删除了自己的照片文件），应该由client调用delete file接口删除该文件。  </p>
-<p>4.FastDFS存储文件采用的是256 * 256的两级目录；  </p>
-<p>5.tracker不耗内存，有1GB内存足矣；   </p>
-<p>6.FastDFS如何做整体迁移？如换机房更换IP?  </p>
-<pre><code>如果新旧<span class="type">IP</span>地址一一对应，而且是一样的，那非常简单，直接将<span class="typedef"><span class="keyword">data</span>目录拷贝过去即可。</span>
-
-<span class="type">IP</span>不一样的话，会比较麻烦一些。
-如果使用了<span class="type">V4</span>的自定义server <span class="type">ID</span>特性，那么比较容易，直接将tracker上的<span class="type">IP</span>和<span class="type">ID</span>映射文件storage_ids.conf修改好即可。
-
-如果是用<span class="type">IP</span>地址作为服务器标识，那么需要修改tracker和storage的<span class="typedef"><span class="keyword">data</span>目录下的几个数据文件，将旧<span class="type">IP</span>调整为新<span class="type">IP</span>。</span>
-注意storage的<span class="typedef"><span class="keyword">data</span>目录下有一个.打头的隐藏文件也需要修改。</span>
-另外，需要将后缀为mark的<span class="type">IP</span>地址和端口命名的同步位置记录文件名改名。
-文件全部调整完成后才能启动集群服务。
-
-<span class="title">tracker</span> server上需要调整的文件列表：
-<span class="typedef"><span class="keyword">data</span>/storage_groups_new.dat</span>
-<span class="typedef"><span class="keyword">data</span>/storage_servers_new.dat</span>
-<span class="typedef"><span class="keyword">data</span>/storage_sync_timestamp.dat</span>
-
-<span class="title">storage</span> server需要调整的文件列表：
-<span class="typedef"><span class="keyword">data</span>/.data_init_flag</span>
-<span class="typedef"><span class="keyword">data</span>/sync/$<span class="container">{<span class="title">ip_addr</span>}</span>_$<span class="container">{<span class="title">port</span>}</span>.mark：此类文件，需要将文件名中的<span class="type">IP</span>地址调整过来。</span>
-</code></pre><p>7./etc/fdfs/mod_fastdfs.conf中的url_have_group_name项为true,否则会使用fdfs_test上传测试文件而后进行测试时，会报400错误。</p>
-<p>8.<a href="http://bbs.chinaunix.net/thread-3772130-1-4.html" target="_blank" rel="external">FastDFS监控系统</a></p>
-<p>9.<a href="http://bbs.chinaunix.net/thread-4164253-1-5.html" target="_blank" rel="external">FastDFS原理分析系列文章</a></p>
-<p>10.部署方式和存储方式：作者推荐采用多个storage服务器(多个group)，各自分别挂载几个单盘的方式，以期提高总的磁盘IO性能。</p>
-<p>11.相同内容的文件在系统里只保存一份文件实体，每次上传同一个文件，返回给client的文件ID是不同的，返回的文件ID通过链接的方式指向该实体文件，以unix的符号链接来理解：目标文件为实体文件，每次上传产生的文件为符号链接，指向对应的实体文件。</p>
-<p>12.Storage的状态：<br>    FDFS_STORAGE_STATUS：INIT      :初始化，尚未得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：WAIT_SYNC :等待同步，已得到同步已有数据的源服务器<br>    FDFS_STORAGE_STATUS：SYNCING   :同步中<br>    FDFS_STORAGE_STATUS：DELETED   :已删除，该服务器从本组中摘除<br>    FDFS_STORAGE_STATUS：OFFLINE   :离线<br>    FDFS_STORAGE_STATUS：ONLINE    :在线，尚不能提供服务<br>    FDFS_STORAGE_STATUS：ACTIVE    :在线，可以提供服务  </p>
-<p>13.安装pcre时，出现<br>configure: error: You need a C++ compiler for C++ support.<br>解决方案：yum install -y gcc gcc-c++</p>
-<p>14.上传文件时：<br>errno: 113, error info: No route to host<br>解决方案：有可能是防火墙问题。iptables -F</p>
-<p>15.启动nginx，permission denied，这时一般是权限问题。<br>解决方案：修改nginx配置，将#user  nobody;修改为user  root;（注意：可能有安全隐患），重启nginx即可。</p>
-<h2 id="Conclusion">Conclusion</h2><p>FastDFS，按照作者本人的说法，它把简洁和高效做到了极致，非常节约资源，中小网站完全用得起。<br>作为国人在mogileFS的基础上进行改进的key-value型文件系统，一方面，它是我们国人的骄傲，另一方面，也希望FastDFS发展越来越好，相关的文档也越来越完善。</p>
-<p><strong>备注</strong>：<br>该文档整理自网络，用于个人备忘与学习。如有侵权，衷心表示抱歉，并请联系本人及时删除相关内容。</p>
-<p><strong>参考</strong>：<br><a href="http://tech.uc.cn/?p=221" target="_blank" rel="external">分布式文件系统FastDFS原理介绍</a><br><a href="http://www.oschina.net/question/12_13316" target="_blank" rel="external">分布式文件系统FastDFS架构剖析</a><br><a href="http://blog.irebit.com/fastdfs-%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" target="_blank" rel="external">FastDFS 配置教程</a><br><a href="http://blog.csdn.net/monkey_d_meng/article/details/6038995" target="_blank" rel="external">轻量级分布式文件系统FastDFS使用安装说明手册</a>  </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><em>by：leotse</em></p>
-<h2 id="Definition">Definition</h2><p>FastDFS是C语言实现的、开源的、轻量级的<strong>应用级分布式文件系统</strong>，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。</p>
-<h2 id="Architecture">Architecture</h2><p>FastDFS一共由三部分组成：<br><strong>TrackerServer</strong>：负责负载均衡和调度。是整个FastDFS的中心，它将StorageServer的分组信息以及状态信息保存在内存中；<br><strong>StorageServer</strong>：存储文件和文件meta信息。直接使用操作系统的文件系统管理DFS上的文件；<br><strong>Client</strong>：使用者与请求发起方。通过专有接口，使用TCP/IP协议与跟踪器服务器或存储节点进行数据交互；<br>]]>
-    
-    </summary>
-    
-      <category term="FastDFS" scheme="http://leotse90.com/tags/FastDFS/"/>
     
       <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
