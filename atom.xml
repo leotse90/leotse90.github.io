@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-01-19T16:19:08.000Z</updated>
+  <updated>2016-01-19T16:25:22.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,14 +19,12 @@
     <link href="http://leotse90.com/2016/01/20/%E8%BF%99%E5%BA%A7%E5%9F%8E%E5%B8%82%E7%9A%84%E5%AD%A4%E5%84%BF/"/>
     <id>http://leotse90.com/2016/01/20/这座城市的孤儿/</id>
     <published>2016-01-19T16:01:02.000Z</published>
-    <updated>2016-01-19T16:19:08.000Z</updated>
-    <content type="html"><![CDATA[<center><br><img src="/img/orphan.jpg" alt="night"><br></center>
-
-<center><br>你指着北方<br>看，北京<br>我沿着你划出的弧线<br>看到一群<br>小心翼翼的陌生人<br>他们用尽全力呼气<br>把天空变成<br>披上雾的毛玻璃<br>擦了又擦<br>也看不到远方</center>]]></content>
+    <updated>2016-01-19T16:25:22.000Z</updated>
+    <content type="html"><![CDATA[<center><br><img src="/img/orphan.jpg" alt="night"><br></center><br><a id="more"></a><br><center><br>你指着北方<br>看，北京<br>我沿着你划出的弧线<br>看到一群<br>小心翼翼的陌生人<br>他们用尽全力呼气<br>把天空变成<br>披上雾的毛玻璃<br>擦了又擦<br>也看不到远方</center>
+]]></content>
     <summary type="html">
-    <![CDATA[<center><br><img src="/img/orphan.jpg" alt="night"><br></center>
-
-<center><br>你指着北方<br>看，北京<br>我沿着你划出的弧线<br>看到一群<br>小心翼翼的陌生人<br>他们用尽全力呼气<br>]]>
+    <![CDATA[<center><br><img src="/img/orphan.jpg" alt="night"><br></center><br>]]>
+    
     </summary>
     
       <category term="远方与诗" scheme="http://leotse90.com/tags/%E8%BF%9C%E6%96%B9%E4%B8%8E%E8%AF%97/"/>
