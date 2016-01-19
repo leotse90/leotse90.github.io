@@ -656,7 +656,7 @@
     <link href="http://leotse90.com/2015/10/18/Hive%E4%B9%8BJOIN%E6%93%8D%E4%BD%9C/"/>
     <id>http://leotse90.com/2015/10/18/Hive之JOIN操作/</id>
     <published>2015-10-18T02:55:15.000Z</published>
-    <updated>2015-10-21T06:41:59.000Z</updated>
+    <updated>2015-10-21T06:41:58.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
 <p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
@@ -722,7 +722,7 @@
     <link href="http://leotse90.com/2015/10/15/%E3%80%90%E8%AF%91%E3%80%91Python%E4%B8%ADyield%E5%85%B3%E9%94%AE%E5%AD%97%E7%94%A8%E6%B3%95/"/>
     <id>http://leotse90.com/2015/10/15/【译】Python中yield关键字用法/</id>
     <published>2015-10-15T02:52:15.000Z</published>
-    <updated>2015-10-23T06:29:41.000Z</updated>
+    <updated>2015-10-23T06:29:40.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <p>本文译自stackoverflow <a href="http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python" target="_blank" rel="external">What does the yield keyword do in Python?</a></p>
 <h2 id="引子">引子</h2><p>这一切始于一位童鞋在Stack Overflow上问的问题：</p>
@@ -777,7 +777,7 @@
     <link href="http://leotse90.com/2015/10/14/Python%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E9%98%9F%E5%88%97Celery/"/>
     <id>http://leotse90.com/2015/10/14/Python任务调度队列Celery/</id>
     <published>2015-10-14T02:55:15.000Z</published>
-    <updated>2015-10-23T02:44:03.000Z</updated>
+    <updated>2015-10-23T02:44:02.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
 <p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
@@ -842,7 +842,7 @@ celery -A download_video_worker worker --loglevel=info
     <link href="http://leotse90.com/2015/10/12/Hive%E6%B5%AE%E7%82%B9%E6%95%B0%E6%AF%94%E8%BE%83%E4%B8%8E%E8%AE%A1%E7%AE%97/"/>
     <id>http://leotse90.com/2015/10/12/Hive浮点数比较与计算/</id>
     <published>2015-10-12T02:55:15.000Z</published>
-    <updated>2015-10-21T06:42:33.000Z</updated>
+    <updated>2015-10-21T06:42:32.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <h3 id="Hive浮点数比较">Hive浮点数比较</h3><p>Hive的较早前版本（0.9.0）在比较浮点数时会出现问题，如下：<br><code>hive&gt; select * from float_compare where weight&gt;120.9;</code><br><code>OK</code><br><code>xiefeng 128.2</code><br><code>yolovon 121.8</code><br><code>leotse 120.9</code><br>我们可以看到，leotse乱入了，他的weight等于120.9，这一点与我们的预期不符合。设想一下，如果这些数据不是weight而是money，那么结果就会变成后果。这是Hive的一个BUG，我们在Hive的issues上可以看到<a href="https://issues.apache.org/jira/browse/HIVE-2586" target="_blank" rel="external">Float comparison doesn’t work</a>。这个问题已经解决了，但是我们仍然可以分析一下其他的原因。<br><a id="more"></a><br>在float_weight表中，weight以float类型保存。当我们在HiveQL语句输入120.9时，Hive会将其保存为double类型，这样我们看看120.9分别在这两种类型的表示：<br><code>float 120.9000001</code><br><code>double 120.900000000001</code><br>我们知道，在比较float和double类型数值时，float会强制转型为double。这样当float_compare表中数值120.9在和HQL中120.9比较时，前者会转型为120.900000100000。我们可以看到120.900000100000&gt;120.900000000001。这也就是为什么leotse会出现在查询结果的原因。</p>
 <p>虽然这个问题已经解决，但是仍然给我们一些启示，当我们在进行浮点数比较的时候，需要警惕float和double的自动转型，特别需要避免从窄类型数值向宽类型数值的转型。</p>
