@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-01-21T15:09:31.000Z</updated>
+  <updated>2016-01-28T16:24:54.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[VAST3.0视频广告规范介绍]]></title>
+    <link href="http://leotse90.com/2016/01/29/VAST3.0/"/>
+    <id>http://leotse90.com/2016/01/29/VAST3.0/</id>
+    <published>2016-01-28T16:23:22.000Z</published>
+    <updated>2016-01-28T16:24:54.000Z</updated>
+    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
+<h2 id="概述">概述</h2><p>说到VAST，就不得不提到IAB，<a href="http://www.iab.com" target="_blank" rel="external">IAB</a>，全称为Interactive Advertising Bureau，我们称之为互联网广告署，它的主要职责是制定网络业务流程的开发标准以及行业准则，并对网络广告收入进行跟踪。</p>
+<p>我们今天要介绍的就是IAB的六个主要部分之一——VAST（Video Ad Serving Template）。它是互联网视频广告的统一标准，采用XML格式。随着在线视频内容的广告越来越普遍，人们也越来越关注互联网视频广告的商业化，在VAST出台之前，视频广告并没有统一的广告协议，行业乱象促使需要有人站出来制定一个通用的标准，这时候IAB开始出来行使它的职责，它为在线互联网视频广告制定了一套统一的、可扩展的广告协议。VAST消除了视频广告的技术壁垒，在VAST3.0之前，已经有两个较为普遍的版本，但是现在通用、流行的就是我们说的3.0版本，3.0版本保证了对2.0的兼容。</p>
+<p>VAST协议主要包含以下三部分：</p>
+<blockquote>
+<p>视频广告的内容（creatives）<br>视频广告的跟踪事件及其追踪链接<br>视频广告的wrapper</p>
+</blockquote>
+<p>在VAST3.0中，保证了支持以下五种类型的广告：</p>
+<blockquote>
+<p>线性广告<br>非线性的广告<br>可跳过线性广告<br>伴随线性广告<br>广告荚</p>
+</blockquote>
+<p>其中，可跳过的线性广告以及广告荚是3.0新增的两种格式。<br><a id="more"></a></p>
+<h2 id="专业术语">专业术语</h2><p>我们接下来要简单介绍一下VAST中主要的专业术语。</p>
+<h3 id="VAST_Tag">VAST Tag</h3><p>VAST标签，获取VAST的URI。通过访问VAST tag可以connect到ad server，从而获取到VAST的response。<br>比如：<a href="http://ad4.liverail.com/?LR_PUBLISHER_ID=1331&amp;LR_CAMPAIGN_ID=229&amp;LR_SCHEMA=vast2-vpaid" target="_blank" rel="external">http://ad4.liverail.com/?LR_PUBLISHER_ID=1331&amp;LR_CAMPAIGN_ID=229&amp;LR_SCHEMA=vast2-vpaid</a></p>
+<h3 id="Video_Ad">Video Ad</h3><p>视频广告，这是VAST的主角。它主要指的是视频流（in-stream video）。</p>
+<h3 id="Primary_Ad_Server">Primary Ad Server</h3><p>主广告服务器，视频播放器请求广告内容的第一个广告服务器。主广告服务器通常是由publisher的广告服务器。<br>从主广告服务器返回的数据不一定是我们所需的广告视频，还有可能是另一个广告服务器的地址，也就是下面介绍的二级广告服务器。</p>
+<h3 id="Secondary_Ad_Server">Secondary Ad Server</h3><p>二级广告服务器，如果主广告服务器返回的不是视频广告的内容，而是一个重定向，指向另一个广告服务器，而这一级的广告服务器也不一定是最后一跳，也就是说还有可能有三级广告服务器、四级广告服务器，以此类推。但是最后一跳的广告服务器一定会提供包含视频广告信息的VAST响应。</p>
+<h3 id="Wrapper">Wrapper</h3><p>封装。如果VAST的响应返回的是一个Wrapper，那么就意味着我们需要访问Wrapper中提供的URI访问下一级广告服务器。</p>
+<h3 id="Clickthrough">Clickthrough</h3><p>点击。当用户点击广告creatives时所打开的页面。</p>
+<h3 id="InLine_Ad">InLine Ad</h3><p>线内广告。指的是包含视频广告所需信息的VAST响应，当VAST的线内广告收到响应后，无需调用其他所需要的广告服务器。</p>
+<p>接下来介绍的是VAST3.0支持的广告：</p>
+<h3 id="Linear_Ad">Linear Ad</h3><p>线性广告。这种类型的广告我们平时接触很多，当我们在网上看电影的时候我们常常会在播放电影之前（pre-roll）、播放之后（post-roll）出现广告，更有甚者，电影中间（mid-roll）也有可能插播广告。<br>线性广告的形式多种多样，它可以是视频、rich media或者只是一张静止的图像。</p>
+<p>可跳过线性广告属于比较特殊的线性广告，也就是用户可以根据需要选择是否看完广告，国外的Youtube的广告一般是这种，用户可以在观看5s后选择是否继续观看广告。</p>
+<h3 id="Nonlinear_Ad">Nonlinear Ad</h3><p>非线性广告。依旧属于视频流广告，它也和视频的内容一起显示，但是与线性广告不同的是，非线性广告通常覆盖视频播放器的底部或顶部的五分之一。<br>非线性广告的形式也是多种多样，包含文本、图像等等。</p>
+<h3 id="Companion_Ad">Companion Ad</h3><p>伴随广告。这种广告区别于前两者，它出现在视频播放器之外，一般是横幅广告或者富媒体广告。</p>
+<p>下图展示了以上四种广告：<br><img src="/img/ads-vast.png" alt="ads-vast"></p>
+<h3 id="Ad_Pod">Ad Pod</h3><p>广告荚。大多数视频网站前面的视频广告都是这种形式，包含一系列的线性视频广告。<br><img src="/img/ad-pods.png" alt="ad-pod"></p>
+<h2 id="VAST3-0_工作原理">VAST3.0 工作原理</h2><p>常见的情况是直接从主广告服务器上获取视频广告信息。IAB给出这个流程的示意图：<br><img src="/img/master-ad-server-vast.png" alt="master-ad-server-vast"><br>从这个图上我们可以很清楚地看到请求VAST的流程，Ad server直接向视频播放器返回所需的InLine响应，视频播放器在解析了ad server的响应后，打开视频广告，并向ad server发跟踪链接。</p>
+<p>另一种情况就是从多级广告服务器上获取视频广告信息，我们以二级广告服务器为例：<br><img src="/img/multi-ad-server-vast.png" alt="multi-ad-server-vast"><br>主广告服务器返回的是Wrapper，也就是视频播放器还需要继续请求二级广告服务器，然后获取到需要的视频创意。这里需要注意的是，跟踪事件需要发送给主广告服务器以及二级广告服务器。</p>
+<h2 id="VAST3-0_响应示例">VAST3.0 响应示例</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">VAST</span> <span class="attribute">version</span>=<span class="value">"2.0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Ad</span> <span class="attribute">id</span>=<span class="value">"VPAID"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">InLine</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">AdSystem</span> <span class="attribute">version</span>=<span class="value">"3.1"</span>&gt;</span>LiveRail<span class="tag">&lt;/<span class="title">AdSystem</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">AdTitle</span>&gt;</span>VPAID Ad Manager<span class="tag">&lt;/<span class="title">AdTitle</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Impression</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Creatives</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Creative</span> <span class="attribute">sequence</span>=<span class="value">"1"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Linear</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Duration</span>&gt;</span>00:00:15<span class="tag">&lt;/<span class="title">Duration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">MediaFiles</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">MediaFile</span> <span class="attribute">delivery</span>=<span class="value">"progressive"</span> <span class="attribute">width</span>=<span class="value">"640"</span> <span class="attribute">height</span>=<span class="value">"480"</span> <span class="attribute">scalable</span>=<span class="value">"1"</span> <span class="attribute">type</span>=<span class="value">"application/x-shockwave-flash"</span> <span class="attribute">apiFramework</span>=<span class="value">"VPAID"</span>&gt;</span></span><br><span class="line"><span class="cdata">&lt;![CDATA[</span><br><span class="line">http://vox-static.liverail.com/swf/v4/admanager.swf?LR_PUBLISHER_ID=1331&amp;LR_CAMPAIGN_ID=229&amp;LR_SUBSEQUENT_VAST2_VPAID_CALL</span><br><span class="line">]]&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">MediaFile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">MediaFile</span> <span class="attribute">delivery</span>=<span class="value">"progressive"</span> <span class="attribute">width</span>=<span class="value">"640"</span> <span class="attribute">height</span>=<span class="value">"480"</span> <span class="attribute">scalable</span>=<span class="value">"1"</span> <span class="attribute">type</span>=<span class="value">"application/javascript"</span> <span class="attribute">apiFramework</span>=<span class="value">"VPAID"</span>&gt;</span></span><br><span class="line"><span class="cdata">&lt;![CDATA[</span><br><span class="line">http://cdn-static.liverail.com/js/LiveRail.AdManager-1.0.js?LR_PUBLISHER_ID=1331&amp;LR_CAMPAIGN_ID=229&amp;LR_SUBSEQUENT_VAST2_VPAID_CALL</span><br><span class="line">]]&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">MediaFile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">MediaFiles</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Linear</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Creative</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Creative</span> <span class="attribute">sequence</span>=<span class="value">"1"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">CompanionAds</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Companion</span> <span class="attribute">width</span>=<span class="value">"300"</span> <span class="attribute">height</span>=<span class="value">"250"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">HTMLResource</span>&gt;</span></span><br><span class="line"><span class="cdata">&lt;![CDATA[</span><br><span class="line">&lt;div id="lr_comp_300x250" style="width: 300px; height: 250px; display: none;"&gt;&lt;/div&gt;</span><br><span class="line">]]&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">HTMLResource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Companion</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Companion</span> <span class="attribute">width</span>=<span class="value">"300"</span> <span class="attribute">height</span>=<span class="value">"60"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">HTMLResource</span>&gt;</span></span><br><span class="line"><span class="cdata">&lt;![CDATA[</span><br><span class="line">&lt;div id="lr_comp_300x60" style="width: 300px; height: 60px; display: none;"&gt;&lt;/div&gt;</span><br><span class="line">]]&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">HTMLResource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Companion</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Companion</span> <span class="attribute">width</span>=<span class="value">"728"</span> <span class="attribute">height</span>=<span class="value">"90"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">HTMLResource</span>&gt;</span></span><br><span class="line"><span class="cdata">&lt;![CDATA[</span><br><span class="line">&lt;div id="lr_comp_728x90" style="width: 728px; height: 90px; display: none;"&gt;&lt;/div&gt;</span><br><span class="line">]]&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">HTMLResource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Companion</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">CompanionAds</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Creative</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Creatives</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">InLine</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Ad</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">VAST</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>参考阅读</strong>：<br><a href="http://www.iab.com/guidelines/digital-video-ad-serving-template-vast-3-0/" target="_blank" rel="external">Digital Video Ad Serving Template (VAST) 3.0</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>by:leotse</em></p>
+<h2 id="概述">概述</h2><p>说到VAST，就不得不提到IAB，<a href="http://www.iab.com">IAB</a>，全称为Interactive Advertising Bureau，我们称之为互联网广告署，它的主要职责是制定网络业务流程的开发标准以及行业准则，并对网络广告收入进行跟踪。</p>
+<p>我们今天要介绍的就是IAB的六个主要部分之一——VAST（Video Ad Serving Template）。它是互联网视频广告的统一标准，采用XML格式。随着在线视频内容的广告越来越普遍，人们也越来越关注互联网视频广告的商业化，在VAST出台之前，视频广告并没有统一的广告协议，行业乱象促使需要有人站出来制定一个通用的标准，这时候IAB开始出来行使它的职责，它为在线互联网视频广告制定了一套统一的、可扩展的广告协议。VAST消除了视频广告的技术壁垒，在VAST3.0之前，已经有两个较为普遍的版本，但是现在通用、流行的就是我们说的3.0版本，3.0版本保证了对2.0的兼容。</p>
+<p>VAST协议主要包含以下三部分：</p>
+<blockquote>
+<p>视频广告的内容（creatives）<br>视频广告的跟踪事件及其追踪链接<br>视频广告的wrapper</p>
+</blockquote>
+<p>在VAST3.0中，保证了支持以下五种类型的广告：</p>
+<blockquote>
+<p>线性广告<br>非线性的广告<br>可跳过线性广告<br>伴随线性广告<br>广告荚</p>
+</blockquote>
+<p>其中，可跳过的线性广告以及广告荚是3.0新增的两种格式。<br>]]>
+    
+    </summary>
+    
+      <category term="VAST" scheme="http://leotse90.com/tags/VAST/"/>
+    
+      <category term="计算广告" scheme="http://leotse90.com/categories/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[劣质诗人]]></title>
@@ -802,71 +862,6 @@
 <p>Python中的yield关键字是用来干嘛的？它都干了些什么？<br>]]>
     
     </summary>
-    
-      <category term="Python" scheme="http://leotse90.com/tags/Python/"/>
-    
-      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Python任务调度队列Celery]]></title>
-    <link href="http://leotse90.com/2015/10/14/Python%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E9%98%9F%E5%88%97Celery/"/>
-    <id>http://leotse90.com/2015/10/14/Python任务调度队列Celery/</id>
-    <published>2015-10-14T02:55:15.000Z</published>
-    <updated>2015-10-23T02:44:02.000Z</updated>
-    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
-<h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
-<p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
-<p>一般推荐使用RabbitMQ，但是我们这里用到Redis，因为Redis安装的时候依赖少，而且性能稳定，但是Redis也有缺点，那就是断电的时候会丢失数据。我们在这里，就以Redis作为Celery的第三方中间层。<br><a id="more"></a></p>
-<h2 id="Installation">Installation</h2><p>我们这里使用Celery+redis套餐进行任务的调度。  </p>
-<p>Celery的安装非常简单，在linux系统下直接执行：  </p>
-<pre>
-sudo pip install Celery
-sudo pip install celery-with-redis
-</pre>
-如果上述安装失败，可以尝试：  
-<pre>
-sudo easy_install Celery
-</pre>
-
-<p>我们来验证一下Celery是否安装成功，进入python shell，输入：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br></pre></td></tr></table></figure></p>
-<p>如果没有报错，则说明安装成功。</p>
-<p>接着我们安装redis：  </p>
-<pre>
-sudo apt-get install redis-server
-</pre>
-安装完成后，redis会自动启动，我们也来验证一下redis是否安装成功：  
-<pre>
-ps -aux|grep redis
-</pre>
-如果看到以下输出，则说明安装ok：  
-<pre>
-redis      942  0.2  0.0  73852  1832 ?        Ssl  Apr13 302:26 /usr/bin/redis-server /etc/redis/redis.conf
-</pre>
-
-<p>它们的安装都比较简单。接下来我们看如何使用Celery进行任务调度。</p>
-<h2 id="Usage">Usage</h2><p>我们应该都知道生产者-消费者模型，在使用Celery的时候，我们也需要一个生产者和一个消费者，生产者负责往队列里写入待处理的数据，消费者负责将数据从队列中取出并进行处理。我们在这里将redis作为存储这种“数据”的地方。</p>
-<p>我们来看这样一个示例，我们假设要下载一批视频v1，v2，v3….，这批视频列表存在另一个文件系统中，我们假设通过get_video_list方法来获取这批视频列表，另一方面，我们可以通过download_video_worker(video)来下载视频。</p>
-<p>那么，生产者的伪代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> download_video_worker</span><br><span class="line">video_list = get_video_list()</span><br><span class="line"><span class="keyword">for</span> video <span class="keyword">in</span> video_list: </span><br><span class="line">    download_video_worker.apply_async([video])</span><br></pre></td></tr></table></figure></p>
-<p>消费者的伪代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">download_app=Celery(<span class="string">"download_videos"</span>, broker=<span class="string">"redis://localhost:6379/0"</span>)</span><br><span class="line"><span class="decorator">@download_app.task`  </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_video_worker</span><span class="params">(video)</span>:</span></span><br><span class="line">    download_video_to_local(video)</span><br></pre></td></tr></table></figure></p>
-<p>接着我们运行Celery：  </p>
-<pre>
-celery -A download_video_worker worker --loglevel=info
-</pre>
-
-<p>这样，当我们每次往队列中放入video信息时，celery就会执行download_video_woker中的逻辑处理video的下载过程。</p>
-<h3 id="推荐阅读">推荐阅读</h3><p><a href="http://www.celeryproject.org/" target="_blank" rel="external">Homepage - Celery: Distributed Task Queue</a><br><a href="https://denibertovic.com/posts/celery-best-practices/" target="_blank" rel="external">CELERY - BEST PRACTICES</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><em>by:leotse</em></p>
-<h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
-<p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
-<p>一般推荐使用RabbitMQ，但是我们这里用到Redis，因为Redis安装的时候依赖少，而且性能稳定，但是Redis也有缺点，那就是断电的时候会丢失数据。我们在这里，就以Redis作为Celery的第三方中间层。<br>]]>
-    
-    </summary>
-    
-      <category term="Celery" scheme="http://leotse90.com/tags/Celery/"/>
     
       <category term="Python" scheme="http://leotse90.com/tags/Python/"/>
     
