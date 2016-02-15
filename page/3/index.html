@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 17.5px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 15px;">并发</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 17.5px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 15px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 10px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -213,6 +213,71 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-【译】避免使用GroupByKey" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/04/【译】避免使用GroupByKey/" class="article-date">
+  	<time datetime="2015-11-04T11:37:15.000Z" itemprop="datePublished">2015-11-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/04/【译】避免使用GroupByKey/">【译】避免使用GroupByKey</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<p>原文：<a href="http://databricks.gitbooks.io/databricks-spark-knowledge-base/content/best_practices/prefer_reducebykey_over_groupbykey.html">Avoid GroupByKey</a></p>
+<h3 id="译文">译文</h3><p>让我们来看两个wordcount的例子，一个使用了<code>reduceByKey</code>，而另一个使用<code>groupByKey</code>:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">words</span> =</span> <span class="type">Array</span>(<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>, <span class="string">"three"</span>, <span class="string">"three"</span>)</span><br><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">wordPairsRDD</span> =</span> sc.parallelize(words).map(word =&gt; (word, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">wordCountsWithReduce</span> =</span> wordPairsRDD</span><br><span class="line">                           .reduceByKey(_ + _)</span><br><span class="line">                           .collect()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">val</span> <span class="title">wordCountsWithGroup</span> =</span> wordPairsRDD</span><br><span class="line">                          .groupByKey()</span><br><span class="line">                          .map(t =&gt; (t._1, t._2.sum))</span><br><span class="line">                          .collect()</span><br></pre></td></tr></table></figure></p>
+<p>上面两个函数所得到的结果都是正确的，但是当数据集很大时，使用了<code>reduceByKey</code>的例子表现更佳。这是因为在shuffle输出的数据前，Spark会Combine每一个partition上具有相同key的输出结果。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/11/04/【译】避免使用GroupByKey/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-ElasticSearch初探" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -539,71 +604,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2015/10/20/Scala入门/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-Hive之JOIN操作" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/18/Hive之JOIN操作/" class="article-date">
-  	<time datetime="2015-10-18T02:55:15.000Z" itemprop="datePublished">2015-10-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/18/Hive之JOIN操作/">Hive之JOIN操作</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
-<p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
-<p>接下来，我们将分析和介绍Hive中主要的JOIN操作。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/">Hive</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/18/Hive之JOIN操作/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
