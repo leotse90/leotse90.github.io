@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://leotse90.com/img/java-exception.jpg">
 <meta property="og:image" content="http://leotse90.com/img/java-exception2.jpg">
 <meta property="og:image" content="http://leotse90.com/img/exception-flow.jpg">
-<meta property="og:updated_time" content="2016-02-29T16:50:16.000Z">
+<meta property="og:updated_time" content="2016-02-29T16:52:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java中线程的异常处理">
 <meta name="twitter:description" content="by:leotse
@@ -266,7 +266,7 @@ var _hmt = _hmt || [];
         <p><em>by:leotse</em></p>
 <h2 id="异常处理">异常处理</h2><p>异常，在程序出现的非正常状态；异常处理机制，就是程序语言针对这些异常状态采取的处理措施。当程序出现异常的时候，程序会暂停运行，并且程序的控制权会转交给异常处理器。</p>
 <p>在Java中，我们有一套比较完善的异常处理机制。下面是Java中异常的一个示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// your code</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception1 exception1)&#123;</span><br><span class="line">    <span class="comment">// do something when Exception1 throws</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception2 exception2)&#123;</span><br><span class="line">    <span class="comment">// do something when Exception2 throws</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// do this no matter what happened</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="异常主要分类">异常主要分类</h3><p>在Java中（Android一样），异常的基类是<code>Throwable</code>，而我们平时所看到的<code>Error</code>以及<code>Exception</code>都继承自<code>Throwable</code>。  </p>
+<h3 id="异常主要分类">异常主要分类</h3><p>在Java中（Android一样），异常的基类是<code>Throwable</code>，而我们平时所看到的<code>Error</code>以及<code>Exception</code>都继承自<code>Throwable</code>。<br><a id="more"></a></p>
 <center><br><img src="/img/java-exception.jpg" alt="java-exception"><br></center>
 
 <p>而<code>Error</code>指的是Java在运行时系统中的内部错误或者资源不够等情况，问题一般较严重；对于<code>Error</code>，程序除了尽快全身而退外，其他什么都做不了。程序也不应该抛出<code>Error</code>对象，它一般是由JVM抛出；<br>相较于<code>Error</code>，<code>Exception</code>就温顺多了，我们一般情况下可以在代码中预测<code>Exception</code>的发生并对症下药，提前编写好异常处理的代码。</p>
