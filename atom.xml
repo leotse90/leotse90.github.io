@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-02-29T16:52:15.000Z</updated>
+  <updated>2016-03-01T16:54:54.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[广告有效性原理]]></title>
+    <link href="http://leotse90.com/2016/03/01/ad-effective-theory/"/>
+    <id>http://leotse90.com/2016/03/01/ad-effective-theory/</id>
+    <published>2016-02-29T17:00:35.000Z</published>
+    <updated>2016-03-01T16:54:54.000Z</updated>
+    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
+<p>广告有效性原理用于描述广告从产生，到达用户以至于最后的转化行为的整个过程。整个模型主要包含三个阶段：选择、解释、态度。这三个名词初看起来有点难以捉摸，接下来会逐个解释这三个阶段。</p>
+<h2 id="选择(selection)">选择(selection)</h2><p>选择主要包含两个子阶段：<strong>曝光阶段(exposure)</strong>与<strong>关注阶段(attention)</strong>。  </p>
+<p>这个阶段主要是将广告带入受众的视线。所以这个阶段也可以理解为到达用户阶段。</p>
+<h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：</p>
+<center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center><br><a id="more"></a><br>这张图上展示了百度搜索广告的北区广告和东区广告，我们明显可以知道北区的广告相比于东区更容易被用户浏览，更别提底部的南区广告了，这种差距不是一些技术上的优化就能抹平的。<br><br>### 关注阶段(attention)<br>如果说曝光阶段是广告进入受众视线可达到的一步，那么关注阶段则是广告被受众发现的过程。举个例子，大部分的公交站都有广告牌，比如说即将上映的电影，或者是刚推出的电子产品等，它的出现就是曝光阶段，但是只有某一天你被它吸引驻足停留，才算是进入了关注阶段。<br><center><br><img src="/img/bus-station-ad.jpg" alt="bus-station-ad"><br></center><br>如果说曝光阶段靠的是先天条件，那么关注阶段的效果就能靠后天努力了（当然先天优势依然很关键）。比如丰富的广告创意，或者符合潜在目标人群的兴趣爱好等，都能提升关注阶段的效果。<br><br>这个阶段，有几个重要的原则：<br><br>&gt;1.尽量不要打断用户的任务；<br>2.明确传达向用户推送广告的原因；<br>3.内容符合用户的兴趣或需求。<br><br>这三点原则在实际实施中很有用，尤其是CPC和CPM的广告。关于第一个原则，有一个实际的例子，笔者所在公司有一款输入法产品，曾经在用户输入某个关键字的时候弹出符合该条件的广告或内容（现在百度输入法还在这样做），但是效果不理想，反而GP上指责不断，这个idea不久就夭折了，因为用户使用输入法一般在聊天或者其他记录查询操作，如果这个时候强行打断用户插入广告，牺牲了产品体验的同时并没有提升广告效果。而第二个原则Amazon很好地贯彻了，Amazon的推荐商品下方一般都有推荐的理由，这样对用户来说，广告出现得并不突兀，反而会让人觉得这是非常合理人性化的商品推荐。<br><center><br><img src="/img/amazon-recommend-ad.png" alt="amazon-recommend-ad"><br></center>
+
+<p>第三个原则可以根据用户的兴趣爱好及需求（问卷调查、数据挖掘、用户行为分析等手段），比较精准地推荐广告，这个原则要执行起来技术难度较大，但是一旦实施效果将会非常明显。</p>
+<h2 id="解释(interpretation)">解释(interpretation)</h2><p>“解释”这个阶段需要解释一下，这个“解释”主要是广告投放方向广告受众讲明来意并被潜在受众理解和接受的阶段。它主要包含理解阶段(comprehension)和接受阶段(acceptance)。</p>
+<h3 id="理解阶段(comprehension)">理解阶段(comprehension)</h3><p>这个阶段的主要目标是让用户明白他关注到的广告的用意，并理解广告所传达的信息。这个通俗地讲就是用户理解了这个广告是干嘛的，香烟广告观众看完要知道这个广告的产品是烟草而不是打火机，食品广告就要让用户知道这是在卖吃的。</p>
+<p>这个阶段也有两个原则：</p>
+<blockquote>
+<p>1.广告内容要在用户能理解的具体兴趣范围内；<br>2.设定与关注程度相匹配的理解门槛。</p>
+</blockquote>
+<p>这两个原则恐怕也是需要解释一下的，第一个原则的前提是广告投放人群定向，而这两个原则都在指引我们在设计广告和投放广告时尽量找到它对应的潜在受众。</p>
+<h3 id="接受阶段(acceptance)">接受阶段(acceptance)</h3><p>广告受众看到了，关注了，也读懂了，但是如果不被用户接受，那么也是前功尽弃。在接受阶段，除了广告的投放需要尽量精准外，还需要注意广告的形式，广告不要过度影响或妨碍用户。比如一个小孩在使用APP的时候，浏览到一则根据他兴趣推荐的最新游戏的广告，但是广告内容却是充满性暗示的美女图片，我们假设小孩还和以前一样是比较单纯的群体，那么这种广告反而会起到负面效果。</p>
+<p>接受，就是合适的广告在合适的时机出现在合适的位置。</p>
+<h2 id="态度(attitude)">态度(attitude)</h2><p>前面的解释阶段注重的是广告投放方向广告的受众传递信息，那么这个“态度”阶段就是广告受众向广告投放方表明自己立场的过程。</p>
+<h3 id="保持阶段(retention)">保持阶段(retention)</h3><p>这个阶段主要是针对品牌广告。品牌广告商希望自己的广告能比较持久的“保持”在受众的脑海里，以期在未来较长的一段时间里都能影响用户的选择。</p>
+<h3 id="决策阶段(decision)">决策阶段(decision)</h3><p>这是广告的最终目的，品牌广告希望你记住广告商并在商场选购中不假思索地选择他们的产品，游戏应用安装类广告希望你下载他们的游戏并沉浸其中，公益广告希望你能遵循教导爱国孝顺礼貌勤劳等等。</p>
+<p>决策是整个广告行为的收官阶段，也是评判广告是否有效的重要指标。</p>
+<blockquote>
+<p>广告没有专业可言，只有成功可言。</p>
+</blockquote>
+<p>是的，广告的世界就是直白。没有广告主会把注意力集中在广告是否丰富专业，他们的需求只有一个：看到广告的用户行动起来！</p>
+<blockquote>
+<p>对于互联网广告，越靠前的阶段，其效果的改善对点击率的贡献就越大；而越靠后的阶段，其效果的改善对转化率的贡献就越大。</p>
+</blockquote>
+<p>关于广告有效性原理，虽然看起来理论气息很浓，但是它的“曝光”绝不只是希望得到我们的“关注”，而是需要我们“理解”并“接受”它的意旨，然后能“保持”在每一个广告人的脑海中并帮助我们在工作中做出更有用的“决策”！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>by:leotse</em></p>
+<p>广告有效性原理用于描述广告从产生，到达用户以至于最后的转化行为的整个过程。整个模型主要包含三个阶段：选择、解释、态度。这三个名词初看起来有点难以捉摸，接下来会逐个解释这三个阶段。</p>
+<h2 id="选择(selection)">选择(selection)</h2><p>选择主要包含两个子阶段：<strong>曝光阶段(exposure)</strong>与<strong>关注阶段(attention)</strong>。  </p>
+<p>这个阶段主要是将广告带入受众的视线。所以这个阶段也可以理解为到达用户阶段。</p>
+<h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：</p>
+<center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center><br>]]>
+    
+    </summary>
+    
+      <category term="广告杂谈" scheme="http://leotse90.com/tags/%E5%B9%BF%E5%91%8A%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="计算广告" scheme="http://leotse90.com/categories/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Java中线程的异常处理]]></title>
@@ -839,38 +891,6 @@
     </summary>
     
       <category term="Scala" scheme="http://leotse90.com/tags/Scala/"/>
-    
-      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Hive之JOIN操作]]></title>
-    <link href="http://leotse90.com/2015/10/18/Hive%E4%B9%8BJOIN%E6%93%8D%E4%BD%9C/"/>
-    <id>http://leotse90.com/2015/10/18/Hive之JOIN操作/</id>
-    <published>2015-10-18T02:55:15.000Z</published>
-    <updated>2015-10-21T06:41:58.000Z</updated>
-    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
-<h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
-<p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
-<p>接下来，我们将分析和介绍Hive中主要的JOIN操作。<br><a id="more"></a><br>我们假定我们有两张表：human和assets。它们分别记录了人口以及资产信息，它们的字段如下：<br><code>hive&gt; describe human;</code><br><code>OK</code><br><code>name                    string</code><br><code>age                     int</code><br><code>job                     string</code><br><code>addr                    string</code>  </p>
-<p><code>hive&gt; describe assets;</code><br><code>OK</code><br><code>name                    string</code><br><code>bank                    string</code><br><code>fund                    int</code>  </p>
-<p>在下面的例子中，将会用到这两张表。</p>
-<h3 id="INNER_JOIN">INNER JOIN</h3><p>INNER JOIN，又称内连接。是较为常见的一种JOIN操作：<br><strong>Input</strong>: 表A、表B<br><strong>Condition</strong>: A.col = B.col<br><strong>Output</strong>: 表A和表B中满足Condition的所有数据记录<br><strong>Example</strong>:<br><code>SELECT a.col1, a.col2, b.col2, b.col3</code><br><code>FROM A a JOIN B b</code><br><code>ON a.col1 = b.col1</code><br><code>WHERE a.col3 = &#39;CONDITION&#39;;</code>  </p>
-<p>我们来看一个具体的例子，我们想知道human表中每一个人在不同银行的存款记录，我们可以用以下SQL语句进行查询：<br><code>SELECT h.name, h.age, h.job, a.bank, a.fund FROM human h JOIN assets a ON h.name=a.name;</code><br>ON关键字指定了两种表联接的条件，<br>我们对输出结果进行了截取，只选取最终的数据查询记录，如下：<br><code>xiefeng    24    big data    CMB    15000000</code><br><code>leotse    25    programmer    CMB    200000000</code><br><code>leotse    25    programmer    CAB    10000000</code><br><code>yolovon    26    CEO    HB    5000000</code><br><code>yolovon    26    CEO    CCB    3200000</code>  </p>
-<p>另外，我们需要注意的是，在Hive中，ON子句中尚不支持谓词OR。</p>
-<p>如果我们对多表进行INNER JOIN操作，如:<br><code>SELECT a.col1, a.col2, b.col4, c.col5 FROM a</code><br><code>JOIN b ON a.col1 = b.col2</code><br><code>JOIN c ON a.col2 = c.col3</code><br><code>WHERE CLAUSE;</code><br>大多数情况下，Hive会对每次JOIN操作启动一个MR Job，（在Hive中，SQL的执行是从左至右的）这上面这个SQL语句的执行过程中，首先启动一个MR Job对表a和表b进行一次JOIN操作，然后再启动另一个新的MR Job对表a和表c进行一次JOIN操作。<br>上面说到是大多数情况下，那种小部分的情况是指只要我们使用的ON后的条件（即连接键）一致的话，那就只会产生一个MR Job。</p>
-<p>Hive还假定最后一张JOIN的表最大，从而先将前面的表先缓存起来，直到最后一张表才进行计算，因此为了防止内存消耗过大，我们应该尽量保证JOIN操作的表从左到右表大小递增。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><em>by:leotse</em></p>
-<h3 id="Introduction">Introduction</h3><p>在MySQL等关系型数据库中，我们经常会用到联表查询，用以查询多张表的数据。<br>使用联表查询的场景一般是：我们需要对两张或多张表中的数据进行关联，从而得到我们所需要的数据集。  </p>
-<p>在Hive中，也存在这样的场景，特别是进行数据分析的时候，但是，Hive虽然支持Hive JOIN语句，但是<strong>只限于等值连接</strong>，也就是说，只支持a.col=b.col而不支持a.col &gt;= b.col这类的条件，主要原因是通过MapReduce很难实现这种类型的联接。</p>
-<p>接下来，我们将分析和介绍Hive中主要的JOIN操作。<br>]]>
-    
-    </summary>
-    
-      <category term="Hive" scheme="http://leotse90.com/tags/Hive/"/>
     
       <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
