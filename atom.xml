@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-03-01T17:01:59.000Z</updated>
+  <updated>2016-03-01T17:06:21.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,15 +19,14 @@
     <link href="http://leotse90.com/2016/03/01/ad-effective-theory/"/>
     <id>http://leotse90.com/2016/03/01/ad-effective-theory/</id>
     <published>2016-02-29T17:00:35.000Z</published>
-    <updated>2016-03-01T17:01:59.000Z</updated>
+    <updated>2016-03-01T17:06:21.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <p>广告有效性原理用于描述广告从产生，到达用户以至于最后的转化行为的整个过程。整个模型主要包含三个阶段：选择、解释、态度。这三个名词初看起来有点难以理解，接下来会逐个解释这三个阶段。</p>
 <h2 id="选择(selection)">选择(selection)</h2><p>选择主要包含两个子阶段：<strong>曝光阶段(exposure)</strong>与<strong>关注阶段(attention)</strong>。  </p>
 <p>这个阶段主要是将广告带入受众的视线。所以这个阶段也可以理解为到达用户阶段。</p>
-<h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：</p>
+<h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：<br><a id="more"></a></p>
 <center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center>
 
-<a id="more"></a>
 <p>这张图上展示了百度搜索广告的北区广告和东区广告，我们明显可以知道北区的广告相比于东区更容易被用户浏览，更别提底部的南区广告了，这种差距不是一些技术上的优化就能抹平的。</p>
 <h3 id="关注阶段(attention)">关注阶段(attention)</h3><p>如果说曝光阶段是广告进入受众视线可达到的一步，那么关注阶段则是广告被受众发现的过程。举个例子，大部分的公交站都有广告牌，比如说即将上映的电影，或者是刚推出的电子产品等，它的出现就是曝光阶段，但是只有某一天你被它吸引驻足停留，才算是进入了关注阶段。</p>
 <center><br><img src="/img/bus-station-ad.jpg" alt="bus-station-ad"><br></center>
@@ -68,8 +67,7 @@
 <p>广告有效性原理用于描述广告从产生，到达用户以至于最后的转化行为的整个过程。整个模型主要包含三个阶段：选择、解释、态度。这三个名词初看起来有点难以理解，接下来会逐个解释这三个阶段。</p>
 <h2 id="选择(selection)">选择(selection)</h2><p>选择主要包含两个子阶段：<strong>曝光阶段(exposure)</strong>与<strong>关注阶段(attention)</strong>。  </p>
 <p>这个阶段主要是将广告带入受众的视线。所以这个阶段也可以理解为到达用户阶段。</p>
-<h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：</p>
-<center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center>]]>
+<h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：<br>]]>
     
     </summary>
     
