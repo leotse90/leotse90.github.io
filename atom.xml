@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-03-01T16:55:54.000Z</updated>
+  <updated>2016-03-01T17:01:59.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,13 +19,26 @@
     <link href="http://leotse90.com/2016/03/01/ad-effective-theory/"/>
     <id>http://leotse90.com/2016/03/01/ad-effective-theory/</id>
     <published>2016-02-29T17:00:35.000Z</published>
-    <updated>2016-03-01T16:55:54.000Z</updated>
+    <updated>2016-03-01T17:01:59.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <p>广告有效性原理用于描述广告从产生，到达用户以至于最后的转化行为的整个过程。整个模型主要包含三个阶段：选择、解释、态度。这三个名词初看起来有点难以理解，接下来会逐个解释这三个阶段。</p>
 <h2 id="选择(selection)">选择(selection)</h2><p>选择主要包含两个子阶段：<strong>曝光阶段(exposure)</strong>与<strong>关注阶段(attention)</strong>。  </p>
 <p>这个阶段主要是将广告带入受众的视线。所以这个阶段也可以理解为到达用户阶段。</p>
 <h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：</p>
-<center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center><br><a id="more"></a><br>这张图上展示了百度搜索广告的北区广告和东区广告，我们明显可以知道北区的广告相比于东区更容易被用户浏览，更别提底部的南区广告了，这种差距不是一些技术上的优化就能抹平的。<br><br>### 关注阶段(attention)<br>如果说曝光阶段是广告进入受众视线可达到的一步，那么关注阶段则是广告被受众发现的过程。举个例子，大部分的公交站都有广告牌，比如说即将上映的电影，或者是刚推出的电子产品等，它的出现就是曝光阶段，但是只有某一天你被它吸引驻足停留，才算是进入了关注阶段。<br><center><br><img src="/img/bus-station-ad.jpg" alt="bus-station-ad"><br></center><br>如果说曝光阶段靠的是先天条件，那么关注阶段的效果就能靠后天努力了（当然先天优势依然很关键）。比如丰富的广告创意，或者符合潜在目标人群的兴趣爱好等，都能提升关注阶段的效果。<br><br>这个阶段，有几个重要的原则：<br><br>&gt;1.尽量不要打断用户的任务；<br>2.明确传达向用户推送广告的原因；<br>3.内容符合用户的兴趣或需求。<br><br>这三点原则在实际实施中很有用，尤其是CPC和CPM的广告。关于第一个原则，有一个实际的例子，笔者所在公司有一款输入法产品，曾经在用户输入某个关键字的时候弹出符合该条件的广告或内容（现在百度输入法还在这样做），但是效果不理想，反而GP上指责不断，这个idea不久就夭折了，因为用户使用输入法一般在聊天或者其他记录查询操作，如果这个时候强行打断用户插入广告，牺牲了产品体验的同时并没有提升广告效果。而第二个原则Amazon很好地贯彻了，Amazon的推荐商品下方一般都有推荐的理由，这样对用户来说，广告出现得并不突兀，反而会让人觉得这是非常合理人性化的商品推荐。<br><center><br><img src="/img/amazon-recommend-ad.png" alt="amazon-recommend-ad"><br></center>
+<center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center>
+
+<a id="more"></a>
+<p>这张图上展示了百度搜索广告的北区广告和东区广告，我们明显可以知道北区的广告相比于东区更容易被用户浏览，更别提底部的南区广告了，这种差距不是一些技术上的优化就能抹平的。</p>
+<h3 id="关注阶段(attention)">关注阶段(attention)</h3><p>如果说曝光阶段是广告进入受众视线可达到的一步，那么关注阶段则是广告被受众发现的过程。举个例子，大部分的公交站都有广告牌，比如说即将上映的电影，或者是刚推出的电子产品等，它的出现就是曝光阶段，但是只有某一天你被它吸引驻足停留，才算是进入了关注阶段。</p>
+<center><br><img src="/img/bus-station-ad.jpg" alt="bus-station-ad"><br></center>
+
+<p>如果说曝光阶段靠的是先天条件，那么关注阶段的效果就能靠后天努力了（当然先天优势依然很关键）。比如丰富的广告创意，或者符合潜在目标人群的兴趣爱好等，都能提升关注阶段的效果。</p>
+<p>这个阶段，有几个重要的原则：</p>
+<blockquote>
+<p>1.尽量不要打断用户的任务；<br>2.明确传达向用户推送广告的原因；<br>3.内容符合用户的兴趣或需求。</p>
+</blockquote>
+<p>这三点原则在实际实施中很有用，尤其是CPC和CPM的广告。关于第一个原则，有一个实际的例子，笔者所在公司有一款输入法产品，曾经在用户输入某个关键字的时候弹出符合该条件的广告或内容（现在百度输入法还在这样做），但是效果不理想，反而GP上指责不断，这个idea不久就夭折了，因为用户使用输入法一般在聊天或者其他记录查询操作，如果这个时候强行打断用户插入广告，牺牲了产品体验的同时并没有提升广告效果。而第二个原则Amazon很好地贯彻了，Amazon的推荐商品下方一般都有推荐的理由，这样对用户来说，广告出现得并不突兀，反而会让人觉得这是非常合理人性化的商品推荐。</p>
+<center><br><img src="/img/amazon-recommend-ad.png" alt="amazon-recommend-ad"><br></center>
 
 <p>第三个原则可以根据用户的兴趣爱好及需求（问卷调查、数据挖掘、用户行为分析等手段），比较精准地推荐广告，这个原则要执行起来技术难度较大，但是一旦实施效果将会非常明显。</p>
 <h2 id="解释(interpretation)">解释(interpretation)</h2><p>“解释”这个阶段需要解释一下，这个“解释”主要是广告投放方向广告受众讲明来意并被潜在受众理解和接受的阶段。它主要包含理解阶段(comprehension)和接受阶段(acceptance)。</p>
@@ -48,7 +61,7 @@
 <blockquote>
 <p>对于互联网广告，越靠前的阶段，其效果的改善对点击率的贡献就越大；而越靠后的阶段，其效果的改善对转化率的贡献就越大。</p>
 </blockquote>
-<p>关于广告有效性原理，虽然看起来理论气息很浓，但是它的“曝光”绝不只是希望得到我们的“关注”，而是需要我们“理解”并“接受”它的意旨，然后能“保持”在每一个广告人的脑海中并帮助我们在工作中做出更有用的“决策”！</p>
+<p><strong>关于广告有效性原理，虽然看起来理论气息很浓，但是它的“曝光”绝不只是希望得到我们的“关注”，而是需要我们“理解”并“接受”它的意旨，然后能“保持”在每一个广告人的脑海中并帮助我们在工作中做出更有用的“决策”！</strong></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p><em>by:leotse</em></p>
@@ -56,7 +69,7 @@
 <h2 id="选择(selection)">选择(selection)</h2><p>选择主要包含两个子阶段：<strong>曝光阶段(exposure)</strong>与<strong>关注阶段(attention)</strong>。  </p>
 <p>这个阶段主要是将广告带入受众的视线。所以这个阶段也可以理解为到达用户阶段。</p>
 <h3 id="曝光阶段(exposure)">曝光阶段(exposure)</h3><p>广告展现出来的阶段。这一阶段拼的是广告位的曝光度，广告位对广告的效果起着决定性的作用。比如百度搜索广告，北区的曝光度比南区和东区都高，这是由产品本身决定的，如下图所示：</p>
-<center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center><br>]]>
+<center><br><img src="/img/baidu-search-ad.png" alt="baidu-search-ad"><br></center>]]>
     
     </summary>
     
