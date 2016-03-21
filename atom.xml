@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-03-21T15:55:20.000Z</updated>
+  <updated>2016-03-21T15:57:21.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,27 +19,27 @@
     <link href="http://leotse90.com/2016/03/21/Mobile-Ad-GooglePlay/"/>
     <id>http://leotse90.com/2016/03/21/Mobile-Ad-GooglePlay/</id>
     <published>2016-03-21T15:22:01.000Z</published>
-    <updated>2016-03-21T15:55:20.000Z</updated>
+    <updated>2016-03-21T15:57:21.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <center><br><img src="/img/google-play.jpg" alt="google-play"><br></center>
 
 <p>在进行移动应用推广的时候，大多数公司会根据不同需求选择不同的渠道进行推广。比如，国内的应用冲榜（也就是刷排名，这时候的一般的目的是进行融资前的造势）的时候，会找网盟进行推广，网盟推广的优点是刷量快、成本低；另外如果是应用推广（目的纯粹），那么会找一些比较专业的广告平台进行广告投放，海外的主要有Adwords、Admob、Facebook等等，相比于网盟，这些广告平台的成本高，但是产品的留存高。一般情况，我们在网盟上推广成本单个价格为Facebook等平台的一半，但是留存也只有后者的一半以下。</p>
-<p>我们这里要介绍的是Google Play上的应用推广，这里的推广并不是指策略（广告素材本地化、借助于GA数据化运营等等），而是技术上的实现。<br><a id="more"></a></p>
+<p>我们这里要介绍的是Google Play上的应用推广，这里的推广并不是指策略（广告素材本地化、借助于GA数据化运营等等），而是介绍了其推广的流程。<br><a id="more"></a></p>
 <h2 id="GooglePlay推广流程">GooglePlay推广流程</h2><p>我们首先使用Google Play URL Builder生成推广链接，Google developers上会有详细的参数说明，这里不再赘述。</p>
 <p>接下来重点介绍用户从点击推广链接到确认安装的流程：<br>1.<strong>用户点击推广链接</strong>：推广链接可以呈现在WEB页面或者APP的广告中，这时候，如果正常跳转，用户会跳转到Google Play的该应用下载页面；<br>2.<strong>用户下载安装应用</strong>：用户在GP上下载安装应用后，GP会发送一个广播，该广播中包含的是推广链接的相关参数；<br>3.<strong>应用上报推广数据</strong>：下载的应用会在收到2中发送的广告后，在适当的时候上报收到的推广参数；   </p>
 <p>我们解读一下上述的流程，一般情况下，用户都会跳转到Google Play网页或者Google Play应用商店，国内的大部分手机都进行了“纯净”，因此可能会跳转到网页或者手机上自带的应用商店。</p>
 <p>Google Play在用户安装应用后，通过Intent发送一个广播INSTALL_REFERENCE，关于INSTALL_REFERENCE，需要注意：  </p>
 <blockquote>
-<p>在Android 3.1（API 12）之前，INSTALL_REFERENCE在应用安装后发送；<br>Android 3.1之后，INSTALL_REFERENCE变为在应用第一次启动时发送。<br>这是因为Android 3.1以后引入了停止状态，而<strong>只有非停止状态的APP才能收到INSTALL_REFERENCE广播</strong>。  </p>
+<p>在Android 3.1（API 12）之前，INSTALL_REFERENCE在应用安装后发送；<br>Android 3.1之后，INSTALL_REFERENCE变为在应用第一次启动时发送。  </p>
 </blockquote>
-<p>同时，INSTALL_REFERENCE只会发送给指定的通过推广安装的应用。从网页到应用是无法发送INSTALL_REFERENCE的。</p>
+<p>这是因为Android 3.1以后引入了停止状态，而<strong>只有非停止状态的APP才能收到INSTALL_REFERENCE广播</strong>。<br>同时，INSTALL_REFERENCE只会发送给指定的通过推广安装的应用。从网页到应用是无法发送INSTALL_REFERENCE的。</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p><em>by:leotse</em></p>
 <center><br><img src="/img/google-play.jpg" alt="google-play"><br></center>
 
 <p>在进行移动应用推广的时候，大多数公司会根据不同需求选择不同的渠道进行推广。比如，国内的应用冲榜（也就是刷排名，这时候的一般的目的是进行融资前的造势）的时候，会找网盟进行推广，网盟推广的优点是刷量快、成本低；另外如果是应用推广（目的纯粹），那么会找一些比较专业的广告平台进行广告投放，海外的主要有Adwords、Admob、Facebook等等，相比于网盟，这些广告平台的成本高，但是产品的留存高。一般情况，我们在网盟上推广成本单个价格为Facebook等平台的一半，但是留存也只有后者的一半以下。</p>
-<p>我们这里要介绍的是Google Play上的应用推广，这里的推广并不是指策略（广告素材本地化、借助于GA数据化运营等等），而是技术上的实现。<br>]]>
+<p>我们这里要介绍的是Google Play上的应用推广，这里的推广并不是指策略（广告素材本地化、借助于GA数据化运营等等），而是介绍了其推广的流程。<br>]]>
     
     </summary>
     
