@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 10px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -213,6 +213,71 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Hadoop集群部署(RedHat)" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/20/Hadoop集群部署(RedHat)/" class="article-date">
+  	<time datetime="2015-09-20T02:55:15.000Z" itemprop="datePublished">2015-09-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/20/Hadoop集群部署(RedHat)/">Hadoop集群部署（RedHat）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
+<p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
+<p>接下来我们对每一步进行详细介绍。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/20/Hadoop集群部署(RedHat)/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-MooseFS概览" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -539,73 +604,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-FastDFS 安装使用说明" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/08/29/FastDFS 安装使用说明/" class="article-date">
-  	<time datetime="2015-08-29T02:55:15.000Z" itemprop="datePublished">2015-08-29</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/29/FastDFS 安装使用说明/">FastDFS安装使用说明</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by：leotse</em></p>
-<h2 id="一、概述">一、概述</h2><p>FastDFS是C语言实现的、开源的、轻量级的应用级分布式文件系统，开发者为淘宝开发平台部资深架构师余庆。它提供了负载均衡、冗余备份机制，是一个可扩展、高可用、高性能的分布式文件系统。<br>更多内容见论坛：<a href="http://bbs.chinaunix.net/forum-240-1.html">http://bbs.chinaunix.net/forum-240-1.html</a></p>
-<p>本文档内容包括：FastDFS安装、Python API安装及调用、通过Nginx访问文件。FastDFS安装又包括Tracker、Storage以及Nginx的安装。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastDFS/">FastDFS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/08/29/FastDFS 安装使用说明/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
     </nav>
   
 </div>

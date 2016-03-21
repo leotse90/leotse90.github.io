@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 10px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -213,6 +213,71 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Python任务调度队列Celery" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/14/Python任务调度队列Celery/" class="article-date">
+  	<time datetime="2015-10-14T02:55:15.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/14/Python任务调度队列Celery/">Python任务调度队列Celery</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="Introduction">Introduction</h2><p>在Python的使用过程中，我们常常会遇到执行一些多进程任务，或者一系列长时间的后台任务。比如，多进程下载视频并上传到某一个文件系统中。这时候，我们可以使用任务调度队列帮我们进行任务的分发与管理。</p>
+<p>Celery就是这样一个任务队列，易于使用，入门简单。Celery常常需要第三方作为发送和接收消息的中间层，一般我们用到的有RabbitMQ、Redis、MongoDB等等，次等的选择也可以是数据库。</p>
+<p>一般推荐使用RabbitMQ，但是我们这里用到Redis，因为Redis安装的时候依赖少，而且性能稳定，但是Redis也有缺点，那就是断电的时候会丢失数据。我们在这里，就以Redis作为Celery的第三方中间层。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Celery/">Celery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/10/14/Python任务调度队列Celery/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-Hive浮点数比较与计算" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -537,74 +602,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-Hadoop集群部署(RedHat)" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/09/20/Hadoop集群部署(RedHat)/" class="article-date">
-  	<time datetime="2015-09-20T02:55:15.000Z" itemprop="datePublished">2015-09-20</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/20/Hadoop集群部署(RedHat)/">Hadoop集群部署（RedHat）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h2 id="概述">概述</h2><p>安装环境：Red Hat 4.8.3-9<br>Hadoop版本：Apache Hadoop 2.6.0<br>Java版本：1.8.0<br>Master：172.16.10.136<br>Slave1：172.16.10.137<br>用户：xiefeng<br>安装目录：/home/xiefeng/dependencies</p>
-<p>主要部署步骤：<br>1.SSH免密码登录设置；<br>2.环境变量设置（Java以及Hadoop）;<br>3.Master部署；<br>4.Slave部署；<br>5.启动集群；  </p>
-<p>接下来我们对每一步进行详细介绍。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/09/20/Hadoop集群部署(RedHat)/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 </div>
