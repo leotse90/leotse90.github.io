@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>移动广告之广告平台选择（Admob&amp;Facebook） | 一条互联网广告狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="by:leotse
+
+
+现在的出海的移动互联网公司，实现变现一般都是两种途径：广告变现，APP内购。游戏一般依赖应用内消费（也有一些游戏通过广告进行变现），而剩下的很多非游戏类应用主要靠广告变现，比较具有代表性的有：CleanMaster、APUS、Kika等工具类产品，根据猎豹移动最新发布的2015年财报，它的海外移动营收中有95%来自于移动广告。
+要实现广告变现，就需要有广告来源，一般的国内的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动广告之广告平台选择（Admob&Facebook）">
+<meta property="og:url" content="http://leotse90.com/2016/03/22/Mobile-AD-Admob-Integration/index.html">
+<meta property="og:site_name" content="一条互联网广告狗">
+<meta property="og:description" content="by:leotse
+
+
+现在的出海的移动互联网公司，实现变现一般都是两种途径：广告变现，APP内购。游戏一般依赖应用内消费（也有一些游戏通过广告进行变现），而剩下的很多非游戏类应用主要靠广告变现，比较具有代表性的有：CleanMaster、APUS、Kika等工具类产品，根据猎豹移动最新发布的2015年财报，它的海外移动营收中有95%来自于移动广告。
+要实现广告变现，就需要有广告来源，一般的国内的">
+<meta property="og:image" content="http://leotse90.com/img/facebook-audience-network.jpg">
+<meta property="og:updated_time" content="2016-03-22T15:59:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动广告之广告平台选择（Admob&Facebook）">
+<meta name="twitter:description" content="by:leotse
+
+
+现在的出海的移动互联网公司，实现变现一般都是两种途径：广告变现，APP内购。游戏一般依赖应用内消费（也有一些游戏通过广告进行变现），而剩下的很多非游戏类应用主要靠广告变现，比较具有代表性的有：CleanMaster、APUS、Kika等工具类产品，根据猎豹移动最新发布的2015年财报，它的海外移动营收中有95%来自于移动广告。
+要实现广告变现，就需要有广告来源，一般的国内的">
+  
+    <link rel="alternative" href="/atom.xml" title="一条互联网广告狗" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?be4918235f4dd713fe3fef59f4af6fad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leo Tse</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">My name is L.T.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/leotse1990" title="facebook">facebook</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/leotse90" title="twitter">twitter</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 12.5px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.iteblog.com">过往记忆</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.skywod.com">互联网广告人</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://yanyiwu.com">大厨的日常</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.runoob.com/w3cnote/android-tutorial-contents.html">Android 基础入门教程</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">日有所学，日有所思，日有所得。移动互联网广告人。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leo Tse</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leo Tse</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">My name is L.T.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/leotse1990" title="facebook">facebook</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/leotse90" title="twitter">twitter</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Mobile-AD-Admob-Integration" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/22/Mobile-AD-Admob-Integration/" class="article-date">
+  	<time datetime="2016-03-22T15:13:46.000Z" itemprop="datePublished">2016-03-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      移动广告之广告平台选择（Admob&amp;Facebook）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动广告/">移动广告</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/计算广告/">计算广告</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<center><br><img src="/img/facebook-audience-network.jpg" alt="facebook-audience-network"><br></center>
+
+<p>现在的出海的移动互联网公司，实现变现一般都是两种途径：广告变现，APP内购。游戏一般依赖应用内消费（也有一些游戏通过广告进行变现），而剩下的很多非游戏类应用主要靠广告变现，比较具有代表性的有：CleanMaster、APUS、Kika等工具类产品，根据猎豹移动最新发布的2015年财报，它的海外移动营收中有95%来自于移动广告。</p>
+<p>要实现广告变现，就需要有广告来源，一般的国内的公司出海变现需要依赖第三方广告平台，当然，也有些有实力的公司自己做广告平台。现在海外主要的广告平台有Admob、Facebook、Mopub、IronSource、DoubleClick等等，国内的像猎豹移动也正在推出自己的广告平台猎户系统，Kika也推出了自己的广告平台Koala。但是如果你只是一般的应用开发者致力于海外市场应用开发，那么推荐你主要依赖Admob与Facebook这两家进行商业变现就可以了。毕竟接广告不仅依赖于一个比较强大的商务团队，还需要具备一定的平台搭建能力。<br><a id="more"></a></p>
+<h2 id="Admob_&amp;_Facebook_广告SDK实施">Admob &amp; Facebook 广告SDK实施</h2><p>哪怕是强如猎豹移动这种出海的先驱，它拥有自己的广告平台，但是它们的主要广告营收还是依赖于Facebook。Facebook Audience Network提供了CPC、CPI、CPM等丰富的广告资源，而且可以根据Facebook的用户的信息进行广告的精准投放，这种精准投放的前提条件也让Facebook广告填充率不够，因为它只能在安装了Facebook的机器上进行广告活动，考虑到国外Facebook的覆盖率，一般来说，Facebook的广告填充率能达到80%－90%。而Admob依靠Google，拥有海量的广告资源，而且Google Play几乎霸占了海外的应用市场份额，因此它在广告界的地位也是无可撼动。</p>
+<p>要想通过Facebook和Admob进行变现，实施起来也十分方便，它们都提供了各自的广告SDK，只需要在他们的平台上申请Ad Unit ID即可轻松实现广告创收。下面是两家的实施示例代码，非常简单：<br>Admob实施代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">String admobAdUnitId = <span class="string">"ca-app-pub-1301877944976160/5685349534"</span>;</span><br><span class="line">AdLoader.Builder adBuilder = <span class="keyword">new</span> AdLoader.Builder(context, admobAdUnitId);</span><br><span class="line"></span><br><span class="line">adBuilder.forAppInstallAd(<span class="keyword">new</span> NativeAppInstallAd.OnAppInstallAdLoadedListener() &#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAppInstallAdLoaded</span><span class="params">(NativeAppInstallAd nativeAppInstallAd)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">AdLoader adLoader = adBuilder.withAdListener(<span class="keyword">new</span> AdListener() &#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAdFailedToLoad</span><span class="params">(<span class="keyword">int</span> errorCode)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).build();</span><br><span class="line"></span><br><span class="line">AdRequest adRequest = <span class="keyword">new</span> AdRequest.Builder().build();</span><br><span class="line">adLoader.loadAd(adRequest);</span><br></pre></td></tr></table></figure></p>
+<p>Facebook Audience Network实施代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">String facebookAdUnitId = <span class="string">"1605000876745596_1688342111425188"</span>;</span><br><span class="line"></span><br><span class="line">mFacebookNativeAd = <span class="keyword">new</span> com.facebook.ads.NativeAd(mContext, facebookAdUnitId);</span><br><span class="line"></span><br><span class="line">mFacebookNativeAd.setAdListener(<span class="keyword">new</span> AdListener() &#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Ad ad, AdError adError)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAdLoaded</span><span class="params">(Ad ad)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ad loaded</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAdClicked</span><span class="params">(Ad ad)</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">mFacebookNativeAd.loadAd();</span><br></pre></td></tr></table></figure></p>
+<p>具体的实施可以参考它们的官网。</p>
+<h2 id="Admob聚合Facebook优化">Admob聚合Facebook优化</h2><p>如前所说，一般你只要集成这两家的SDK就可以轻松变现，但是这也存在一些问题，比如：1.Facebook可以精准投放但是填充率不及Admob，应该怎么优化？2.两家的广告如果都能填充，如何进行抉择？</p>
+<p>Admob提供了比较完善的解决方案，那就是SDK集成SDK，你可以在使用Admob SDK时集成Facebook Audience Network，并且可以在Admob后台进行设置，进行广告效果的调优。</p>
+<p>Admob其实可以集成非常多的第三方广告平台，但是效果最好的要数Facebook。Admob集成的优势在于它提供了一种竞价模式。据了解，Admob的竞价有两种：</p>
+<p>一种就是InMobi那种，Admob和Inmobi后台已经打通，可以互通有无，Admob知道Inmobi的实时eCPM，因此总是能返回eCPM高的广告给调用方；<br>另一种就是Facebook这种，Admob并不知道Facebook的实时eCPM，但是我们可以在Admob后台设置一个Facebook的eCPM阀值，比如我们在Admob上为Facebook的eCPM设置阀值为15，那么广告填充就会出现三种情况：<br>1）Facebook没有广告返回，直接返回Admob的广告，广告的eCPM就是Admob的平均eCPM；<br>2）Facebook有广告返回，但是Admob返回的广告eCPM大于Facebook预设的阀值，这里是15，那么返回Admob的广告，此时广告的eCPM会高于预设阀值；<br>3）Facebook有广告返回，但是Admob返回的广告eCPM小于Facebook预设的阀值，那么就会使用Facebook返回的广告，此时广告的eCPM就会是你在Facebook平台上的平均eCPM。</p>
+<p>由此可以看出，要想实现收益最大化，我们应该适当调高在Admob后台设置的Facebook eCPM阀值，并在Facebook后台将广告设置偏向“价格优先”。在我们的产品上，Facebook的eCPM经验阀值为15，整体收益最高。实际情况需要实施者不断观察不断调整，从而达到整体最优。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/03/21/Mobile-Ad-GooglePlay/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">移动广告之GooglePlay推广流程</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Mobile-AD-Admob-Integration" data-title="移动广告之广告平台选择（Admob&amp;Facebook）" data-url="http://leotse90.com/2016/03/22/Mobile-AD-Admob-Integration/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Leo Tse
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

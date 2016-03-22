@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 10px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 12.5px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 12.5px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -213,6 +213,71 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Hadoop安装之你不知道的事" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/10/Hadoop安装之你不知道的事/" class="article-date">
+  	<time datetime="2015-09-10T02:55:15.000Z" itemprop="datePublished">2015-09-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/10/Hadoop安装之你不知道的事/">Hadoop安装之你不知道的事</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="概述">概述</h2><p>这不是一篇教你怎么搭建Hadoop集群的文章，如果你需要安装Hadoop，可以直接跳转到<a href="https://github.com/leotse90/blogs/blob/master/Hadoop集群部署\(RedHat\">这里</a>.md)。</p>
+<p>那么这篇文章究竟在讲些什么呢？我们讨论一些在搭建Hadoop集群时的细节。比如：NameNode的format干了些什么？又比如为什么我们需要在搭建集群前设置SSH免密码登录？诸如此类的都在我们这里的讨论范围之内。</p>
+<p>我们先简单总结一下Hadoop集群的安装过程：<br>1.准备工作：SSH免密码登录设置以及HostName配置；<br>2.NameNode安装与配置：解压Hadoop安装包到NameNode服务器上，并修改配置文件；<br>3.DataNode安装与配置：将NameNode的Hadoop文件分发到各DataNode服务器；<br>4.集群启动：格式化NameNode，然后先后启动Hadoop集群的dfs以及yarn；<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/09/10/Hadoop安装之你不知道的事/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-FastDFS 安装使用说明" class="article article-type-post" itemscope itemprop="blogPost">
   
