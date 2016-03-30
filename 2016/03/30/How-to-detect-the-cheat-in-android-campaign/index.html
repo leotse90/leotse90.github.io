@@ -3,27 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ElasticSearch初探 | 一条互联网广告狗</title>
+  <title>一条互联网广告狗</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="by:leotse
-ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
-
-Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
+  <meta name="description" content="如何监测出Android推广渠道作弊？
+如何判断渠道的质量和狡猾程度,如何判断用户是否真实、是否来自墙、是否机刷or肉刷而来,是运营人员乃至整个公司最为头疼的事情,因为事关成本,而寒冬将至,成本则事关生死,不可谓不大。
+那么我们如何识别真假用户,从而有效的管理渠道呢?从运营的角度,要是能根据上量的用户的综合价值来给渠道付费,那当然就是最佳策略。什么叫用户的综合价值,那就是该用户为公司创造出来的综合">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ElasticSearch初探">
-<meta property="og:url" content="http://leotse90.com/2015/11/01/ElasticSearch初探/index.html">
+<meta property="og:title" content="一条互联网广告狗">
+<meta property="og:url" content="http://leotse90.com/2016/03/30/How-to-detect-the-cheat-in-android-campaign/index.html">
 <meta property="og:site_name" content="一条互联网广告狗">
-<meta property="og:description" content="by:leotse
-ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
-
-Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
-<meta property="og:updated_time" content="2015-11-01T14:29:49.000Z">
+<meta property="og:description" content="如何监测出Android推广渠道作弊？
+如何判断渠道的质量和狡猾程度,如何判断用户是否真实、是否来自墙、是否机刷or肉刷而来,是运营人员乃至整个公司最为头疼的事情,因为事关成本,而寒冬将至,成本则事关生死,不可谓不大。
+那么我们如何识别真假用户,从而有效的管理渠道呢?从运营的角度,要是能根据上量的用户的综合价值来给渠道付费,那当然就是最佳策略。什么叫用户的综合价值,那就是该用户为公司创造出来的综合">
+<meta property="og:updated_time" content="2016-03-30T15:52:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ElasticSearch初探">
-<meta name="twitter:description" content="by:leotse
-ES介绍我们首先来看ES（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：
-
-Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTf">
+<meta name="twitter:title" content="一条互联网广告狗">
+<meta name="twitter:description" content="如何监测出Android推广渠道作弊？
+如何判断渠道的质量和狡猾程度,如何判断用户是否真实、是否来自墙、是否机刷or肉刷而来,是运营人员乃至整个公司最为头疼的事情,因为事关成本,而寒冬将至,成本则事关生死,不可谓不大。
+那么我们如何识别真假用户,从而有效的管理渠道呢?从运营的角度,要是能根据上量的用户的综合价值来给渠道付费,那当然就是最佳策略。什么叫用户的综合价值,那就是该用户为公司创造出来的综合">
   
     <link rel="alternative" href="/atom.xml" title="一条互联网广告狗" type="application/atom+xml">
   
@@ -222,11 +219,11 @@ var _hmt = _hmt || [];
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-ElasticSearch初探" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-How-to-detect-the-cheat-in-android-campaign" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/11/01/ElasticSearch初探/" class="article-date">
-  	<time datetime="2015-11-01T14:05:15.000Z" itemprop="datePublished">2015-11-01</time>
+      <a href="/2016/03/30/How-to-detect-the-cheat-in-android-campaign/" class="article-date">
+  	<time datetime="2016-03-30T15:52:07.000Z" itemprop="datePublished">2016-03-30</time>
 </a>
     </div>
   
@@ -235,56 +232,59 @@ var _hmt = _hmt || [];
       <input type="hidden" class="isFancy" />
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      ElasticSearch初探
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li></ul>
-	</div>
-
-        
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>by:leotse</em></p>
-<h2 id="ES介绍">ES介绍</h2><p>我们首先来看<a href="https://www.elastic.co" target="_blank" rel="external">ES</a>（全称是Elastic Search）到底是什么，下面是Wikipedia给出的定义：</p>
-<blockquote>
-<p>Elasticsearch is a search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTful web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License. Elasticsearch is the second most popular enterprise search engine after Apache Solr.</p>
-</blockquote>
-<p>百度上给出了中文版定义：</p>
-<blockquote>
-<p>ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是第二流行的企业搜索引擎。</p>
-</blockquote>
-<p>在这段定义之外，我们看看ES还有哪些吸引人的地方：<br><a id="more"></a><br>1）ES的搜索几乎是实时的，当你向一个ES服务器或者一个ES集群发出搜索请求后，你可以在非常短的延迟后获取到你想要的数据（不超过1s）；<br>2）ES的集群是去中心化的，也就是说，不像Hadoop这种分布式框架，ES集群不存在单点故障。ES集群中包含多个节点，节点可以通过选举选出它们的中心节点，因此，当集群中的一个节点出现故障时，集群马上会选取出下一个新的中心节点来管理集群；<br>3）ES的横向扩展性能非常好，集群维护者不用担心集群出现资源不够的情况，因为你只需要增加一台服务器，然后在其上安装ES然后简单进行配置，这台新的节点就能成为集群中的一员；<br>4）ES提供了分片机制（Shard），一个索引（Index）可以划分为多个Shard，这些Shard分布在集群中不同的节点上，能有效提升集群的处理效率；<br>5）ES为其中的数据提供了replica，确保数据的冗余存储，从而使得整个ES集群可用性大大增强，亦即当一个节点出现故障时，存储在其上的数据仍然可以在其他的节点上访问到；<br>6）ES简单易用，除了为开发者和使用者提供了RESTful接口外，ES本身非常易于学习和使用，这一点在应用中你可以感受到。它的社区也十分活跃，相关的文档资料也较健全。</p>
-<p>这些点足以让我们拥有信心在需要的时候投入ES的怀抱，当然我们还需要考虑ES的一些不足，在本人的了解范围里以及结合本人的使用经验，ES集群可能存在以下问题：  </p>
-<p><strong>脑裂问题</strong>：ES集群有可能在节点间网络通信故障时成为“裂脑人”。这是ES集群的去中心化带来的不足。我们假设这样一个场景，我们的ES集群有10个节点，它们分别在两个机房A和B，有一天机房的网络出现问题，A机房无法与B机房进行通信，这时候，ES的选举机制会被触发，A机房会选取出一个中心节点，B机房也会选取出一个中心节点，整个集群一分为二，虽然对外提供访问时仍然问题不大，但是这两个集群会出现数据不同步的问题；  </p>
-<p><strong>权限管理机制不健全</strong>：迄今为止，ES集群没有比较健全的权限管理机制，如果你需要对ES的访问和使用权限进行管理，或者你需要为ES集群提供一个前端web服务，那么你需要在后台自行实现一个权限管理机制。</p>
-<h2 id="ES相关概念">ES相关概念</h2><p>我们这里只介绍ES的一些相关的术语，在此之前，我们结合关系型数据库来简单介绍一下ES的结构：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Relational DB <span class="subst">-&gt; </span>Databases <span class="subst">-&gt; </span>Tables <span class="subst">-&gt; </span><span class="keyword">Rows</span> <span class="subst">-&gt; </span>Columns</span><br><span class="line">Elasticsearch <span class="subst">-&gt; </span>Indices   <span class="subst">-&gt; </span>Types  <span class="subst">-&gt; </span>Documents <span class="subst">-&gt; </span>Fields</span><br></pre></td></tr></table></figure></p>
-<p>理解ES的结构本身不难，但是由于ES的这些术语在我们的圈子里已经有一些其他的受众较广的含义，所以这样一种与RDB的对比可以帮助我们理解ES的结构，ES本身可以想象成一个MySQL，ES中的Index就是数据库DB，而Type相当于数据库中的表，以此类推。</p>
-<p><strong>索引Index</strong>:在ES中，Document中的所有字段都会建立索引（这里的索引是我们平常所理解的意思，如数据库的索引），这种设定使得ES中的每个文档的每个字段都是可以直接用来搜索的。事实上，我们的数据被存储和索引在分片中，索引只是一个把一个或多个分片分组在一起的逻辑空间。</p>
-<p><strong>分片Shard</strong>:我们可以将ES中的分片Shard理解为HDFS中的文件块Block，一个完整的Index可以划分为多个Shard，然后分别存储在不同的节点上；</p>
-<p><strong>类型Type</strong>:我们能够自己定义ES中的Type，Type是Index的一个逻辑分区，每个类型都有自己的映射或者结构定义，就像传统数据库表中的列一样；</p>
-<p><strong>文档Document</strong>:如果你的Tool Kit中有OOP，那么你可以简单将Document理解为对象Object，它是ES中可被索引的基础信息单元；Type是序列化为JSON格式的数据。</p>
-<p><strong>映射Mapping</strong>:ES中的映射相当于数据库中表的定义，映射定义了字段类型，每个字段的数据类型，以及字段被ES处理的方式。映射还用于设置关联到类型上的元数据。</p>
-<p>这里只简单介绍了ES相关的基础信息，万里长征这才是第一步，但是希望这些信息可以让我们对ES有一个比较清晰的理解，至于如何使用ES进行存储数据、查询数据以及分析数据，我们需要在实践上不断学习和参悟。</p>
-<p>最后推荐一本书，希望能帮助到各位学习和理解ES：<a href="http://es.xiaoleilu.com/index.html" target="_blank" rel="external">Elasticsearch 权威指南</a>。</p>
+        <p>如何监测出Android推广渠道作弊？</p>
+<p>如何判断渠道的质量和狡猾程度,如何判断用户是否真实、是否来自墙、是否机刷or肉刷而来,是运营人员乃至整个公司最为头疼的事情,因为事关成本,而寒冬将至,成本则事关生死,不可谓不大。</p>
+<p>那么我们如何识别真假用户,从而有效的管理渠道呢?从运营的角度,要是能根据上量的用户的综合价值来给渠道付费,那当然就是最佳策略。什么叫用户的综合价值,那就是该用户为公司创造出来的综合价值,价值包括但不限于:</p>
+<p>1) 直接利润价值:比如购买行为,产生收入和潜在的利润;</p>
+<p>2) 内容价值:比如产生了积极的、优质内容,间接的创造价值等;</p>
+<p>3) 传播价值:比如因为ta的传播,引发了其他用户的使用等等;</p>
+<p>4) 衍生价值:停留时长或关注时长,所带来的广告收益等;</p>
+<p>每个App的行业不同,这四种价值侧重不同。</p>
+<p>因为按照激活这个时间作为结算的时间节点对我们来说,这个时间窗口太短,对甄别用户的真假带来巨大的挑战。</p>
+<p>在这个巨大的挑战面前,就分化出作弊防护的不同境界。</p>
+<p>第一个境界——事后诸葛亮,事前猪一样</p>
+<p>稍微量化一下这个境界,发现作弊的时间需要7天以上,能感知到40%左右的假量用户,其他超过半数的作假不能确保;通俗的讲,知道自己被骗了,但不知道骗了多少。他们的手段一般是这样的:</p>
+<p>(一) 看留存率</p>
+<p>根据长期的斗争经验,他们发现渠道刷量会选择在次日、7日、30日这些重要时间点上导入用户数据。然后发现App在次日、7日、30日这些关键时间点上的数据明显高于其他时间点。而真实的用户的留存曲线是一条平滑的指数衰减曲线,如果他们发现留存曲线存在陡升陡降的异常波动,基本上就是渠道干预了数据。</p>
+<p>(二) 看用户终端信息</p>
+<p>1) 低价设备排名</p>
+<p>根据经验分析渠道的新增用户或者启动用户的设备排名。如果发现某款低价设备排名异常靠前,他们就视其为异常,开始报警。</p>
+<p>2) 新版本操作系统的占比</p>
+<p>经过渠道多年蹂躏,运营人员终于发现,很多渠道刷量工作室在操作系统版本的适配上会有延时。查看渠道用户的操作系统时,可以和全体手机网民的操作系统的分布做比较。</p>
+<p>3) wifi 网络的使用情况</p>
+<p>比如说2G、3G、4G的使用比例分布是否正常等等。</p>
+<p>(三)看延伸信息</p>
+<p>1) 注册昵称的分布和规律,很多低端的刷假量的注册昵称有很强的规律性,各位运营看官肯定遇到这样的情况;</p>
+<p>2) 注册手机号码的归属地分布,这点相比各位看官也遇到过,某个渠道上来的用户手机号码不但来自某运营商的某个地市,甚至都是连号手机号码。</p>
+<p>小结:该境界中的运营者严重依赖于个人经验,工具手段不专业化,操作效率低下,耗费人力物力,但发现问题时间滞后,而且稍微高级一点的作弊行为不能被发现。</p>
+<p>第二个境界——亡羊补牢,损失在所难免:</p>
+<p>在这个段位的选手,甄别出真假的时间周期大概是2-7天之间,识别出来的假量大概在40%-70%之间,通俗的讲,他们可以比较确定性的识别出很大一部分假量用户,如果商务条件比较给力的话,是可以控制损失范围的。之所以有这样的效果是因为他们采用了一些专业的手段:</p>
+<p>(一) 单个指标</p>
+<p>1) IP:是否为黑名单IP、是否为代理IP,跟一个巨大的黑名单库进行比对;</p>
+<p>2) IMEI:是否为黑名单IP;</p>
+<p>3) 手机号码:号码是否非法,是否在黑名单;</p>
+<p>(二) 群体指标</p>
+<p>1) IP:用户IP的地域分布是否符合先验数据的分布,地域包括国内的省份分布和海外市场的分布,;</p>
+<p>2) IMEI:用户IMEI号的地域分布是否符合先验数据的分布,IMEI所代表的制造商的分布是否随机;</p>
+<p>3) OS:该渠道操作系统版本的分布情况是否符合一定的随机性和统计性,并与之前的先验数据进行对比判断;</p>
+<p>4) 机型:机型分布是否符合先验数据,以及最新智能手机出货量的比例;</p>
+<p>5) 位置信息:位置信息打开的比例,以及获取到位置信息的地域分布比例是否符合先验数据的分布,是否符合渠道承诺的地域情况,是否符合应用的实际分布情况;</p>
+<p>6) 运营商:运营商的数据分布是否随机,是否符合国内运营商的正常分布,以及海外运营商的随机分布;</p>
+<p>7) 网络接入方式:wifi、2G、3G、4G的分布比例是否与先验数据保持同样的趋势和数据特征;</p>
+<p>(三) 信息一致性:</p>
+<p>设备一致性的验证,包括:CPU、制造商、Mac地址、IMEI、机型、操作系统的一致性验证。</p>
+<p>一般而言,通用的统计分析工具是实现不了上述的分布,这就需要用专业的作弊防护软件或安全软件来。</p>
+<p>这个境界的运营者已经摆脱了手工处理,依赖个人经验的阶段,而是走上了算法和数据的专业化路线,但问题是每家的算法能力和数据积累参差不齐,因此在效果上各家能力差异很大,而渠道反过来猜测各个运营者的能力的强弱,来给他们掺不同比例的假量。</p>
+<p>第三个境界——当下即断,零损失可以期待</p>
+<p>在这个段位的选手,甄别用户的真假所需时间从15分钟到30分钟,如果是时间窗口延伸到24小时,那么他们的把握将更大。那么他们是如何做到的呢?总结一句话就是:软硬兼施,进攻是最好的防守!</p>
+<p>(一) 硬手段: </p>
+<p>所谓硬手段就是在用户端的硬件上下功夫下手段,进驻在用户硬件设备上的SDK主动进行探嗅,探测硬件环境的变化、操作系统环境的异常、以及各种应用接口是否被劫持。第一时间得到用户智能设备的状态。当该用户的手机硬件及其系统环境出现异常时,立刻在后台对该用户的所有数据进行缜密的审核,1)追踪其IP及端口的状态,以及IP的历史行为;2)追踪其IMEI以及IMSI的对应关系,IMEI和IMSI基本可以理解为一把钥匙一把锁的对应,伪造一个IMEI号容易,但要想连同IMSI一同伪造,这个成本就变得奇高无比。而整个过程可以控制在15-30分钟,为跟渠道斗(si)争(bi)赢得充分时间窗口。</p>
+<p>(二) 软手段:</p>
+<p>在第二境界的基础上,他们通过长期的数据积累和研究发现:各个指标反馈出来的信息强弱不同,因此对所有的指标进行赋值,并让这些指标对该群用户做作弊投票,当累计值超过阀值时,宣布该用户为可疑用户。这样就可以完成了在24小时内对用户真假的补充判断。</p>
+<p>要达到这个水平,不仅需要长期大量的数据积累和与时俱进的更新,还要有强大的数据处理算法和软硬通吃的技术实力。</p>
+<p>作者：古婆<br>链接：<a href="https://www.zhihu.com/question/22958167/answer/81144971" target="_blank" rel="external">https://www.zhihu.com/question/22958167/answer/81144971</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 
       
     </div>
@@ -294,18 +294,18 @@ var _hmt = _hmt || [];
     
 <nav id="article-nav">
   
-    <a href="/2015/11/04/【译】避免使用GroupByKey/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/03/31/How-to-detecti-the-cheat-in-android-campaign/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          【译】避免使用GroupByKey
+          如何监测出Android推广渠道作弊？
         
       </div>
     </a>
   
   
-    <a href="/2015/10/26/Scala学习之数组/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">心猿意码Scala之数组</div>
+    <a href="/2016/03/22/Mobile-AD-Admob-Integration/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">移动广告之广告平台选择（Admob&amp;Facebook）</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -334,7 +334,7 @@ var _hmt = _hmt || [];
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ElasticSearch初探" data-title="ElasticSearch初探" data-url="http://leotse90.com/2015/11/01/ElasticSearch初探/"></div>
+	<div class="ds-thread" data-thread-key="How-to-detect-the-cheat-in-android-campaign" data-title="" data-url="http://leotse90.com/2016/03/30/How-to-detect-the-cheat-in-android-campaign/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
