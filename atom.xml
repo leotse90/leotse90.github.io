@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-04-10T14:01:42.000Z</updated>
+  <updated>2016-04-10T14:04:28.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://leotse90.com/2016/04/09/mobile-advertising-attribution/"/>
     <id>http://leotse90.com/2016/04/09/mobile-advertising-attribution/</id>
     <published>2016-04-09T13:48:03.000Z</published>
-    <updated>2016-04-10T14:01:42.000Z</updated>
+    <updated>2016-04-10T14:04:28.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <center><br><img src="/img/love_store.jpg" alt="love_store"><br></center>
 
@@ -48,7 +48,7 @@
 </blockquote>
 <p>指纹匹配在移动应用后台中异步运行，此方法可强制打开浏览器，不会妨碍用户体验。由于使用另外的几种归因可提供1:1的准确性，而指纹匹配取决于统计概率（大约86%的统计概率），因此另外两种归因方法始终胜过指纹匹配。</p>
 <h2 id="总结">总结</h2><p>以上三种转化归因方式都可以用于安装的归因，但是它们又各有差异，下图（来自网络）很好地展现了它们的适用场景以及差异：  </p>
-<center><br><img src="/img/ad_installation_attributions_method.png" alt="ad_installation_attributions_method"><br></center>
+<center><br><img src="/img/attributions_method.png" alt="attributions_method"><br></center>
 
 <p>了解这些这三种转化归因的差异以及适用范围，可以帮助我们在实际中选取合适的转化归因方式进行归因确认。</p>
 ]]></content>
