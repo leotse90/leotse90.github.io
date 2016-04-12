@@ -444,10 +444,13 @@
     <link href="http://leotse90.com/2016/01/19/Android-Bitmap/"/>
     <id>http://leotse90.com/2016/01/19/Android-Bitmap/</id>
     <published>2016-01-18T16:10:12.000Z</published>
-    <updated>2016-01-18T16:18:13.000Z</updated>
+    <updated>2016-04-12T15:40:18.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <h2 id="Bitmap简介">Bitmap简介</h2><p>Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图的构造，使得其图像效果很好好，它是非压缩格式的，但是这也导致它需要占用较大的存储空间，这让位图变得不太适合在网络上传输。</p>
-<p><img src="/img/bitmap-example.bmp" alt="Bitmap example"><br><a id="more"></a><br>由于Bitmap的应用比较广泛，因此Android中常常使用到Bitmap。但是在使用Bitmap的时候，我们常常需要考虑到其占用内存较大的事实，因此关注Bitmap的OOM异常成为我们使用Bitmap的必修课。我们主要需要注意以下几个方面：</p>
+<center><br><img src="/img/bitmap-example.bmp" alt="Bitmap example"><br></center>
+
+<a id="more"></a>
+<p>由于Bitmap的应用比较广泛，因此Android中常常使用到Bitmap。但是在使用Bitmap的时候，我们常常需要考虑到其占用内存较大的事实，因此关注Bitmap的OOM异常成为我们使用Bitmap的必修课。我们主要需要注意以下几个方面：</p>
 <blockquote>
 <p>1.Android系统资源有限；<br>2.Bitmap很能吃内存；<br>3.应用的UI一般加载多张Bitmap，这样会一下消耗很多内存。</p>
 </blockquote>
@@ -478,7 +481,7 @@
     <summary type="html">
     <![CDATA[<p><em>by:leotse</em></p>
 <h2 id="Bitmap简介">Bitmap简介</h2><p>Bitmap，我们称之为位图文件，它的扩展名一般是.bmp，有时也可以是.dip。位图由点（像素）组成，其可以理解为一个像素矩阵，矩阵中的每一个点表示对应位置上像素的颜色，每个点可以由多种颜色组成，包括2，4，8，16，24，32位色彩。一张1200x628分辨率的32位真彩图片，所占的存储空间为：1200x628x32/(8x1024)＝2944KB。由于位图的构造，使得其图像效果很好好，它是非压缩格式的，但是这也导致它需要占用较大的存储空间，这让位图变得不太适合在网络上传输。</p>
-<p><img src="/img/bitmap-example.bmp" alt="Bitmap example"><br>]]>
+<center><br><img src="/img/bitmap-example.bmp" alt="Bitmap example"><br></center>]]>
     
     </summary>
     
