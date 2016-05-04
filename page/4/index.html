@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 12.5px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 17.5px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 15px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 10px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 15px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 17.5px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 15px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -213,6 +213,73 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-ElasticSearch与MySQL数据同步以及修改表结构" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/" class="article-date">
+  	<time datetime="2015-11-11T14:12:23.000Z" itemprop="datePublished">2015-11-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/">ElasticSearch与MySQL数据同步</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="ES与MySQL的数据同步">ES与MySQL的数据同步</h2><p>如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：<br>1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；</p>
+<p>2.<a href="https://github.com/siddontang/go-mysql-elasticsearch">go-mysql-elasticsearch</a>。这是Git上的一个开源项目，差不多是第一种方案的一个实现版本。这个插件支持实时同步MySQL与ES的新增、修改以及删除操作。但是缺点是使用起来不够灵活，它的作者给出了它的以下缺点：</p>
+<blockquote>
+<p>-binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>-Can not alter table format at runtime.<br>-<code>mysqldump</code> must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.  </p>
+</blockquote>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-ElasticSearch-match-VS-match-phrase" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -533,70 +600,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2015/10/22/Scala之函数/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-Scala控制结构" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10/21/Scala控制结构/" class="article-date">
-  	<time datetime="2015-10-21T09:48:25.000Z" itemprop="datePublished">2015-10-21</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/21/Scala控制结构/">心猿意码Scala之控制结构</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h3 id="块表达式">块表达式</h3><p>首先，我们需要了解一下块表达式。我们这样定义块表达式：凡是用{}包含的语句都同属一个块表达式，在Scala中，块表达式的值等于块表达式最后一条语句的值（在Scala中，每一个表达式都有一个值）。我们看下面的示例：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">var</span> v = &#123;<span class="keyword">var</span> a = <span class="number">2</span>; <span class="keyword">var</span> b = <span class="number">4</span>; a + b;&#125;</span><br><span class="line">v: <span class="type">Int</span> = <span class="number">6</span></span><br><span class="line">scala&gt; <span class="function"><span class="keyword">val</span> <span class="title">v1</span> =</span> &#123;<span class="keyword">var</span> s1 = <span class="string">"hello"</span>; <span class="keyword">var</span> i = <span class="number">20</span>;&#125;</span><br><span class="line">v1: <span class="type">Unit</span> = ()</span><br></pre></td></tr></table></figure></p>
-<p>在这里，我们可以总结以下两点：1.块表达式的值由{…}中的最后一条语句的值决定，那么当我们在定义一个函数的时候，一般不需要定义返回值，因为最后一条语句的值就是这个块表达式的值；2.侧面反映了Scala中赋值语句的值为Unit类型（注：Scala中的Unit类型相当于Java中的void，其只有一个值()）。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/10/21/Scala控制结构/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
