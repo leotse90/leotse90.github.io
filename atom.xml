@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-05-14T13:44:32.000Z</updated>
+  <updated>2016-05-15T15:52:21.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,81 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[互联网思维到底是什么？]]></title>
+    <link href="http://leotse90.com/2016/05/15/internet_thinking/"/>
+    <id>http://leotse90.com/2016/05/15/internet_thinking/</id>
+    <published>2016-05-15T15:46:11.000Z</published>
+    <updated>2016-05-15T15:52:21.000Z</updated>
+    <content type="html"><![CDATA[<center><br><img src="/img/1.png" alt="internet_thinking_1"><br></center><br><a id="more"></a><br><br><center><br><img src="/img/2.png" alt="internet_thinking_2"><br></center>
+
+<center><br><img src="/img/3.png" alt="internet_thinking_3"><br></center>
+
+<center><br><img src="/img/4.png" alt="internet_thinking_4"><br></center>
+
+<center><br><img src="/img/5.png" alt="internet_thinking_5"><br></center>
+
+<center><br><img src="/img/6.png" alt="internet_thinking_6"><br></center>
+
+<center><br><img src="/img/7.png" alt="internet_thinking_7"><br></center>
+
+<center><br><img src="/img/8.png" alt="internet_thinking_8"><br></center>
+
+<center><br><img src="/img/9.png" alt="internet_thinking_9"><br></center>
+
+<center><br><img src="/img/10.png" alt="internet_thinking_10"><br></center>
+
+<center><br><img src="/img/11.png" alt="internet_thinking_11"><br></center>
+
+<center><br><img src="/img/12.png" alt="internet_thinking_12"><br></center>
+
+<center><br><img src="/img/13.png" alt="internet_thinking_13"><br></center>
+
+<center><br><img src="/img/14.png" alt="internet_thinking_14"><br></center>
+
+<center><br><img src="/img/15.png" alt="internet_thinking_15"><br></center>
+
+<center><br><img src="/img/16.png" alt="internet_thinking_16"><br></center>
+
+<center><br><img src="/img/17.png" alt="internet_thinking_17"><br></center>
+
+<center><br><img src="/img/18.png" alt="internet_thinking_18"><br></center>
+
+<center><br><img src="/img/10.png" alt="internet_thinking_10"><br></center>
+
+<center><br><img src="/img/19.png" alt="internet_thinking_19"><br></center>
+
+<center><br><img src="/img/20.png" alt="internet_thinking_20"><br></center>
+
+<center><br><img src="/img/21.png" alt="internet_thinking_21"><br></center>
+
+<center><br><img src="/img/22.png" alt="internet_thinking_22"><br></center>
+
+<center><br><img src="/img/23.png" alt="internet_thinking_23"><br></center>
+
+<center><br><img src="/img/24.png" alt="internet_thinking_24"><br></center>
+
+<center><br><img src="/img/25.png" alt="internet_thinking_25"><br></center>
+
+<center><br><img src="/img/26.png" alt="internet_thinking_26"><br></center>
+
+<center><br><img src="/img/27.png" alt="internet_thinking_27"><br></center>
+
+<center><br><img src="/img/28.png" alt="internet_thinking_28"><br></center>
+
+<p>转自 鸟哥笔记<a href="http://mp.weixin.qq.com/s?__biz=MjM5MzIxNTQ2MA==&amp;mid=2650658054&amp;idx=1&amp;sn=e7496c65b57f6b34a5b9cb86bf64d644&amp;scene=0#wechat_redirect" target="_blank" rel="external">天天都在说的“互联网思维”，这28张图总算把它彻底讲清楚了</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<center><br><img src="/img/1.png" alt="internet_thinking_1"><br></center><br>]]>
+    
+    </summary>
+    
+      <category term="IT" scheme="http://leotse90.com/tags/IT/"/>
+    
+      <category term="互联网" scheme="http://leotse90.com/categories/%E4%BA%92%E8%81%94%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[移动广告之互联网广告产业链]]></title>
@@ -857,55 +932,6 @@
     </summary>
     
       <category term="ElasticSearch" scheme="http://leotse90.com/tags/ElasticSearch/"/>
-    
-      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[ElasticSearch与MySQL数据同步]]></title>
-    <link href="http://leotse90.com/2015/11/11/ElasticSearch%E4%B8%8EMySQL%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E4%BB%A5%E5%8F%8A%E4%BF%AE%E6%94%B9%E8%A1%A8%E7%BB%93%E6%9E%84/"/>
-    <id>http://leotse90.com/2015/11/11/ElasticSearch与MySQL数据同步以及修改表结构/</id>
-    <published>2015-11-11T14:12:23.000Z</published>
-    <updated>2015-11-12T00:31:38.000Z</updated>
-    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
-<h2 id="ES与MySQL的数据同步">ES与MySQL的数据同步</h2><p>如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：<br>1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；</p>
-<p>2.<a href="https://github.com/siddontang/go-mysql-elasticsearch" target="_blank" rel="external">go-mysql-elasticsearch</a>。这是Git上的一个开源项目，差不多是第一种方案的一个实现版本。这个插件支持实时同步MySQL与ES的新增、修改以及删除操作。但是缺点是使用起来不够灵活，它的作者给出了它的以下缺点：</p>
-<blockquote>
-<p>-binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>-Can not alter table format at runtime.<br>-<code>mysqldump</code> must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.  </p>
-</blockquote>
-<a id="more"></a>
-<p>这三点比较重要的缺点影响我使用这种方案，特别是不能运行时修改表结构。对于很多在线业务来说是比较难以接受的。</p>
-<p>3.<a href="https://github.com/jprante/elasticsearch-jdbc" target="_blank" rel="external">elasticsearch-river-jdbc</a>。这种方案是1、2的结合体。可以较为灵活地进行数据同步，比如可以在同步的时候指定需要同步的字段以及筛选条件。这也是比较流行的解决方案，但是它也有一个比较致命的缺点，那就是删除操作不能同步（物理删除）！</p>
-<p>如果你的系统对删除操作频繁，而且都是物理删除，并且能接受不能运行时修改表结构等条件，那么使用go-mysql-elasticsearch将是非常不错的选择；如果你的表结构改变得相对频繁，而且不用对表进行物理删除（比如用逻辑删除取而代之），那么你可以选择elasticsearch-river-jdbc。如果你对这两者都不满意，而且觉得自己的编码能力还不错，那么完全可以自己定制一个满足自己需求的插件。</p>
-<h2 id="elasticsearch-river-jdbc使用">elasticsearch-river-jdbc使用</h2><p>我们这里选择使用elasticsearch-river-jdbc作为我们同步ES与MySQL的插件。我们这里简单介绍一下elasticsearch-river-jdbc的安装与使用：<br>1.确保ES的集群的每个Node都能访问MySQL数据库；  </p>
-<p>2.安装River：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;./bin/plugin --install river-jdbc --url  <span class="symbol">http:</span>/<span class="regexp">/xbib.org/repository</span><span class="regexp">/org/xbib</span><span class="regexp">/elasticsearch/plugin</span><span class="regexp">/elasticsearch-river-jdbc/</span><span class="number">1.5</span>.<span class="number">0.5</span>/elasticsearch-river-jdbc-<span class="number">1.5</span>.<span class="number">0.5</span>-plugin.zip</span><br></pre></td></tr></table></figure></p>
-<p>3.下载mysql-connector-java-5.1.30-bin.jar并将其保存在{$ES_HOME}/plugins/jdbc/目录下：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">http:</span>/<span class="regexp">/cdn.mysql.com/</span><span class="regexp">/Downloads/</span><span class="constant">Connector</span>-<span class="constant">J</span>/mysql-connector-java-<span class="number">5.1</span>.<span class="number">37</span>.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>如果是ES集群，你需要在每一个Node上执行这一步。</p>
-<p>4.创建一个JDBC river<br><figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;curl -XPUT <span class="string">'localhost:9200/_river/my_jdbc_river/_meta'</span> -d <span class="string">'&#123;</span><br><span class="line">     "</span>type<span class="string">" : "</span>jdbc<span class="string">",</span><br><span class="line">     "</span>jdbc<span class="string">" : &#123;</span><br><span class="line">         "</span>driver<span class="string">" : "</span><span class="transposed_variable">com.</span><span class="transposed_variable">mysql.</span><span class="transposed_variable">jdbc.</span>Driver<span class="string">",</span><br><span class="line">         "</span>url<span class="string">" : "</span>jdbc:mysql:<span class="comment">//localhost:3306/test",</span></span><br><span class="line">         <span class="string">"user"</span> : <span class="string">"root"</span>,</span><br><span class="line">         <span class="string">"password"</span> : <span class="string">"123456"</span>,</span><br><span class="line">         <span class="string">"sql"</span> : <span class="string">"select * from test.student;"</span>,</span><br><span class="line">         <span class="string">"interval"</span> : <span class="string">"30"</span>,</span><br><span class="line">         <span class="string">"index"</span> : <span class="string">"test"</span>,</span><br><span class="line">         <span class="string">"type"</span> : <span class="string">"student"</span></span><br><span class="line">     &#125;</span><br><span class="line"> &#125;’</span><br></pre></td></tr></table></figure></p>
-<p> 5.你可以查看ES是否已经同步了这些数据：<br> <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; curl -XGET <span class="comment">'localhost:9200/test/student/_search?pretty&amp;q=*'</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="修改表结构后的数据同步">修改表结构后的数据同步</h2><p>如果你需要修改正在与ES进行数据同步的表的结构，你有以下三种方案（亲测可行）：<br><strong>方案一</strong>：创建JDBC river的时候使用sql语句：<code>select * from table_name;</code><br>乍一看，这种方法很坑。但是确实适合那些喜欢简单粗暴的coder。但是这种方案的场景比较苛刻：   </p>
-<blockquote>
-<p>MySQL中表在创建时id命名为_id，这是因为_id是ES中每一条document的唯一标识；如果不这样干，你会发现每一次同步ES的type中都会增加MySQL表中条目数个Document；<br>MySQL表所有的字段对ES都是有效的、必要的；</p>
-</blockquote>
-<p><strong>方案二</strong>.方案一的改进版，使用sql语句：<code>select *, id as _id from table_name;</code><br>这个方案在你需要在ES中存储MySQL中表所有字段的时候变得比较有效。</p>
-<p><strong>方案三</strong>：使用elasticsearch的alias。具体的操作比较简单，可以参照<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html" target="_blank" rel="external">官网的介绍</a>。</p>
-<p>前两种方案有点取巧，第三种方案才是正道。</p>
-<p>如果你愿意，完全建议自己定制一套解决方案。由于业务需要，本人最近也在开始写这样的插件。我会在这个博客里保持更新。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><em>by:leotse</em></p>
-<h2 id="ES与MySQL的数据同步">ES与MySQL的数据同步</h2><p>如果你需要进行ES与MySQL的数据同步，亦即将MySQL中的数据导入到ES中，并保持同步，一般来看，有以下几种方法：<br>1.自己动手写一个同步的模块。实时tail处理MySQL的binlog，将数据库的新增、修改或删除这些操作同步在ES上执行。这种方案可行，但是实现起来代价大；</p>
-<p>2.<a href="https://github.com/siddontang/go-mysql-elasticsearch">go-mysql-elasticsearch</a>。这是Git上的一个开源项目，差不多是第一种方案的一个实现版本。这个插件支持实时同步MySQL与ES的新增、修改以及删除操作。但是缺点是使用起来不够灵活，它的作者给出了它的以下缺点：</p>
-<blockquote>
-<p>-binlog row image must be full for MySQL, you may lost some field data if you update PK data in MySQL with minimal or noblob binlog row image. MariaDB only supports full row image.<br>-Can not alter table format at runtime.<br>-<code>mysqldump</code> must exist in the same node with go-mysql-elasticsearch, if not, go-mysql-elasticsearch will try to sync binlog only.  </p>
-</blockquote>]]>
-    
-    </summary>
-    
-      <category term="ElasticSearch" scheme="http://leotse90.com/tags/ElasticSearch/"/>
-    
-      <category term="MySQL" scheme="http://leotse90.com/tags/MySQL/"/>
     
       <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
