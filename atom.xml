@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-07-04T15:06:16.000Z</updated>
+  <updated>2016-07-04T15:06:54.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://leotse90.com/2016/07/04/Mobile-AD-ROI/"/>
     <id>http://leotse90.com/2016/07/04/Mobile-AD-ROI/</id>
     <published>2016-07-04T15:06:11.000Z</published>
-    <updated>2016-07-04T15:06:16.000Z</updated>
+    <updated>2016-07-04T15:06:54.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <center><br><img src="/img/ROI-banner.jpg" alt="ROI"><br></center>
 
@@ -27,6 +27,7 @@
 <blockquote>
 <p>推荐系统的首要准则是<strong>用户兴趣</strong>；<br>在线广告的首要准则是<strong>投资回报比（ROI）</strong>；</p>
 </blockquote>
+<a id="more"></a>
 <p>推荐系统主要是为用户推荐同质化的物品，比如你在淘宝上购物的时候侧栏的推荐位都是同类的商品；<br>而广告则不同，它的目的是为了</p>
 <h2 id="在线广告系统的ROI">在线广告系统的ROI</h2><p>在ROI模型中，我们主要关心的是R（Return），因为I（Investment）有各种各样的方法和途径。</p>
 <p>下面是ROI的公式：</p>
@@ -42,7 +43,11 @@
     <![CDATA[<p><em>by:leotse</em></p>
 <center><br><img src="/img/ROI-banner.jpg" alt="ROI"><br></center>
 
-<h2 id="概述">概述</h2><p>我们常常拿广告和推荐系统做对比，特别是展示类广告]]>
+<h2 id="概述">概述</h2><p>我们常常拿广告和推荐系统做对比，特别是展示类广告，但是推荐和广告的一个本质区别是他们的首要准则不同。</p>
+<blockquote>
+<p>推荐系统的首要准则是<strong>用户兴趣</strong>；<br>在线广告的首要准则是<strong>投资回报比（ROI）</strong>；</p>
+</blockquote>]]>
+    
     </summary>
     
       <category term="移动广告" scheme="http://leotse90.com/tags/%E7%A7%BB%E5%8A%A8%E5%B9%BF%E5%91%8A/"/>
