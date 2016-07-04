@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 12.5px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 15px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 20px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 15px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 16px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 14px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 14px;">Hive</a> <a href="/tags/IT/" style="font-size: 12px;">IT</a> <a href="/tags/Java/" style="font-size: 18px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12px;">MySQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/Scala/" style="font-size: 18px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 16px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 14px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 20px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 14px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -213,6 +213,74 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-VAST3.0" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/29/VAST3.0/" class="article-date">
+  	<time datetime="2016-01-28T16:23:22.000Z" itemprop="datePublished">2016-01-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/29/VAST3.0/">VAST3.0视频广告规范介绍</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<h2 id="概述">概述</h2><p>说到VAST，就不得不提到<a href="http://www.iab.com">IAB</a>，全称为Interactive Advertising Bureau，我们称之为互联网广告署，它的主要职责是制定网络业务流程的开发标准以及行业准则，并对网络广告收入进行跟踪。</p>
+<p>我们今天要介绍的就是IAB的六个主要部分之一——VAST（Video Ad Serving Template）。它是互联网视频广告的统一标准，采用XML格式。随着在线视频内容的广告越来越普遍，人们也越来越关注互联网视频广告的商业化，在VAST出台之前，视频广告并没有统一的广告协议，行业乱象促使需要有人站出来制定一个通用的标准，这时候IAB开始出来行使它的职责，它为在线互联网视频广告制定了一套统一的、可扩展的广告协议。VAST消除了视频广告的技术壁垒，在VAST3.0之前，已经有两个较为普遍的版本，但是现在通用、流行的就是我们说的3.0版本，3.0版本保证了对2.0的兼容。</p>
+<p>VAST协议主要包含以下三部分：</p>
+<blockquote>
+<p>视频广告的内容（creatives）<br>视频广告的跟踪事件及其追踪链接<br>视频广告的wrapper</p>
+</blockquote>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VAST/">VAST</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/计算广告/">计算广告</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/29/VAST3.0/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-劣质诗人" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -515,74 +583,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/01/07/Java-concurrency2/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-Java-concurrency1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/06/Java-concurrency1/" class="article-date">
-  	<time datetime="2016-01-05T16:30:15.000Z" itemprop="datePublished">2016-01-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/06/Java-concurrency1/">Java并发(一)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<h2 id="并发，并发，并发">并发，并发，并发</h2><p>有顺序编程，就有并发编程。事实上，几乎我们所有的程序都可以通过顺序编程来完成，只是你必须忍受一些非常情况。<br>并发说起来很奇怪，它具有可论证的确定性，但是实际上却具有不可确定性。它的不可确定性是因为你没有办法预知在实际情况下会发生事情导致工作失败，而且你也没有办法通过编写代码进行完备的测试。<br>虽然实际应用中，并发很难做到完全掌握，但是这不能成为我们不作为的理由。</p>
-<blockquote>
-<p>如果视而不见，你就会遭其反噬。</p>
-</blockquote>
-<p>作为一名骄傲的程序员，并发编程是基础，也是必备知识。</p>
-<h2 id="为什么需要并发">为什么需要并发</h2><p>这是一个老生常谈的问题，但是我们不能规避这个问题，要想深入理解一件事物，就必须弄清楚它的来龙去脉。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发/">并发</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/01/06/Java-concurrency1/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

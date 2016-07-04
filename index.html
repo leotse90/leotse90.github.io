@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 17.5px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 15px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12.5px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/IT/" style="font-size: 12.5px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Scala/" style="font-size: 20px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 17.5px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 15px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 20px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 15px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 16px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 14px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 12px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 14px;">Hive</a> <a href="/tags/IT/" style="font-size: 12px;">IT</a> <a href="/tags/Java/" style="font-size: 18px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 12px;">MySQL</a> <a href="/tags/Python/" style="font-size: 14px;">Python</a> <a href="/tags/Scala/" style="font-size: 18px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 16px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 14px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 20px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 14px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -213,6 +213,81 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Mobile-AD-ROI" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/04/Mobile-AD-ROI/" class="article-date">
+  	<time datetime="2016-07-04T15:06:11.000Z" itemprop="datePublished">2016-07-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/04/Mobile-AD-ROI/">移动广告之由ROI分解看市场形态</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<center><br><img src="/img/ROI-banner.jpg" alt="ROI"><br></center>
+
+<h2 id="概述">概述</h2><p>我们常常拿广告和推荐系统做对比，特别是展示类广告，但是推荐和广告的一个本质区别是他们的首要准则不同。</p>
+<blockquote>
+<p>推荐系统的首要准则是<strong>用户兴趣</strong>；<br>在线广告的首要准则是<strong>投资回报比（ROI）</strong>；</p>
+</blockquote>
+<p>推荐系统主要是为用户推荐同质化的物品，比如你在淘宝上购物的时候侧栏的推荐位都是同类的商品；<br>而广告则不同，它的目的是为了</p>
+<h2 id="在线广告系统的ROI">在线广告系统的ROI</h2><p>在ROI模型中，我们主要关心的是R（Return），因为I（Investment）有各种各样的方法和途径。</p>
+<p>下面是ROI的公式：</p>
+<center><br><img src="/img/ROI.png" alt="ROI"><br></center>
+
+<p>这其中，u代表着点击率（CTR），也就是对于特定的用户u来说，在特定场景c下他或她点击广告a的概率；v（Click value）代表着这次点击的价值，由于这时候用户已经离开了广告所在的场景来到了广告的着陆页（可以是应用商店，也可以是网站），因此我们计算v的时候并不需要考虑广告投放的场景c，也就是说v很大程度上取决于这个用户u和广告a本身的内容。而等号右边的e代表eCPM，即预期收益。</p>
+<h2 id="根据ROI分解的市场形态">根据ROI分解的市场形态</h2><p>根据ROI的公式，我们可以将整个在线广告市场进行细分：</p>
+<h3 id="CPM市场">CPM市场</h3><p>我们如果只看等号的右边，也就是eCPM固定。这意味着广告每次展示的收益都是确定的，比如eCPM为$10，那么该广告展示1000次你获得的收益就是10美元。这种广告形式当然最大的受益者就是publisher，因为只要用户看到广告就能获益。这种广告比较适合于短期效果不明显的品牌广告，比如可口可乐的品牌广告，它不寄希望于你能马上购买它的产品或服务，而是希望你能记住它的品牌。<br>CPM的定价往往是由需求方来制定的。在国内比较常见的是包量，也就是常见的按天收费等。  </p>
+<h3 id="CPC市场">CPC市场</h3><p>在CPC市场中，CTR是动态变化的，但是点击价值v是相对固定的。一般的，广告网络来估算广告的CTR，因为他们面向用户，可能有比较丰富的用户数据以及广告行为数据，可以比较准确的估计用户点击广告的概率，但是这次点击能给广告主带来多大的收益广告网络方并不清楚，因此这里的点击价值v由需求方来估算。</p>
+<h3 id="CPA/CPS/ROI市场">CPA/CPS/ROI市场</h3><p>如果CTR和点击价值v都是动态变化的，那么这种类型的广告市场我们就称之为CPA或CPS市场。这种市场走到另一个极端，广告市场本身揽下了所有的风险，需求方按照效果付费，比如游戏应用APP，用户通过广告进入下载页下载APP后，游戏开发者就根据定价给媒体付费。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动广告/">移动广告</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/计算广告/">计算广告</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-internet_thinking" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -513,75 +588,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/04/09/mobile-advertising-attribution/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-How-to-detect-the-cheat-in-android-campaign" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/31/How-to-detect-the-cheat-in-android-campaign/" class="article-date">
-  	<time datetime="2016-03-30T16:07:07.000Z" itemprop="datePublished">2016-03-31</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/31/How-to-detect-the-cheat-in-android-campaign/">如何监测出Android推广渠道作弊？</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<p><em><strong>本文整理自知乎，<a href="https://www.zhihu.com/question/22958167/answer/81144971">如何监测出安卓推广渠道作弊？</a></strong></em>。<br><em><strong>文章比较系统地介绍了三个境界的防作弊手段，对于APP运营者有一定价值，同时对于广告渠道来说也有一定的意义。</strong></em></p>
-<p>如何判断渠道的质量和狡猾程度,如何判断用户是否真实、是否来自墙、是否机刷or肉刷而来,是运营人员乃至整个公司最为头疼的事情,因为事关成本,而寒冬将至,成本则事关生死,不可谓不大。</p>
-<p>那么我们如何识别真假用户,从而有效的管理渠道呢?从运营的角度,要是能根据上量的用户的综合价值来给渠道付费,那当然就是最佳策略。什么叫用户的综合价值,那就是该用户为公司创造出来的综合价值,价值包括但不限于:</p>
-<blockquote>
-<p>1) 直接利润价值:比如购买行为,产生收入和潜在的利润;<br>2) 内容价值:比如产生了积极的、优质内容,间接的创造价值等;<br>3) 传播价值:比如因为ta的传播,引发了其他用户的使用等等;<br>4) 衍生价值:停留时长或关注时长,所带来的广告收益等;</p>
-</blockquote>
-<p>每个App的行业不同,这四种价值侧重不同。<br>因为按照激活这个时间作为结算的时间节点对我们来说,这个时间窗口太短,对甄别用户的真假带来巨大的挑战。<br>在这个巨大的挑战面前,就分化出作弊防护的不同境界。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动广告/">移动广告</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/计算广告/">计算广告</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/31/How-to-detect-the-cheat-in-android-campaign/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
