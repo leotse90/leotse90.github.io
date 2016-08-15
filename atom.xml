@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-08-15T15:40:47.000Z</updated>
+  <updated>2016-08-15T15:41:12.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://leotse90.com/2016/08/15/android_sharedPreferenced_editor/"/>
     <id>http://leotse90.com/2016/08/15/android_sharedPreferenced_editor/</id>
     <published>2016-08-15T03:33:56.000Z</published>
-    <updated>2016-08-15T15:40:47.000Z</updated>
+    <updated>2016-08-15T15:41:12.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=17177324&auto=0&height=66"></iframe>
 
@@ -27,7 +27,7 @@
 <p>当我们需要写入数据时，我们需要借助于SharedPreferences.Editor进行数据的写操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SharedPreferences.Editor editor = getSharedPreferences(<span class="string">"test"</span>, MODE_PRIVATE).edit();</span><br><span class="line">editor.putString(<span class="string">"key"</span>, <span class="string">"value"</span>);</span><br><span class="line">editor.commit();</span><br></pre></td></tr></table></figure></p>
 <p>执行完这段代码，我们就能将key－value这组数据存储在/data/data/your_package_name/shared_prefs/目录下。  </p>
 <p>我们注意到，在这里我们使用commit()进行数据的提交，实际上，SharedPreferences还提供了另一个方法apply()来提交需要保存的数据，那么这两者有什么区别呢？<br><a id="more"></a></p>
-<p>1.commit()方法是同步的，也就是它会马上执行数据的保存操作，而apply()方法是异步的，它首先将数据保存在内存里，然后再写入文件。如果我们使用SharedPreferences的场景需要频繁进行文件的保存，那么我们建议使用apply()方法，这样可以提高程序的性能；<br>2.当然commit()也不是一无是处的，commit()会及时反馈给调用方数据保存的结果。如果你需要确保数据的保存成功或者做一些容错处理，commit()就会是你的优选。</p>
+<p><strong>1.commit()方法是同步的，也就是它会马上执行数据的保存操作，而apply()方法是异步的，它首先将数据保存在内存里，然后再写入文件。如果我们使用SharedPreferences的场景需要频繁进行文件的保存，那么我们建议使用apply()方法，这样可以提高程序的性能；<br>2.当然commit()也不是一无是处的，commit()会及时反馈给调用方数据保存的结果。如果你需要确保数据的保存成功或者做一些容错处理，commit()就会是你的优选。</strong></p>
 <p>如果两个editor同时修改，那么只有后面的修改才会生效；如果程序在使用commit()进行提交的时候，同时程序另一处使用apply()进行提交还没有完成，那么commit()将会阻塞直到所有的异步操作完成。</p>
 <p>对于每一个进程，SharedPreferences都是单例的，因此我们直接使用异步的apply()进行提交也是安全的。同时你也大可不必担心Android组件状态的改变导致的apply()提交失败，因为Android会保证每一次状态的改变前都会完成apply()操作。</p>
 <blockquote>
