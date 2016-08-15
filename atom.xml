@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-08-15T15:38:26.000Z</updated>
+  <updated>2016-08-15T15:40:47.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,9 +19,9 @@
     <link href="http://leotse90.com/2016/08/15/android_sharedPreferenced_editor/"/>
     <id>http://leotse90.com/2016/08/15/android_sharedPreferenced_editor/</id>
     <published>2016-08-15T03:33:56.000Z</published>
-    <updated>2016-08-15T15:38:26.000Z</updated>
+    <updated>2016-08-15T15:40:47.000Z</updated>
     <content type="html"><![CDATA[<p><em>by:leotse</em></p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=17177324&auto=1&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=17177324&auto=0&height=66"></iframe>
 
 <p>在Android开发中，我们经常会使用SharedPreferences对一些指定数据类型的数据进行持久化存储。</p>
 <p>当我们需要写入数据时，我们需要借助于SharedPreferences.Editor进行数据的写操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SharedPreferences.Editor editor = getSharedPreferences(<span class="string">"test"</span>, MODE_PRIVATE).edit();</span><br><span class="line">editor.putString(<span class="string">"key"</span>, <span class="string">"value"</span>);</span><br><span class="line">editor.commit();</span><br></pre></td></tr></table></figure></p>
@@ -36,7 +36,7 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<p><em>by:leotse</em></p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=17177324&auto=1&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=17177324&auto=0&height=66"></iframe>
 
 <p>在Android开发中，我们经常会使用SharedPreferences对一些指定数据类型的数据进行持久化存储。</p>
 <p>当我们需要写入数据时，我们需要借助于SharedPreferences.Editor进行数据的写操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SharedPreferences.Editor editor = getSharedPreferences(<span class="string">"test"</span>, MODE_PRIVATE).edit();</span><br><span class="line">editor.putString(<span class="string">"key"</span>, <span class="string">"value"</span>);</span><br><span class="line">editor.commit();</span><br></pre></td></tr></table></figure></p>
