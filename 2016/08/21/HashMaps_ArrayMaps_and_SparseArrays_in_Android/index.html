@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HashMaps, ArrayMaps and SparseArrays in Android | 一条互联网广告狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Posted by deepak in Android
+
+
+Android developers must be observing Lint warnings recently to replace some of their HashMaps with SparseArrays with a promise of memory optimization. Good for us ! There">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMaps, ArrayMaps and SparseArrays in Android">
+<meta property="og:url" content="http://leotse90.com/2016/08/21/HashMaps_ArrayMaps_and_SparseArrays_in_Android/index.html">
+<meta property="og:site_name" content="一条互联网广告狗">
+<meta property="og:description" content="Posted by deepak in Android
+
+
+Android developers must be observing Lint warnings recently to replace some of their HashMaps with SparseArrays with a promise of memory optimization. Good for us ! There">
+<meta property="og:image" content="http://leotse90.com/img/hashmap.png">
+<meta property="og:updated_time" content="2016-08-21T11:45:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HashMaps, ArrayMaps and SparseArrays in Android">
+<meta name="twitter:description" content="Posted by deepak in Android
+
+
+Android developers must be observing Lint warnings recently to replace some of their HashMaps with SparseArrays with a promise of memory optimization. Good for us ! There">
+  
+    <link rel="alternative" href="/atom.xml" title="一条互联网广告狗" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?be4918235f4dd713fe3fef59f4af6fad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leo Tse</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">My name is L.T.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">首页</a></li>
+				        
+							<li><a href="/archives">文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/leotse1990" title="facebook">facebook</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/leotse90" title="twitter">twitter</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 15px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 13.33px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 11.67px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/IT/" style="font-size: 11.67px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 11.67px;">MySQL</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Scala/" style="font-size: 16.67px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 15px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 13.33px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 18.33px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 13.33px;">远方与诗</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.iamniu.com">牛国柱的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.skywod.com">互联网广告人</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.rtbchina.com">RTB China</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.runoob.com/w3cnote/android-tutorial-contents.html">Android 基础入门教程</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">从不思到寻思，从浅思到深思，从顺思到反思，从技术之思到哲理之思。移动互联网广告人。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leo Tse</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://avatars3.githubusercontent.com/u/11941413?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leo Tse</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">My name is L.T.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">首页</a></li>
+		        
+					<li><a href="/archives">文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/leotse90" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://www.weibo.com/proleo" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/leotse1990" title="facebook">facebook</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/leotse90" title="twitter">twitter</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/pub/leo-tse/69/316/27a/zh-cn" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-HashMaps_ArrayMaps_and_SparseArrays_in_Android" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/21/HashMaps_ArrayMaps_and_SparseArrays_in_Android/" class="article-date">
+  	<time datetime="2016-08-21T11:39:08.000Z" itemprop="datePublished">2016-08-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HashMaps, ArrayMaps and SparseArrays in Android
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>Posted by <a href="http://deepakmishra.me/blog/index.php/2015/10/19/hashmaps-arraymaps-and-sparsearrays-in-android/" target="_blank" rel="external">deepak in Android</a></em></p>
+<center><br><img src="/img/hashmap.png" alt="hashmap"><br></center>
+
+<p>Android developers must be observing Lint warnings recently to replace some of their HashMaps with SparseArrays with a promise of memory optimization. Good for us ! There are few classes we should learn to use, like ArrayMap  and SimpleArrayMap. There are also multiple variants of SparseArrays. This post will describe these classes along with their internals.<br><a id="more"></a><br>Let’s start with some code showing how to use these classes:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">java.util.HashMap&lt;String, String&gt; hashMap = <span class="keyword">new</span> java.util.HashMap&lt;String, String&gt;(<span class="number">16</span>);</span><br><span class="line">hashMap.put(<span class="string">"key"</span>, <span class="string">"value"</span>);</span><br><span class="line">hashMap.get(<span class="string">"key"</span>);</span><br><span class="line">hashMap.entrySet().iterator();</span><br><span class="line"></span><br><span class="line">android.util.ArrayMap&lt;String, String&gt; arrayMap = <span class="keyword">new</span> android.util.ArrayMap&lt;String, String&gt;(<span class="number">16</span>);</span><br><span class="line">arrayMap.put(<span class="string">"key"</span>, <span class="string">"value"</span>);</span><br><span class="line">arrayMap.get(<span class="string">"key"</span>);</span><br><span class="line">arrayMap.entrySet().iterator();</span><br><span class="line"></span><br><span class="line">android.support.v4.util.ArrayMap&lt;String, String&gt; supportArrayMap =</span><br><span class="line">        <span class="keyword">new</span> android.support.v4.util.ArrayMap&lt;String, String&gt;(<span class="number">16</span>);</span><br><span class="line">supportArrayMap.put(<span class="string">"key"</span>, <span class="string">"value"</span>);</span><br><span class="line">supportArrayMap.get(<span class="string">"key"</span>);</span><br><span class="line">supportArrayMap.entrySet().iterator();</span><br><span class="line"></span><br><span class="line">android.support.v4.util.SimpleArrayMap&lt;String, String&gt; simpleArrayMap =</span><br><span class="line">        <span class="keyword">new</span> android.support.v4.util.SimpleArrayMap&lt;String, String&gt;(<span class="number">16</span>);</span><br><span class="line">simpleArrayMap.put(<span class="string">"key"</span>, <span class="string">"value"</span>);</span><br><span class="line">simpleArrayMap.get(<span class="string">"key"</span>);</span><br><span class="line"><span class="comment">//simpleArrayMap.entrySet().iterator();      &lt;- will not compile</span></span><br><span class="line"></span><br><span class="line">android.util.SparseArray&lt;String&gt; sparseArray = <span class="keyword">new</span> android.util.SparseArray&lt;String&gt;(<span class="number">16</span>);</span><br><span class="line">sparseArray.put(<span class="number">10</span>, <span class="string">"value"</span>);</span><br><span class="line">sparseArray.get(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">android.util.LongSparseArray&lt;String&gt; longSparseArray = <span class="keyword">new</span> android.util.LongSparseArray&lt;String&gt;(<span class="number">16</span>);</span><br><span class="line">longSparseArray.put(<span class="number">10L</span>, <span class="string">"value"</span>);</span><br><span class="line">longSparseArray.get(<span class="number">10L</span>);</span><br><span class="line"></span><br><span class="line">android.util.SparseLongArray sparseLongArray = <span class="keyword">new</span> android.util.SparseLongArray(<span class="number">16</span>);</span><br><span class="line">sparseLongArray.put(<span class="number">10</span>, <span class="number">100L</span>);</span><br><span class="line">sparseLongArray.get(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<p>Let’s discuss these classes one by one. All Java collections are primarily based on Arrays. We need to understand how HashMaps work before we look into alternatives.</p>
+<h2 id="java-util-HashMap">java.util.HashMap</h2><p>HashMap is basically an Array of HashMap.Entry objects (Entry is an inner class of HashMap). On a high-level, the instance variables in Entry class are :</p>
+<blockquote>
+<p>A non-primitive key<br>A non-primitive value<br>Hashcode of the object<br>A pointer to next Entry  </p>
+</blockquote>
+<p>Note that keys and values are all non-primitives. This is a design decision made by Java engineers, and we have to live with it. Inserting a primitive comes at a cost of autoboxing.</p>
+<p>When an object is inserted in the HashMap :</p>
+<blockquote>
+<p>Hashcode of the key is calculated and Entry class’ hashCode variable is populated.<br>Another method, java.util.HashMap.indexFor() is applied on the hashCode which you can think of as a modulo function using the size of Entry[ ], and determines the index of this Entry in the Entry[ ]. This index is called ‘bucket’.<br>If there is a pre-existing element in this bucket, the new element is inserted with the last element pointing to new one – essentially making the bucket a LinkedList.</p>
+</blockquote>
+<p>Queries can now be done with O(1) complexity :</p>
+<blockquote>
+<p>Input key’s hashCode is calculated<br>java.util.HashMap.indexFor() is applied on this hashCode and we get the bucket/index of the Entry object like querying an array.</p>
+</blockquote>
+<p>O(1) time is a magic all developers want. But space is another constraint. Especially on mobile. Drawbacks of HashMaps are :</p>
+<p>1.Autoboxing means extra objects created with each insertion. This will impact memory usage as well as Garbage Collection.<br>2.The HashMap.Entry objects themselves are an extra layer of objects to be created and garbage collected.<br>3.Buckets are rearranged each time HashMap is compacted or expanded. This is an expensive operation which grows with number of objects.<br>4.Hashing is cool, but if implemented poorly will take us back to O(N).<br>5.A related disadvantage of hashing which most people ignore is that we still need to store both the key and the hashcode. This redundancy helps with tackling collision. Non-hash solutions can help in this regard too.</p>
+<h2 id="android-util-ArrayMap">android.util.ArrayMap</h2><p>ArrayMap uses 2 arrays. The instance variables used internally are Object[ ] mArray to store the objects and the int[] mHashes to store hashCodes. When an key/value is inserted :</p>
+<blockquote>
+<p>Key/Value is autoboxed.<br>Key object is inserted at the next available position in mArray[ ].<br>Value object is also inserted in the position next to key’s position in mArray[ ].<br>The hashCode of key is calculated and placed in mHashes[ ] at the next available position.  </p>
+</blockquote>
+<p>For searching a key :</p>
+<blockquote>
+<p>Key’s hashCode is calculated<br>Binary search is done for this hashCode in the mHashes array. This implies time complexity increases  to O(logN).<br>Once we get the index of hash, we know that key is at 2*index position in mArray and value is at keyIndex+1 position.  </p>
+</blockquote>
+<p>This still does not solve the problem of autoboxing, as put() still takes an Object as input. But it does create one less object (HashMap.Entry). Is it worth trading off O(1) search complexity ? Metrics say yes for most apps.  </p>
+<h2 id="android-support-v4-util-ArrayMap">android.support.v4.util.ArrayMap</h2><p>android.util.ArrayMap works only on API level 19 (Kitkat) onwards. Support library brings the same functionality to older platforms.</p>
+<h2 id="android-support-v4-util-SimpleArrayMap">android.support.v4.util.SimpleArrayMap</h2><p>As you would have noticed in the code snippet posted earlier (line#21), this class does not offer entrySet() method to iterate. If you go through it’s documentation, it trims off many other methods from standard Java Collections API. So why use SimpleArrayMap ? Use it to trim down your APK size at the cost of losing interoperability with other Java containers. This way, Proguard (code optimization and obfuscation tool, which is likely to be a part of your build generation) can trim off most of those unused Collections API code – and hence making your APK size smaller. The internal working of this class is same as android.util.ArrayMap.</p>
+<h2 id="android-util-SparseArray">android.util.SparseArray</h2><p>Like ArrayMaps, SparseArrays also use 2 arrays at their core. One is int[ ] called mKeys and the second is Object[ ] called mValues. As the names suggest, one is for keys and another for values :)</p>
+<p>When a key/value is inserted :</p>
+<blockquote>
+<p>The int key (and not it’s hash) is stored in the next available position in mKeys[ ]. So no autoboxing of the key anymore.<br>The value Object is stored in the next available position in mValues[ ]. Value is still autoboxed.</p>
+</blockquote>
+<p>For a query :</p>
+<blockquote>
+<p>The key is searched using binary search (refer to android.util.ContainerHelpers.binarySearch() method) in the mKeys array. This means, search complexity is still O(log N).<br>The key index is used to retrieve the value from the mValues array.  </p>
+</blockquote>
+<p>Compared to HashMap, we got rid of Entry object and the key object. We have given up hashing, and are relying on binary search. On compaction/expansion, there is a lighter overhead now.  </p>
+<p>Pre-Kitkat (API level &gt;= 19) use android.support.v4.util.SparseArrayCompat</p>
+<h2 id="android-util-LongSparseArray">android.util.LongSparseArray</h2><p>SparseArray accepts only int primitives as keys. With LongSparseArray, we can use long as keys too. Implementation is same as SparseArray.  </p>
+<p>Pre-Kitkat (API level &gt;= 19) use android.support.v4.util.LongSparseArray</p>
+<h2 id="android-util-SparseIntArray,_android-util-SparseLongArray_and_android-util-SparseBooleanArray">android.util.SparseIntArray, android.util.SparseLongArray and android.util.SparseBooleanArray</h2><p>For cases where keys are integer primitives and values are either integer, long or boolean primitives; use SparseIntArray, SparseLongArray and SparseBooleanArray respectively. Their implementation is same as SparseArrays, the advantage being the mValues array is a primitive array. Which means neither key, nor value is boxed, and we save 3 objects (Entry, Key and Value) compared to HashMap implementation, while losing search complexity from O(1) to O(log N).</p>
+<p>Using the SpareArray and ArrayMap implementations will certainly reduce the number of objects creation. Performance difference should not be significant (less than 50%) for collections with hundreds of items. In summary, it’s good to migrate to ArrayMap and SparseArray implementations for new code; and back-porting should be easy as API signatures match.</p>
+<p>N.B : Though they sound like arrays, SparseArrays and ArrayMaps do not guarantee preserving the order of insertion. Be mindful while iterating.</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/15/android_sharedPreferenced_editor/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SharedPreferences.Editor的commit VS apply</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="HashMaps_ArrayMaps_and_SparseArrays_in_Android" data-title="HashMaps, ArrayMaps and SparseArrays in Android" data-url="http://leotse90.com/2016/08/21/HashMaps_ArrayMaps_and_SparseArrays_in_Android/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Leo Tse
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
