@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-08-30T15:04:00.000Z</updated>
+  <updated>2016-08-30T15:07:27.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -19,12 +19,14 @@
     <link href="http://leotse90.com/2016/08/30/%E6%97%A0%E7%AB%AF/"/>
     <id>http://leotse90.com/2016/08/30/无端/</id>
     <published>2016-08-30T15:01:02.000Z</published>
-    <updated>2016-08-30T15:04:00.000Z</updated>
-    <content type="html"><![CDATA[<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=26508242&auto=1&height=66"></iframe>
+    <updated>2016-08-30T15:07:27.000Z</updated>
+    <content type="html"><![CDATA[<p><em>From:L.T.</em></p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=26508242&auto=0&height=66"></iframe>
 
 <center><br><img src="/img/mask.jpeg" alt="mask"><br></center><br><a id="more"></a><br><center><br>北京<br>一半贪婪<br>一半恐惧<br></center>]]></content>
     <summary type="html">
-    <![CDATA[<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=26508242&auto=1&height=66"></iframe>
+    <![CDATA[<p><em>From:L.T.</em></p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=26508242&auto=0&height=66"></iframe>
 
 <center><br><img src="/img/mask.jpeg" alt="mask"><br></center><br>]]>
     
