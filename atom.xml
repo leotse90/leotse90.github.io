@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2016-09-12T14:27:46.000Z</updated>
+  <updated>2017-06-07T15:47:35.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Android获取全局Context]]></title>
+    <link href="http://leotse90.com/2017/06/07/Android%E8%8E%B7%E5%8F%96%E5%85%A8%E5%B1%80Context/"/>
+    <id>http://leotse90.com/2017/06/07/Android获取全局Context/</id>
+    <published>2017-06-07T15:33:21.000Z</published>
+    <updated>2017-06-07T15:47:35.000Z</updated>
+    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
+<p>在Android的开发中，我们经常需要在不同的场景中使用Context对象。比如，弹出一个Toast，启动一个Service或者一个Activity等等。</p>
+<p>每个开发者都有自己的方法去获取Context，比较常见的是将Context作为一个参数传递到需要使用的方法，这种方法虽然可以实现这个目的，但是也存在着弊端，Context作为参数传递固然ok，但是需要我们在需要使用到Context的方法里都加上一个参数，这种做法并不优雅。</p>
+<p>这时候我们有另一种办法去实现我们的目的，那就是在Application中定义一个静态方法，用以获取Context：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Context cxt;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line"></span><br><span class="line">        cxt = getApplicationContext();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Context <span class="title">getContext</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cxt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>这样我们就可以在project的任意地方通过调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyApplication.getContext();</span><br></pre></td></tr></table></figure></p>
+<p>来获取Context对象。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>by:leotse</em></p>
+<p>在Android的开发中，我们经常需要在不同的场景中使用Context对象。比如，弹出一个Toast，启动一个Service或者一个Activity等等。</p>
+<p>每个开发者都有自己的方法去获取Context，比较常见的是将Context作为一个参数传递到需要使用的方法，这种方法虽然可以实现这个目的，但是也存在着弊端，Context作为参数传递固然ok，但是需要我们在需要使用到Context的方法里都加上一个参数，这种做法并不优雅。</p>
+<p>这时候我们有另一种办法去实现我们的目的，那就是在Application中定义一个静态方法，用以获取Context：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Context cxt;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line"></span><br><span class="line">        cxt = getApplicationContext();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Context <span class="title">getContext</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cxt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]>
+    
+    </summary>
+    
+      <category term="Android" scheme="http://leotse90.com/tags/Android/"/>
+    
+      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Top 5 Secrets of Mobile Ad Network Payout]]></title>
@@ -840,25 +870,6 @@
     <content type="html"><![CDATA[<center><br><img src="/img/brick.jpg" alt="brick"><br></center><br><a id="more"></a><br><center><br>我试着<br>一<br>字<br>一<br>行<br>置换一件<br>诗人的伪装<br></center>]]></content>
     <summary type="html">
     <![CDATA[<center><br><img src="/img/brick.jpg" alt="brick"><br></center><br>]]>
-    
-    </summary>
-    
-      <category term="远方与诗" scheme="http://leotse90.com/tags/%E8%BF%9C%E6%96%B9%E4%B8%8E%E8%AF%97/"/>
-    
-      <category term="随笔" scheme="http://leotse90.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[这座城市的孤儿]]></title>
-    <link href="http://leotse90.com/2016/01/20/%E8%BF%99%E5%BA%A7%E5%9F%8E%E5%B8%82%E7%9A%84%E5%AD%A4%E5%84%BF/"/>
-    <id>http://leotse90.com/2016/01/20/这座城市的孤儿/</id>
-    <published>2016-01-19T16:01:02.000Z</published>
-    <updated>2016-01-21T14:34:59.000Z</updated>
-    <content type="html"><![CDATA[<center><br><img src="/img/orphan.jpg" alt="orphan"><br></center><br><a id="more"></a><br><center><br>你指着北方<br>看，北京<br>我沿着你划出的弧线<br>看到一群<br>小心翼翼的陌生人<br>他们用尽全力呼气<br>把天空变成<br>披上雾的毛玻璃<br>擦了又擦<br>也看不到远方</center>
-]]></content>
-    <summary type="html">
-    <![CDATA[<center><br><img src="/img/orphan.jpg" alt="orphan"><br></center><br>]]>
     
     </summary>
     
