@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 16.67px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 15px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 13.33px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 11.67px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/IT/" style="font-size: 11.67px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 11.67px;">MySQL</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Scala/" style="font-size: 16.67px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 15px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 13.33px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 18.33px;">移动广告</a> <a href="/tags/远方与诗/" style="font-size: 15px;">远方与诗</a>
+						<a href="/tags/Android/" style="font-size: 16.67px;">Android</a> <a href="/tags/Celery/" style="font-size: 10px;">Celery</a> <a href="/tags/ElasticSearch/" style="font-size: 15px;">ElasticSearch</a> <a href="/tags/FastDFS/" style="font-size: 13.33px;">FastDFS</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 11.67px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/IT/" style="font-size: 11.67px;">IT</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MooseFS/" style="font-size: 10px;">MooseFS</a> <a href="/tags/MySQL/" style="font-size: 11.67px;">MySQL</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Scala/" style="font-size: 16.67px;">Scala</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/VAST/" style="font-size: 10px;">VAST</a> <a href="/tags/并发/" style="font-size: 15px;">并发</a> <a href="/tags/广告杂谈/" style="font-size: 13.33px;">广告杂谈</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/移动广告/" style="font-size: 18.33px;">移动广告</a> <a href="/tags/设计原则/" style="font-size: 10px;">设计原则</a> <a href="/tags/远方与诗/" style="font-size: 15px;">远方与诗</a>
 					</div>
 				</section>
 				
@@ -209,6 +209,73 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-OOP原则之依赖倒置原则" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/24/OOP原则之依赖倒置原则/" class="article-date">
+  	<time datetime="2017-09-24T15:18:01.000Z" itemprop="datePublished">2017-09-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/24/OOP原则之依赖倒置原则/">OOP设计原则之依赖倒置原则（DIP）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>by:leotse</em></p>
+<blockquote>
+<p>Program to an interface, not an implementation. </p>
+</blockquote>
+<p>先不管上面的定义，我们看一个例子，我们的APP需要使用Facebook Audience Network的广告实现应用内变现，一般的实现方式是（这里用Java实现）：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AdController</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>&#123;</span><br><span class="line">		FacebookAdManager fbAdManager = <span class="keyword">new</span> FacebookManager();</span><br><span class="line">		fbAdManager.displayFbAd();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FacebookAdManager</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">displayFbAd</span><span class="params">()</span></span>&#123;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的实现方式比较常见。这里我们抽象出两个模块，控制模块（AdController）以及广告加载模块（FacebookAdManager），两个模块之间的关系是处于高层的控制模块直接依赖于低层的广告加载模块，这也是我们在传统的应用架构中见得比较多的一种代码依赖关系，就像楼房的高层需要基于低层一样。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OOP/">OOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计原则/">设计原则</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术/">技术</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/09/24/OOP原则之依赖倒置原则/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-Android获取全局Context" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -521,69 +588,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a  href="/2016/08/15/android_sharedPreferenced_editor/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-size-in-Android" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/04/size-in-Android/" class="article-date">
-  	<time datetime="2016-08-03T16:33:56.000Z" itemprop="datePublished">2016-08-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/04/size-in-Android/">一切为了适配－Android的单位和尺寸</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>by:leotse</em></p>
-<center><br><img src="/img/adapter.jpg" alt="adapter"><br></center>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/08/04/size-in-Android/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
