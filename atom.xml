@@ -4,7 +4,7 @@
   <subtitle><![CDATA[My name is L.T.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://leotse90.com/"/>
-  <updated>2017-09-24T15:45:52.000Z</updated>
+  <updated>2017-09-25T15:43:33.000Z</updated>
   <id>http://leotse90.com/</id>
   
   <author>
@@ -13,6 +13,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[OOP设计原则之里氏替换原则（LSP）]]></title>
+    <link href="http://leotse90.com/2017/09/25/OOP-design-priciples-LSP/"/>
+    <id>http://leotse90.com/2017/09/25/OOP-design-priciples-LSP/</id>
+    <published>2017-09-25T15:41:40.000Z</published>
+    <updated>2017-09-25T15:43:33.000Z</updated>
+    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
+<blockquote>
+<p>Program to an interface, not an implementation. </p>
+</blockquote>
+<p>在<a href="http://leotse90.com/2017/09/24/OOP-design-principles-DIP/">OOP设计原则之依赖倒置原则（DIP）</a>中，我们介绍了OOP设计原则之一的DIP，这里我们将继续介绍另一个设计原则。</p>
+<p>我们仍然先来看一个示例，在<a href="http://leotse90.com/2017/09/24/OOP-design-principles-DIP/">OOP设计原则之依赖倒置原则（DIP）</a>中，我们使用到了加载Admob广告和Facebook Audience Network广告的例子，我们假定我们会在不同的场景下使用不同的广告源：用户设备上安装了Facebook、Messenger等APP时（Cond 1）请求Facebook<br>的广告，其他情况（Cond 2）请求Admob的广告。那么我们如何实现呢？<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IAdManager</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">displayAd</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FacebookAdManager</span> <span class="keyword">implements</span> <span class="title">IAdManager</span></span>&#123;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">displayAd</span><span class="params">()</span></span>&#123;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AdmobAdManager</span> <span class="keyword">implements</span> <span class="title">IAdManager</span></span>&#123;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">displayAd</span><span class="params">()</span></span>&#123;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在控制模块中，我们通过不同的Condition判断来调用不同的广告源：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AdController</span></span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>&#123;</span><br><span class="line">		IAdManager adManager;</span><br><span class="line">		<span class="keyword">if</span> (Condition <span class="number">1</span>)&#123;</span><br><span class="line">			adManager = <span class="keyword">new</span> FacebookAdManager();</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			adManager = <span class="keyword">new</span> AdmobAdManager();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		adManager.displayAd();</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这个示例里，我们在声明的时候用到了基类AdManager，而在程序运行的时候根据设定的条件判断确定真正要实例化的广告源。这里的设计就满足了我们要介绍的里氏替换原则（Liskov Substitution Principle，LSP）。</p>
+<p>里氏替换原则要求<strong>在任何可以使用基类类型的地方，都可以替换为其子类类型</strong>。<br>要遵守这个原则，需要我们在设计的时候将基类设计为抽象类或者接口，同时子类需要实现基类声明的所有方法。在声明的时候使用基类类型即可，而在运行时再确定子类类型。里氏替换原则可以帮助我们提高代码复用程度。</p>
+<p>里氏替换原则是基于OOP中的继承和多态。但是如果基类本身是可以实例化的，且子类能够重载基类的方法，那么子类的行为和基类的行为就有可能不一致，这时候不能轻易用子类类型替换基类类型。因此我们在使用LSP的时候需要记住：</p>
+<blockquote>
+<p>尽量不要基于可实例化的父类中继承，而是要基于抽象类和接口继承。</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><em>by:leotse</em></p>
+<blockquote>
+<p>Program to an interface, not an implementation. </p>
+</blockquote>
+<p>在<a href="http://leotse90.com/2017/09/24/OOP-design-principles-DIP/">OOP设计原则之依赖倒置原则（DIP）</a>中，我们介绍了OOP设计原则之一的DIP，这里我们将继续介绍另一个设计原则。</p>
+<p>我们仍然先来看一个示例，在<a href="http://leotse90.com/2017/09/24/OOP-design-principles-DIP/">OOP设计原则之依赖倒置原则（DIP）</a>中，我们使用到了加载Admob广告和Facebook Audience Network广告的例子，我们假定我们会在不同的场景下使用不同的广告源：用户设备上安装了Facebook、Messenger等APP时（Cond 1）请求Facebook<br>的广告，其他情况（Cond 2）请求Admob的广告。那么我们如何实现呢？<br>]]>
+    
+    </summary>
+    
+      <category term="OOP" scheme="http://leotse90.com/tags/OOP/"/>
+    
+      <category term="设计原则" scheme="http://leotse90.com/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/"/>
+    
+      <category term="技术" scheme="http://leotse90.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[OOP设计原则之依赖倒置原则（DIP）]]></title>
@@ -837,62 +875,6 @@
     </summary>
     
       <category term="广告杂谈" scheme="http://leotse90.com/tags/%E5%B9%BF%E5%91%8A%E6%9D%82%E8%B0%88/"/>
-    
-      <category term="计算广告" scheme="http://leotse90.com/categories/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[VAST3.0视频广告规范介绍]]></title>
-    <link href="http://leotse90.com/2016/01/29/VAST3.0/"/>
-    <id>http://leotse90.com/2016/01/29/VAST3.0/</id>
-    <published>2016-01-28T16:23:22.000Z</published>
-    <updated>2016-01-28T16:40:50.000Z</updated>
-    <content type="html"><![CDATA[<p><em>by:leotse</em></p>
-<h2 id="概述">概述</h2><p>说到VAST，就不得不提到<a href="http://www.iab.com" target="_blank" rel="external">IAB</a>，全称为Interactive Advertising Bureau，我们称之为互联网广告署，它的主要职责是制定网络业务流程的开发标准以及行业准则，并对网络广告收入进行跟踪。</p>
-<p>我们今天要介绍的就是IAB的六个主要部分之一——VAST（Video Ad Serving Template）。它是互联网视频广告的统一标准，采用XML格式。随着在线视频内容的广告越来越普遍，人们也越来越关注互联网视频广告的商业化，在VAST出台之前，视频广告并没有统一的广告协议，行业乱象促使需要有人站出来制定一个通用的标准，这时候IAB开始出来行使它的职责，它为在线互联网视频广告制定了一套统一的、可扩展的广告协议。VAST消除了视频广告的技术壁垒，在VAST3.0之前，已经有两个较为普遍的版本，但是现在通用、流行的就是我们说的3.0版本，3.0版本保证了对2.0的兼容。</p>
-<p>VAST协议主要包含以下三部分：</p>
-<blockquote>
-<p>视频广告的内容（creatives）<br>视频广告的跟踪事件及其追踪链接<br>视频广告的wrapper</p>
-</blockquote>
-<a id="more"></a>
-<p>在VAST3.0中，保证了支持以下五种类型的广告：</p>
-<blockquote>
-<p>线性广告<br>非线性的广告<br>可跳过线性广告<br>伴随线性广告<br>广告荚</p>
-</blockquote>
-<p>其中，可跳过的线性广告以及广告荚是3.0新增的两种格式。</p>
-<h2 id="专业术语">专业术语</h2><p>我们接下来要简单介绍一下VAST中主要的专业术语。</p>
-<h3 id="VAST_Tag">VAST Tag</h3><p>VAST标签，获取VAST的URI。通过访问VAST tag可以connect到ad server，从而获取到VAST的response。   </p>
-<h3 id="Video_Ad">Video Ad</h3><p>视频广告，这是VAST的主角。它主要指的是视频流（in-stream video）。</p>
-<h3 id="Primary_Ad_Server">Primary Ad Server</h3><p>主广告服务器，视频播放器请求广告内容的第一个广告服务器。主广告服务器通常是由publisher的广告服务器。<br>从主广告服务器返回的数据不一定是我们所需的广告视频，还有可能是另一个广告服务器的地址，也就是下面介绍的二级广告服务器。</p>
-<h3 id="Secondary_Ad_Server">Secondary Ad Server</h3><p>二级广告服务器，如果主广告服务器返回的不是视频广告的内容，而是一个重定向，指向另一个广告服务器，而这一级的广告服务器也不一定是最后一跳，也就是说还有可能有三级广告服务器、四级广告服务器，以此类推。但是最后一跳的广告服务器一定会提供包含视频广告信息的VAST响应。</p>
-<h3 id="Wrapper">Wrapper</h3><p>封装。如果VAST的响应返回的是一个Wrapper，那么就意味着我们需要访问Wrapper中提供的URI访问下一级广告服务器。</p>
-<h3 id="Clickthrough">Clickthrough</h3><p>点击。当用户点击广告creatives时所打开的页面。</p>
-<h3 id="InLine_Ad">InLine Ad</h3><p>线内广告。指的是包含视频广告所需信息的VAST响应，当VAST的线内广告收到响应后，无需调用其他所需要的广告服务器。</p>
-<p>接下来介绍的是VAST3.0支持的广告：</p>
-<h3 id="Linear_Ad">Linear Ad</h3><p>线性广告。这种类型的广告我们平时接触很多，当我们在网上看电影的时候我们常常会在播放电影之前（pre-roll）、播放之后（post-roll）出现广告，更有甚者，电影中间（mid-roll）也有可能插播广告。<br>线性广告的形式多种多样，它可以是视频、rich media或者只是一张静止的图像。</p>
-<p>可跳过线性广告属于比较特殊的线性广告，也就是用户可以根据需要选择是否看完广告，国外的Youtube的广告一般是这种，用户可以在观看5s后选择是否继续观看广告。</p>
-<h3 id="Nonlinear_Ad">Nonlinear Ad</h3><p>非线性广告。依旧属于视频流广告，它也和视频的内容一起显示，但是与线性广告不同的是，非线性广告通常覆盖视频播放器的底部或顶部的五分之一。<br>非线性广告的形式也是多种多样，包含文本、图像等等。</p>
-<h3 id="Companion_Ad">Companion Ad</h3><p>伴随广告。这种广告区别于前两者，它出现在视频播放器之外，一般是横幅广告或者富媒体广告。</p>
-<p>下图展示了以上四种广告：<br><img src="/img/ads-vast.png" alt="ads-vast"></p>
-<h3 id="Ad_Pod">Ad Pod</h3><p>广告荚。大多数视频网站前面的视频广告都是这种形式，包含一系列的线性视频广告。<br><img src="/img/ad-pods.png" alt="ad-pod"></p>
-<h2 id="VAST3-0_工作原理">VAST3.0 工作原理</h2><p>常见的情况是直接从主广告服务器上获取视频广告信息。IAB给出这个流程的示意图：<br><img src="/img/master-ad-server-vast.png" alt="master-ad-server-vast"><br>从这个图上我们可以很清楚地看到请求VAST的流程，Ad server直接向视频播放器返回所需的InLine响应，视频播放器在解析了ad server的响应后，打开视频广告，并向ad server发跟踪链接。</p>
-<p>另一种情况就是从多级广告服务器上获取视频广告信息，我们以二级广告服务器为例：<br><img src="/img/multi-ad-server-vast.png" alt="multi-ad-server-vast"><br>主广告服务器返回的是Wrapper，也就是视频播放器还需要继续请求二级广告服务器，然后获取到需要的视频创意。这里需要注意的是，跟踪事件需要发送给主广告服务器以及二级广告服务器。</p>
-<h2 id="VAST3-0_响应示例">VAST3.0 响应示例</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">VAST</span> <span class="attribute">version</span>=<span class="value">”3.0”</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">Ad</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">InLine</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">AdSystem</span>&gt;</span>My Ad Server<span class="tag">&lt;/<span class="title">AdSystem</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">AdTitle</span>&gt;</span>Car Company<span class="tag">&lt;/<span class="title">AdTitle</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">Impression</span>&gt;</span>...<span class="tag">&lt;/<span class="title">Impression</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">Creatives</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="title">Creative</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="title">Linear</span>&gt;</span>...<span class="tag">&lt;/<span class="title">Linear</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="title">Creative</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="title">Creative</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="title">CompanionAds</span>&gt;</span>...<span class="tag">&lt;/<span class="title">CompanionAds</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="title">Creative</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="title">Creatives</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="title">InLine</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">Ad</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">VAST</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>参考阅读</strong>：<br><a href="http://www.iab.com/guidelines/digital-video-ad-serving-template-vast-3-0/" target="_blank" rel="external">Digital Video Ad Serving Template (VAST) 3.0</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><em>by:leotse</em></p>
-<h2 id="概述">概述</h2><p>说到VAST，就不得不提到<a href="http://www.iab.com">IAB</a>，全称为Interactive Advertising Bureau，我们称之为互联网广告署，它的主要职责是制定网络业务流程的开发标准以及行业准则，并对网络广告收入进行跟踪。</p>
-<p>我们今天要介绍的就是IAB的六个主要部分之一——VAST（Video Ad Serving Template）。它是互联网视频广告的统一标准，采用XML格式。随着在线视频内容的广告越来越普遍，人们也越来越关注互联网视频广告的商业化，在VAST出台之前，视频广告并没有统一的广告协议，行业乱象促使需要有人站出来制定一个通用的标准，这时候IAB开始出来行使它的职责，它为在线互联网视频广告制定了一套统一的、可扩展的广告协议。VAST消除了视频广告的技术壁垒，在VAST3.0之前，已经有两个较为普遍的版本，但是现在通用、流行的就是我们说的3.0版本，3.0版本保证了对2.0的兼容。</p>
-<p>VAST协议主要包含以下三部分：</p>
-<blockquote>
-<p>视频广告的内容（creatives）<br>视频广告的跟踪事件及其追踪链接<br>视频广告的wrapper</p>
-</blockquote>]]>
-    
-    </summary>
-    
-      <category term="VAST" scheme="http://leotse90.com/tags/VAST/"/>
     
       <category term="计算广告" scheme="http://leotse90.com/categories/%E8%AE%A1%E7%AE%97%E5%B9%BF%E5%91%8A/"/>
     
